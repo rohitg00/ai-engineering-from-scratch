@@ -1,0 +1,9 @@
+{
+  "name": "Mindtrip",
+  "url": "https://mindtrip.ai/",
+  "category": "travel-agents",
+  "description": "Travel agent that books flights and hotels in chat.",
+  "open_source": false,
+  "x": "mindtripai",
+  "logo": "mindtrip.png"
+}

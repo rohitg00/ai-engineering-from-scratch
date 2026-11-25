@@ -1,0 +1,9 @@
+{
+  "name": "Stable Diffusion web UI",
+  "url": "https://github.com/AUTOMATIC1111/stable-diffusion-webui",
+  "category": "media",
+  "description": "Web interface for Stable Diffusion.",
+  "open_source": true,
+  "repo": "https://github.com/AUTOMATIC1111/stable-diffusion-webui",
+  "logo": "stable-diffusion-web-ui.png"
+}

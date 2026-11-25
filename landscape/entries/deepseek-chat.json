@@ -1,0 +1,8 @@
+{
+  "name": "DeepSeek Chat",
+  "url": "https://chat.deepseek.com",
+  "category": "chat-assistants",
+  "description": "Chat assistant from DeepSeek.",
+  "open_source": false,
+  "logo": "deepseek-chat.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Vellum",
+  "url": "https://www.vellum.ai/",
+  "category": "personal-assistants",
+  "description": "A personal assistant built around your context.",
+  "open_source": false,
+  "x": "vellum_ai",
+  "logo": "vellum.png"
+}

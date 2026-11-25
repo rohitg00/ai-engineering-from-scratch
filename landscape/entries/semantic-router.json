@@ -1,0 +1,9 @@
+{
+  "name": "Semantic Router",
+  "url": "https://github.com/aurelio-labs/semantic-router",
+  "category": "agents",
+  "description": "Decision layer that routes requests by meaning.",
+  "open_source": true,
+  "repo": "https://github.com/aurelio-labs/semantic-router",
+  "logo": "semantic-router.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Mindgard",
+  "url": "https://mindgard.ai",
+  "category": "security",
+  "description": "Automated red teaming for AI systems.",
+  "open_source": false,
+  "logo": "mindgard.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Cloudflare Workflows",
+  "url": "https://developers.cloudflare.com/workflows",
+  "category": "orchestration",
+  "description": "Durable multi-step execution on Cloudflare Workers.",
+  "open_source": false,
+  "logo": "cloudflare-workflows.png"
+}

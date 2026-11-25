@@ -1,0 +1,9 @@
+{
+  "name": "Crawl4AI",
+  "url": "https://crawl4ai.com",
+  "category": "search",
+  "description": "Web crawler that outputs model-ready markdown.",
+  "open_source": true,
+  "repo": "https://github.com/unclecode/crawl4ai",
+  "logo": "crawl4ai.png"
+}

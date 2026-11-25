@@ -1,0 +1,9 @@
+{
+  "name": "Town",
+  "url": "https://www.town.com/",
+  "category": "work-assistants",
+  "description": "An assistant that learns how you work and takes on tasks.",
+  "open_source": false,
+  "x": "TownAI",
+  "logo": "town.png"
+}

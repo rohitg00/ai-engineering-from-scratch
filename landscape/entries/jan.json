@@ -1,0 +1,9 @@
+{
+  "name": "Jan",
+  "url": "https://jan.ai",
+  "category": "inference",
+  "description": "Desktop app that runs models offline.",
+  "open_source": true,
+  "repo": "https://github.com/janhq/jan",
+  "logo": "jan.png"
+}

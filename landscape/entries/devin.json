@@ -1,0 +1,14 @@
+{
+  "name": "Devin",
+  "url": "https://devin.ai/",
+  "category": "coding",
+  "also": [
+    "harnesses",
+    "orchestrators",
+    "work-assistants"
+  ],
+  "description": "An AI software engineer from Cognition.",
+  "open_source": false,
+  "x": "cognition",
+  "logo": "devin.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "MotherDuck",
+  "url": "https://motherduck.com",
+  "category": "databases",
+  "description": "Cloud data warehouse built on DuckDB.",
+  "open_source": false,
+  "logo": "motherduck.png"
+}

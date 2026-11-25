@@ -1,0 +1,8 @@
+{
+  "name": "Lepton AI",
+  "url": "https://lepton.ai",
+  "category": "inference-providers",
+  "description": "Cloud platform for running AI models and workloads.",
+  "open_source": false,
+  "logo": "lepton-ai.png"
+}

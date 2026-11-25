@@ -1,0 +1,9 @@
+{
+  "name": "Fish Audio",
+  "url": "https://fish.audio",
+  "category": "voice-apis",
+  "description": "Text-to-speech and voice cloning.",
+  "open_source": true,
+  "repo": "https://github.com/fishaudio/fish-speech",
+  "logo": "fish-audio.png"
+}

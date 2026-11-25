@@ -1,0 +1,8 @@
+{
+  "name": "Vonage",
+  "url": "https://vonage.com",
+  "category": "voice-platforms",
+  "description": "Communication APIs for voice, video and messaging.",
+  "open_source": false,
+  "logo": "vonage.png"
+}

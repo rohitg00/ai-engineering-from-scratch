@@ -1,0 +1,8 @@
+{
+  "name": "Firebase Studio",
+  "url": "https://firebase.studio",
+  "category": "builders",
+  "description": "Browser workspace for building apps with agents.",
+  "open_source": false,
+  "logo": "firebase-studio.png"
+}

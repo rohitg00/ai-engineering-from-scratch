@@ -1,0 +1,9 @@
+{
+  "name": "Determined AI",
+  "url": "https://github.com/determined-ai/determined",
+  "category": "tracking",
+  "description": "Training platform with hyperparameter search.",
+  "open_source": true,
+  "repo": "https://github.com/determined-ai/determined",
+  "logo": "determined-ai.png"
+}

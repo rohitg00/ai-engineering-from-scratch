@@ -1,0 +1,8 @@
+{
+  "name": "AWS Step Functions",
+  "url": "https://aws.amazon.com/step-functions",
+  "category": "orchestration",
+  "description": "State machine service for workflows on AWS.",
+  "open_source": false,
+  "logo": "aws-step-functions.png"
+}

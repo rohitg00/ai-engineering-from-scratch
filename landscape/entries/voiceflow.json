@@ -1,0 +1,8 @@
+{
+  "name": "Voiceflow",
+  "url": "https://voiceflow.com",
+  "category": "agent-platforms",
+  "description": "Builder for chat and voice agents.",
+  "open_source": false,
+  "logo": "voiceflow.png"
+}

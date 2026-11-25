@@ -1,0 +1,9 @@
+{
+  "name": "Oz",
+  "url": "https://oz.anyreach.ai/",
+  "category": "personal-assistants",
+  "description": "A text-based assistant for quotes, client updates, and paperwork.",
+  "open_source": false,
+  "x": "Anyreach_Oz",
+  "logo": "oz.png"
+}

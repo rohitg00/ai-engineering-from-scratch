@@ -1,0 +1,9 @@
+{
+  "name": "OpenVINO",
+  "url": "https://openvino.ai",
+  "category": "inference",
+  "description": "Toolkit that optimizes and runs models on Intel hardware.",
+  "open_source": true,
+  "repo": "https://github.com/openvinotoolkit/openvino",
+  "logo": "openvino.png"
+}

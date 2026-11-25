@@ -1,0 +1,8 @@
+{
+  "name": "Speechmatics",
+  "url": "https://speechmatics.com",
+  "category": "voice-apis",
+  "description": "Speech recognition for many languages.",
+  "open_source": false,
+  "logo": "speechmatics.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Redpanda",
+  "url": "https://redpanda.com",
+  "category": "data-platforms",
+  "description": "Streaming data platform compatible with Kafka.",
+  "open_source": true,
+  "repo": "https://github.com/redpanda-data/redpanda",
+  "logo": "redpanda.png"
+}

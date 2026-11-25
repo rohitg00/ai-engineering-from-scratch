@@ -1,0 +1,9 @@
+{
+  "name": "smolagents",
+  "url": "https://huggingface.co/docs/smolagents",
+  "category": "agents",
+  "description": "Small library for agents that write code.",
+  "open_source": true,
+  "repo": "https://github.com/huggingface/smolagents",
+  "logo": "smolagents.png"
+}

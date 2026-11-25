@@ -1,0 +1,9 @@
+{
+  "name": "Deep Lake",
+  "url": "https://deeplake.ai",
+  "category": "databases",
+  "description": "Database for multimodal AI data.",
+  "open_source": true,
+  "repo": "https://github.com/activeloopai/deeplake",
+  "logo": "deep-lake.png"
+}

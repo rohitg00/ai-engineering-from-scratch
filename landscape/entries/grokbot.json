@@ -1,0 +1,9 @@
+{
+  "name": "GrokBot",
+  "url": "https://docs.x.ai/grok-bot/overview",
+  "category": "lab-assistants",
+  "description": "A proactive AI teammate with a real computer in the cloud.",
+  "open_source": false,
+  "x": "bot",
+  "logo": "grokbot.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Tensorlake",
+  "url": "https://tensorlake.ai/",
+  "category": "sandboxes",
+  "description": "Sandboxes for AI agents.",
+  "open_source": false,
+  "x": "tensorlake",
+  "logo": "tensorlake.png"
+}

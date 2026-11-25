@@ -1,0 +1,8 @@
+{
+  "name": "PromptLayer",
+  "url": "https://promptlayer.com",
+  "category": "evaluation",
+  "description": "Prompt management, logging and evaluation.",
+  "open_source": false,
+  "logo": "promptlayer.png"
+}

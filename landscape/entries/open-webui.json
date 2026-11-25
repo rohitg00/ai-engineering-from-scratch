@@ -1,0 +1,9 @@
+{
+  "name": "Open WebUI",
+  "url": "https://openwebui.com",
+  "category": "builders",
+  "description": "Self-hosted chat interface for local and remote models.",
+  "open_source": true,
+  "repo": "https://github.com/open-webui/open-webui",
+  "logo": "open-webui.png"
+}

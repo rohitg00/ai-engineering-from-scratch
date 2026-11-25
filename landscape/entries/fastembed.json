@@ -1,0 +1,9 @@
+{
+  "name": "FastEmbed",
+  "url": "https://qdrant.github.io/fastembed",
+  "category": "embeddings",
+  "description": "Lightweight library for generating embeddings.",
+  "open_source": true,
+  "repo": "https://github.com/qdrant/fastembed",
+  "logo": "fastembed.png"
+}

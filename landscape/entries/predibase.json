@@ -1,0 +1,8 @@
+{
+  "name": "Predibase",
+  "url": "https://predibase.com",
+  "category": "inference-providers",
+  "description": "Fine-tuning and serving of open models with adapters.",
+  "open_source": false,
+  "logo": "predibase.png"
+}

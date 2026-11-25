@@ -1,0 +1,9 @@
+{
+  "name": "AI SDK",
+  "url": "https://ai-sdk.dev",
+  "category": "agents",
+  "description": "TypeScript toolkit for model calls, tools and agents.",
+  "open_source": true,
+  "repo": "https://github.com/vercel/ai",
+  "logo": "ai-sdk.png"
+}

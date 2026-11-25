@@ -1,0 +1,9 @@
+{
+  "name": "Fo by Wajo",
+  "url": "https://wajo.ai/",
+  "category": "personal-assistants",
+  "description": "An assistant that makes calls, books services, and handles payments.",
+  "open_source": false,
+  "x": "wajo_ai",
+  "logo": "fo-by-wajo.png"
+}

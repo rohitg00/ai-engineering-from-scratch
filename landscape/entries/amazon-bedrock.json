@@ -1,0 +1,8 @@
+{
+  "name": "Amazon Bedrock",
+  "url": "https://aws.amazon.com/bedrock",
+  "category": "model-clouds",
+  "description": "Managed access to foundation models on AWS.",
+  "open_source": false,
+  "logo": "amazon-bedrock.png"
+}

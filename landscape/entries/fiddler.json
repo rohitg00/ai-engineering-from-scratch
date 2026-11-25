@@ -1,0 +1,8 @@
+{
+  "name": "Fiddler",
+  "url": "https://fiddler.ai",
+  "category": "evaluation",
+  "description": "Observability and guardrails for AI systems.",
+  "open_source": false,
+  "logo": "fiddler.png"
+}

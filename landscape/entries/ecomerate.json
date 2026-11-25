@@ -1,0 +1,9 @@
+{
+  "name": "Ecomerate",
+  "url": "https://ecomerate.com/",
+  "category": "finance-agents",
+  "description": "AI stock-research analyst you text via iMessage.",
+  "open_source": false,
+  "x": "ecomerateHQ",
+  "logo": "ecomerate.png"
+}

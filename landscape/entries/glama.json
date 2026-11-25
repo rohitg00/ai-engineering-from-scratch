@@ -1,0 +1,8 @@
+{
+  "name": "Glama",
+  "url": "https://glama.ai",
+  "category": "protocols",
+  "description": "Directory and gateway for MCP servers.",
+  "open_source": false,
+  "logo": "glama.png"
+}

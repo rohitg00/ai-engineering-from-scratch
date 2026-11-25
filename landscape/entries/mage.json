@@ -1,0 +1,9 @@
+{
+  "name": "Mage",
+  "url": "https://mage.ai",
+  "category": "orchestration",
+  "description": "Tool for building and running data pipelines.",
+  "open_source": true,
+  "repo": "https://github.com/mage-ai/mage-ai",
+  "logo": "mage.png"
+}

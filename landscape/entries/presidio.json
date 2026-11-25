@@ -1,0 +1,9 @@
+{
+  "name": "Presidio",
+  "url": "https://microsoft.github.io/presidio",
+  "category": "security",
+  "description": "Detects and removes personal data in text.",
+  "open_source": true,
+  "repo": "https://github.com/microsoft/presidio",
+  "logo": "presidio.png"
+}

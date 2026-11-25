@@ -1,0 +1,8 @@
+{
+  "name": "Baseten",
+  "url": "https://baseten.co",
+  "category": "inference-providers",
+  "description": "Model deployment and inference for production workloads.",
+  "open_source": false,
+  "logo": "baseten.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "HashiCorp Vault",
+  "url": "https://hashicorp.com/products/vault",
+  "category": "identity",
+  "description": "Secrets and encryption management.",
+  "open_source": true,
+  "repo": "https://github.com/hashicorp/vault",
+  "logo": "hashicorp-vault.png"
+}

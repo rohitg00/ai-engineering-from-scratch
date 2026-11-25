@@ -1,0 +1,9 @@
+{
+  "name": "AnythingLLM",
+  "url": "https://anythingllm.com",
+  "category": "builders",
+  "description": "Desktop and server app for chat with documents.",
+  "open_source": true,
+  "repo": "https://github.com/Mintplex-Labs/anything-llm",
+  "logo": "anythingllm.png"
+}

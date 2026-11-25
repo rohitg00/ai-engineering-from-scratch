@@ -1,0 +1,11 @@
+{
+  "name": "Factory",
+  "url": "https://factory.ai",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Coding agents that run in the terminal, IDE and CI.",
+  "open_source": false,
+  "logo": "factory.png"
+}

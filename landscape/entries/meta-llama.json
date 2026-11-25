@@ -1,0 +1,9 @@
+{
+  "name": "Meta Llama",
+  "url": "https://llama.com",
+  "category": "models",
+  "description": "Open-weight Llama model family from Meta.",
+  "open_source": true,
+  "repo": "https://github.com/meta-llama/llama-models",
+  "logo": "meta-llama.png"
+}

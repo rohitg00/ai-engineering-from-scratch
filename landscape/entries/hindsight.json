@@ -1,0 +1,9 @@
+{
+  "name": "Hindsight",
+  "url": "https://hindsight.vectorize.io/",
+  "category": "memory",
+  "description": "Long-term memory for AI agents that learns across sessions.",
+  "open_source": false,
+  "x": "vectorizeio",
+  "logo": "hindsight.png"
+}

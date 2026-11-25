@@ -1,0 +1,8 @@
+{
+  "name": "Stainless",
+  "url": "https://stainless.com",
+  "category": "connectors",
+  "description": "Generates SDKs and MCP servers from an API spec.",
+  "open_source": false,
+  "logo": "stainless.png"
+}

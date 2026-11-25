@@ -1,0 +1,8 @@
+{
+  "name": "Greptile",
+  "url": "https://greptile.com",
+  "category": "review",
+  "description": "Code review agent with full codebase context.",
+  "open_source": false,
+  "logo": "greptile.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "TensorBoard",
+  "url": "https://tensorflow.org/tensorboard",
+  "category": "tracking",
+  "description": "Visualization toolkit for training runs.",
+  "open_source": true,
+  "repo": "https://github.com/tensorflow/tensorboard",
+  "logo": "tensorboard.png"
+}

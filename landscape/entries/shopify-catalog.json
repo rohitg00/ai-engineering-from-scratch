@@ -1,0 +1,9 @@
+{
+  "name": "Shopify Catalog",
+  "url": "https://shopify.dev/docs/agents/catalog/catalog-api",
+  "category": "commerce",
+  "description": "Catalog API so agents can search and recommend Shopify products.",
+  "open_source": false,
+  "x": "shopify",
+  "logo": "shopify-catalog.png"
+}

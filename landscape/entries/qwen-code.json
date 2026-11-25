@@ -1,0 +1,12 @@
+{
+  "name": "Qwen Code",
+  "url": "https://github.com/QwenLM/qwen-code",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Terminal coding agent tuned for Qwen models.",
+  "open_source": true,
+  "repo": "https://github.com/QwenLM/qwen-code",
+  "logo": "qwen-code.png"
+}

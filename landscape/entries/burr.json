@@ -1,0 +1,9 @@
+{
+  "name": "Burr",
+  "url": "https://burr.apache.org",
+  "category": "agents",
+  "description": "State machine framework for agents and applications.",
+  "open_source": true,
+  "repo": "https://github.com/apache/burr",
+  "logo": "burr.png"
+}

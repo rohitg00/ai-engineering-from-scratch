@@ -1,0 +1,9 @@
+{
+  "name": "MLflow",
+  "url": "https://mlflow.org",
+  "category": "tracking",
+  "description": "Tracks experiments, models and evaluations across the machine learning lifecycle.",
+  "open_source": true,
+  "repo": "https://github.com/mlflow/mlflow",
+  "logo": "mlflow.svg"
+}

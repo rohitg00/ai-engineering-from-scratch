@@ -1,0 +1,8 @@
+{
+  "name": "WitnessAI",
+  "url": "https://witness.ai",
+  "category": "security",
+  "description": "Guardrails and visibility for enterprise AI use.",
+  "open_source": false,
+  "logo": "witnessai.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Dex",
+  "url": "https://meetdex.ai/",
+  "category": "work-assistants",
+  "description": "AI talent agent matching senior software engineers with top tech companies.",
+  "open_source": false,
+  "x": "meetdexai",
+  "logo": "dex.png"
+}

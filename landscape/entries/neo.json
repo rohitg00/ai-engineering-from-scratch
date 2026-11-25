@@ -1,0 +1,9 @@
+{
+  "name": "Neo",
+  "url": "https://01labs.ai/",
+  "category": "personal-assistants",
+  "description": "A personal AI assistant from 01 Labs.",
+  "open_source": false,
+  "x": "01labsAI",
+  "logo": "neo.png"
+}

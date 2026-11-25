@@ -1,0 +1,8 @@
+{
+  "name": "Scorecard",
+  "url": "https://scorecard.io",
+  "category": "evaluation",
+  "description": "Evaluation platform for agents.",
+  "open_source": false,
+  "logo": "scorecard.png"
+}

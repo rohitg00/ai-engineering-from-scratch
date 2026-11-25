@@ -350,6 +350,10 @@
       "destination": "/sponsors.html"
     },
     {
+      "source": "/landscape",
+      "destination": "/landscape.html"
+    },
+    {
       "source": "/assessment",
       "destination": "/assessment.html"
     },
@@ -557,7 +561,7 @@
       ]
     },
     {
-      "source": "/(blogs|glossary|catalog|certifications|certification|assessment|path|prereqs|roadmap|about|developer|docs|contact|privacy|sponsors|projects|project|learning-paths|developers|api|manuals|manual-[a-z0-9-]+)",
+      "source": "/(blogs|glossary|catalog|certifications|certification|assessment|path|prereqs|roadmap|about|developer|docs|contact|privacy|sponsors|landscape|projects|project|learning-paths|developers|api|manuals|manual-[a-z0-9-]+)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -824,7 +828,7 @@
       "permanent": true
     },
     {
-      "source": "/:page(about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|assessment|inside-an-ai-agent|inside-a-decompiler|inside-an-llm-serving-gpu|skills|how-to-learn|highlights|whats-new).html",
+      "source": "/:page(about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|assessment|inside-an-ai-agent|inside-a-decompiler|inside-an-llm-serving-gpu|skills|how-to-learn|highlights|whats-new|landscape).html",
       "destination": "/:page",
       "permanent": true
     },

@@ -1,0 +1,9 @@
+{
+  "name": "BullMQ",
+  "url": "https://bullmq.io",
+  "category": "orchestration",
+  "description": "Message queue and job system on Redis.",
+  "open_source": true,
+  "repo": "https://github.com/taskforcesh/bullmq",
+  "logo": "bullmq.png"
+}

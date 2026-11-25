@@ -1,0 +1,9 @@
+{
+  "name": "Chrome DevTools MCP",
+  "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+  "category": "browser-infra",
+  "description": "MCP server that lets agents control and inspect Chrome.",
+  "open_source": true,
+  "repo": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+  "logo": "chrome-devtools-mcp.png"
+}

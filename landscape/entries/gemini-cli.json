@@ -1,0 +1,12 @@
+{
+  "name": "Gemini CLI",
+  "url": "https://github.com/google-gemini/gemini-cli",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Terminal coding agent from Google.",
+  "open_source": true,
+  "repo": "https://github.com/google-gemini/gemini-cli",
+  "logo": "gemini-cli.png"
+}

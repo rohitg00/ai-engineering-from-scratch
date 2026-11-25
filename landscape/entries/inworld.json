@@ -1,0 +1,8 @@
+{
+  "name": "Inworld",
+  "url": "https://inworld.ai",
+  "category": "voice-apis",
+  "description": "Text-to-speech and runtime for voice applications.",
+  "open_source": false,
+  "logo": "inworld.png"
+}

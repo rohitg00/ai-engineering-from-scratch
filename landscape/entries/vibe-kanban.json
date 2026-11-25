@@ -1,0 +1,9 @@
+{
+  "name": "Vibe Kanban",
+  "url": "https://www.vibekanban.com",
+  "category": "orchestrators",
+  "description": "Kanban board for running and reviewing coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/BloopAI/vibe-kanban",
+  "logo": "vibe-kanban.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Promptfoo",
+  "url": "https://promptfoo.dev",
+  "category": "evaluation",
+  "description": "Tests and red teams prompts, agents and RAG.",
+  "open_source": true,
+  "repo": "https://github.com/promptfoo/promptfoo",
+  "logo": "promptfoo.png"
+}

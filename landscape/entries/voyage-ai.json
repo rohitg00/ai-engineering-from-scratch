@@ -1,0 +1,8 @@
+{
+  "name": "Voyage AI",
+  "url": "https://voyageai.com",
+  "category": "embeddings",
+  "description": "Embedding and rerank models for retrieval.",
+  "open_source": false,
+  "logo": "voyage-ai.png"
+}

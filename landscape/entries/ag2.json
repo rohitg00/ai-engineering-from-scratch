@@ -1,0 +1,9 @@
+{
+  "name": "AG2",
+  "url": "https://ag2.ai",
+  "category": "agents",
+  "description": "Open framework for multi-agent systems.",
+  "open_source": true,
+  "repo": "https://github.com/ag2ai/ag2",
+  "logo": "ag2.png"
+}

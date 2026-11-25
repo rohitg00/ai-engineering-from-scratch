@@ -1,0 +1,9 @@
+{
+  "name": "Axolotl",
+  "url": "https://axolotl.ai",
+  "category": "finetuning",
+  "description": "Config-driven tool for fine-tuning language models.",
+  "open_source": true,
+  "repo": "https://github.com/axolotl-ai-cloud/axolotl",
+  "logo": "axolotl.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "AnyAlpha",
+  "url": "https://anyalpha.ai/",
+  "category": "finance-agents",
+  "description": "Agentic trading platform: your AI agent researches, backtests and trades 24/7.",
+  "open_source": false,
+  "x": "anyalphaai",
+  "logo": "anyalpha.png"
+}

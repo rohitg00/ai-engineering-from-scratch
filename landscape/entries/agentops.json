@@ -1,0 +1,9 @@
+{
+  "name": "AgentOps",
+  "url": "https://agentops.ai",
+  "category": "evaluation",
+  "description": "Session tracing and cost tracking for agents.",
+  "open_source": true,
+  "repo": "https://github.com/AgentOps-AI/agentops",
+  "logo": "agentops.png"
+}

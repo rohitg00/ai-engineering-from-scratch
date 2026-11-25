@@ -1,0 +1,9 @@
+{
+  "name": "Chroma",
+  "url": "https://trychroma.com",
+  "category": "databases",
+  "description": "Embedding database for AI applications.",
+  "open_source": true,
+  "repo": "https://github.com/chroma-core/chroma",
+  "logo": "chroma.png"
+}

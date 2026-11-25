@@ -1,0 +1,9 @@
+{
+  "name": "Grok",
+  "url": "https://grok.com/",
+  "category": "chat-assistants",
+  "description": "An AI assistant with access to information from the web and X.",
+  "open_source": false,
+  "x": "grok",
+  "logo": "grok.png"
+}

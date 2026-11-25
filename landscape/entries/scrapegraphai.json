@@ -1,0 +1,9 @@
+{
+  "name": "ScrapeGraphAI",
+  "url": "https://scrapegraphai.com",
+  "category": "search",
+  "description": "Scraping library that uses language models.",
+  "open_source": true,
+  "repo": "https://github.com/ScrapeGraphAI/Scrapegraph-ai",
+  "logo": "scrapegraphai.png"
+}

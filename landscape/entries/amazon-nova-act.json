@@ -1,0 +1,8 @@
+{
+  "name": "Amazon Nova Act",
+  "url": "https://nova.amazon.com/act",
+  "category": "browser-infra",
+  "description": "Agent SDK for actions in a web browser.",
+  "open_source": false,
+  "logo": "amazon-nova-act.png"
+}

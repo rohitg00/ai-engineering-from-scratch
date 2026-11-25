@@ -151,3 +151,6 @@ manuals/*/capture/demos/**/*.db
 .project-validation/
 projects/*/solution/output/
 projects/*/solution/demo-output/
+
+site/landscape-data.js
+site/landscape-logos-*.bin

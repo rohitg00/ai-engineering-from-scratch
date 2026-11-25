@@ -1,0 +1,9 @@
+{
+  "name": "Qdrant",
+  "url": "https://qdrant.tech",
+  "category": "databases",
+  "description": "Vector database and similarity search engine written in Rust.",
+  "open_source": true,
+  "repo": "https://github.com/qdrant/qdrant",
+  "logo": "qdrant.png"
+}

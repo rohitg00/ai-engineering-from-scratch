@@ -1,0 +1,9 @@
+{
+  "name": "Windmill",
+  "url": "https://windmill.dev",
+  "category": "orchestration",
+  "description": "Turns scripts into workflows and internal tools.",
+  "open_source": true,
+  "repo": "https://github.com/windmill-labs/windmill",
+  "logo": "windmill.png"
+}

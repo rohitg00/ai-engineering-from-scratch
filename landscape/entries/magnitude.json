@@ -1,0 +1,9 @@
+{
+  "name": "Magnitude",
+  "url": "https://magnitude.run",
+  "category": "browser-infra",
+  "description": "Vision-first browser agent.",
+  "open_source": true,
+  "repo": "https://github.com/magnitudedev/browser-agent",
+  "logo": "magnitude.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "1Helm",
+  "url": "https://1helm.com/",
+  "category": "personal-assistants",
+  "description": "Assistant with its own browser for bookings, shopping and forms.",
+  "open_source": false,
+  "x": "1helmcloud",
+  "logo": "1helm.png"
+}

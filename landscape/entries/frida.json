@@ -1,0 +1,8 @@
+{
+  "name": "Frida",
+  "url": "https://frida.chat/",
+  "category": "personal-assistants",
+  "description": "A personal AI agent accessed through chat.",
+  "open_source": false,
+  "logo": "frida.png"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Cline",
+  "url": "https://cline.bot",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Coding agent that runs inside the editor.",
+  "open_source": true,
+  "repo": "https://github.com/cline/cline",
+  "logo": "cline.png"
+}

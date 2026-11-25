@@ -1,0 +1,12 @@
+{
+  "name": "Goose",
+  "url": "https://block.github.io/goose",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Local agent that automates engineering tasks.",
+  "open_source": true,
+  "repo": "https://github.com/block/goose",
+  "logo": "goose.png"
+}

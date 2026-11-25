@@ -1,0 +1,9 @@
+{
+  "name": "Cal.com",
+  "url": "https://cal.com",
+  "category": "messaging",
+  "description": "Scheduling infrastructure.",
+  "open_source": true,
+  "repo": "https://github.com/calcom/cal.com",
+  "logo": "cal-com.png"
+}

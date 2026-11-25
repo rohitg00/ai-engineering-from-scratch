@@ -1,0 +1,9 @@
+{
+  "name": "Better Auth",
+  "url": "https://better-auth.com",
+  "category": "identity",
+  "description": "Authentication framework for TypeScript.",
+  "open_source": true,
+  "repo": "https://github.com/better-auth/better-auth",
+  "logo": "better-auth.png"
+}

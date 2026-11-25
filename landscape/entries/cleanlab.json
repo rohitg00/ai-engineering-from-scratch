@@ -1,0 +1,9 @@
+{
+  "name": "Cleanlab",
+  "url": "https://cleanlab.ai",
+  "category": "data",
+  "description": "Finds label errors and data quality issues.",
+  "open_source": true,
+  "repo": "https://github.com/cleanlab/cleanlab",
+  "logo": "cleanlab.png"
+}

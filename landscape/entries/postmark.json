@@ -1,0 +1,8 @@
+{
+  "name": "Postmark",
+  "url": "https://postmarkapp.com",
+  "category": "messaging",
+  "description": "Transactional email delivery.",
+  "open_source": false,
+  "logo": "postmark.png"
+}

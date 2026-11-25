@@ -1,0 +1,9 @@
+{
+  "name": "Evidently",
+  "url": "https://evidentlyai.com",
+  "category": "evaluation",
+  "description": "Evaluation and monitoring for ML and LLM systems.",
+  "open_source": true,
+  "repo": "https://github.com/evidentlyai/evidently",
+  "logo": "evidently.png"
+}

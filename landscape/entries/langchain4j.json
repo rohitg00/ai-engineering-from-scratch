@@ -1,0 +1,9 @@
+{
+  "name": "LangChain4j",
+  "url": "https://docs.langchain4j.dev",
+  "category": "agents",
+  "description": "Java library for model applications.",
+  "open_source": true,
+  "repo": "https://github.com/langchain4j/langchain4j",
+  "logo": "langchain4j.png"
+}

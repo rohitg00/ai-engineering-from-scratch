@@ -1,0 +1,9 @@
+{
+  "name": "MLC LLM",
+  "url": "https://llm.mlc.ai",
+  "category": "inference",
+  "description": "Compiler and runtime that deploys models to many devices.",
+  "open_source": true,
+  "repo": "https://github.com/mlc-ai/mlc-llm",
+  "logo": "mlc-llm.png"
+}

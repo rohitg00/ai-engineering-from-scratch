@@ -1,0 +1,9 @@
+{
+  "name": "Kata Containers",
+  "url": "https://katacontainers.io",
+  "category": "sandboxes",
+  "description": "Containers that run in lightweight virtual machines.",
+  "open_source": true,
+  "repo": "https://github.com/kata-containers/kata-containers",
+  "logo": "kata-containers.png"
+}

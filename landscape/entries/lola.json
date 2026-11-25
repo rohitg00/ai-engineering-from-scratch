@@ -1,0 +1,9 @@
+{
+  "name": "Lola",
+  "url": "https://lola.com/",
+  "category": "travel-agents",
+  "description": "AI assistant for experiences, find hotels and restaurants, and book them.",
+  "open_source": false,
+  "x": "lolainsiders",
+  "logo": "lola.png"
+}

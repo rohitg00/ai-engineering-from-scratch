@@ -20,7 +20,7 @@
     'how-to-learn.html', 'skills.html', 'catalog.html', 'learning-paths.html', 'index.html#contents',
     'roadmap.html', 'projects.html', 'practice.html', 'interviews.html', 'manuals.html',
     'cheatsheets.html', 'highlights.html', 'glossary.html', 'index.html#books', 'certifications.html',
-    'blogs.html', 'whats-new.html', 'about.html', 'sponsors.html'
+    'blogs.html', 'landscape.html', 'whats-new.html', 'about.html', 'sponsors.html'
   ];
   var TAB_ITEMS = [
     { href: 'catalog.html', label: 'Learn', icon: 'M3 4h7v16H3zM14 4h7v16h-7z' },
@@ -72,7 +72,7 @@
     var boundary = href.search(/[?#]/);
     var pathname = boundary < 0 ? href : href.slice(0, boundary);
     var suffix = boundary < 0 ? '' : href.slice(boundary);
-    var pages = '(index|about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|certification|assessment|lesson|blogs|manuals|manual-[a-z0-9-]+|inside-an-ai-agent|inside-a-decompiler|inside-an-llm-serving-gpu|skills|how-to-learn|highlights|whats-new)';
+    var pages = '(index|about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|certification|assessment|lesson|blogs|manuals|manual-[a-z0-9-]+|inside-an-ai-agent|inside-a-decompiler|inside-an-llm-serving-gpu|skills|how-to-learn|highlights|whats-new|landscape)';
     if (isStaticPreview(locationValue)) {
       return pathname.replace(new RegExp('(^|/)' + pages + '$'), '$1$2.html') + suffix;
     }
@@ -325,6 +325,7 @@
     ensureNavigationLink(nav, 'skills.html', 'Skills', '');
     ensureNavigationLink(nav, 'highlights.html', 'My Highlights', '');
     ensureNavigationLink(nav, '/blogs', 'Blogs & Guides', '');
+    ensureNavigationLink(nav, 'landscape.html', 'Landscape', '');
     ensureNavigationLink(nav, '/whats-new', "What's New", '');
     ensureNavigationLink(nav, 'certifications.html', 'Certifications', 'header-mobile-only');
     ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');

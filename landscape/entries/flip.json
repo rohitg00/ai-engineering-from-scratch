@@ -1,0 +1,9 @@
+{
+  "name": "Flip",
+  "url": "https://fliptexts.com/",
+  "category": "finance-agents",
+  "description": "A personal money-management assistant in iMessage.",
+  "open_source": false,
+  "x": "fliptexts",
+  "logo": "flip.png"
+}

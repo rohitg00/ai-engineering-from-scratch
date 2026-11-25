@@ -1,0 +1,9 @@
+{
+  "name": "OpenFGA",
+  "url": "https://openfga.dev",
+  "category": "identity",
+  "description": "Fine-grained authorization system.",
+  "open_source": true,
+  "repo": "https://github.com/openfga/openfga",
+  "logo": "openfga.png"
+}

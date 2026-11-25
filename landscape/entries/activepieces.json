@@ -1,0 +1,9 @@
+{
+  "name": "Activepieces",
+  "url": "https://activepieces.com",
+  "category": "agent-platforms",
+  "description": "Automation tool with AI agents and many connectors.",
+  "open_source": true,
+  "repo": "https://github.com/activepieces/activepieces",
+  "logo": "activepieces.png"
+}

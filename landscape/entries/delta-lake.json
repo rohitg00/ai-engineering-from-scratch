@@ -1,0 +1,9 @@
+{
+  "name": "Delta Lake",
+  "url": "https://delta.io",
+  "category": "data-platforms",
+  "description": "Storage framework for lakehouse tables.",
+  "open_source": true,
+  "repo": "https://github.com/delta-io/delta",
+  "logo": "delta-lake.png"
+}

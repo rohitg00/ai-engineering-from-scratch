@@ -1,0 +1,9 @@
+{
+  "name": "Kestra",
+  "url": "https://kestra.io",
+  "category": "orchestration",
+  "description": "Declarative orchestration platform.",
+  "open_source": true,
+  "repo": "https://github.com/kestra-io/kestra",
+  "logo": "kestra.png"
+}

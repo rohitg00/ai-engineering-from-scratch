@@ -1,0 +1,9 @@
+{
+  "name": "Guidance",
+  "url": "https://github.com/guidance-ai/guidance",
+  "category": "agents",
+  "description": "Language for controlling model output.",
+  "open_source": true,
+  "repo": "https://github.com/guidance-ai/guidance",
+  "logo": "guidance.png"
+}

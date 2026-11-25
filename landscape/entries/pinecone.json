@@ -1,0 +1,8 @@
+{
+  "name": "Pinecone",
+  "url": "https://pinecone.io",
+  "category": "databases",
+  "description": "Managed vector database.",
+  "open_source": false,
+  "logo": "pinecone.png"
+}

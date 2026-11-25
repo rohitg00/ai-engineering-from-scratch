@@ -1,0 +1,9 @@
+{
+  "name": "Anchor Browser",
+  "url": "https://anchorbrowser.io/",
+  "category": "browser-infra",
+  "description": "Cloud browser infrastructure for AI agents, with managed authentication and isolated browser sessions.",
+  "open_source": false,
+  "x": "AnchorBrowser",
+  "logo": "anchor-browser.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "MemMachine",
+  "url": "https://memmachine.ai",
+  "category": "memory",
+  "description": "Memory layer for agents.",
+  "open_source": true,
+  "repo": "https://github.com/MemMachine/MemMachine",
+  "logo": "memmachine.png"
+}

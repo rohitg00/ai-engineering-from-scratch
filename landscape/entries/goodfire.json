@@ -1,0 +1,8 @@
+{
+  "name": "Goodfire",
+  "url": "https://goodfire.ai",
+  "category": "interpretability",
+  "description": "Interpretability research and tools for model internals.",
+  "open_source": false,
+  "logo": "goodfire.png"
+}

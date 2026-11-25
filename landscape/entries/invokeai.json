@@ -1,0 +1,9 @@
+{
+  "name": "InvokeAI",
+  "url": "https://invoke.ai",
+  "category": "media",
+  "description": "Creative engine for Stable Diffusion models.",
+  "open_source": true,
+  "repo": "https://github.com/invoke-ai/InvokeAI",
+  "logo": "invokeai.png"
+}

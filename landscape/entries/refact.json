@@ -1,0 +1,9 @@
+{
+  "name": "Refact",
+  "url": "https://refact.ai",
+  "category": "coding",
+  "description": "Coding agent with self-hosting support.",
+  "open_source": true,
+  "repo": "https://github.com/smallcloudai/refact",
+  "logo": "refact.png"
+}

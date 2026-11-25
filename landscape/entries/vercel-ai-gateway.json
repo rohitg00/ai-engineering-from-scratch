@@ -1,0 +1,8 @@
+{
+  "name": "Vercel AI Gateway",
+  "url": "https://vercel.com/ai-gateway",
+  "category": "gateways",
+  "description": "One endpoint for many model providers with spend controls.",
+  "open_source": false,
+  "logo": "vercel-ai-gateway.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Union",
+  "url": "https://union.ai",
+  "category": "orchestration",
+  "description": "Managed Flyte for AI workflow orchestration.",
+  "open_source": false,
+  "logo": "union.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Boski",
+  "url": "https://boski.com/",
+  "category": "personal-assistants",
+  "description": "A personal assistant accessed through text messages.",
+  "open_source": false,
+  "x": "boski",
+  "logo": "boski.png"
+}

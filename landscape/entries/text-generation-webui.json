@@ -1,0 +1,9 @@
+{
+  "name": "text-generation-webui",
+  "url": "https://github.com/oobabooga/text-generation-webui",
+  "category": "inference",
+  "description": "Web interface for running local language models.",
+  "open_source": true,
+  "repo": "https://github.com/oobabooga/text-generation-webui",
+  "logo": "text-generation-webui.png"
+}

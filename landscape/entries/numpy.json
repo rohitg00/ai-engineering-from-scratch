@@ -1,0 +1,9 @@
+{
+  "name": "NumPy",
+  "url": "https://numpy.org",
+  "category": "data-platforms",
+  "description": "Array computing library for Python.",
+  "open_source": true,
+  "repo": "https://github.com/numpy/numpy",
+  "logo": "numpy.png"
+}

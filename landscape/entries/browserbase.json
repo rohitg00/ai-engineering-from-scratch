@@ -1,0 +1,9 @@
+{
+  "name": "Browserbase",
+  "url": "https://www.browserbase.com/",
+  "category": "browser-infra",
+  "description": "Headless browsers in the cloud for agents that need to use the web.",
+  "open_source": false,
+  "x": "browserbase",
+  "logo": "browserbase.png"
+}

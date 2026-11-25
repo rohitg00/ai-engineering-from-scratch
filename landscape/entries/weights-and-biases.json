@@ -1,0 +1,8 @@
+{
+  "name": "Weights & Biases",
+  "url": "https://wandb.ai",
+  "category": "tracking",
+  "description": "Hosted experiment tracking, model registry and evaluation tools.",
+  "open_source": false,
+  "logo": "weights-and-biases.png"
+}

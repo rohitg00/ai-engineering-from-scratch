@@ -1,0 +1,8 @@
+{
+  "name": "OpenRouter",
+  "url": "https://openrouter.ai",
+  "category": "gateways",
+  "description": "One API that routes requests to models from many providers.",
+  "open_source": false,
+  "logo": "openrouter.png"
+}

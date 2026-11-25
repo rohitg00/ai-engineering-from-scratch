@@ -1,0 +1,9 @@
+{
+  "name": "Onyx",
+  "url": "https://onyx.app",
+  "category": "builders",
+  "description": "Chat and search over company knowledge.",
+  "open_source": true,
+  "repo": "https://github.com/onyx-dot-app/onyx",
+  "logo": "onyx.png"
+}

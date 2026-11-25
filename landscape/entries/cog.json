@@ -1,0 +1,9 @@
+{
+  "name": "Cog",
+  "url": "https://cog.run",
+  "category": "inference",
+  "description": "Packages a model into a container with a standard API.",
+  "open_source": true,
+  "repo": "https://github.com/replicate/cog",
+  "logo": "cog.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "TransformerLens",
+  "url": "https://transformerlensorg.github.io/TransformerLens",
+  "category": "interpretability",
+  "description": "Library for mechanistic interpretability of language models.",
+  "open_source": true,
+  "repo": "https://github.com/TransformerLensOrg/TransformerLens",
+  "logo": "transformerlens.png"
+}

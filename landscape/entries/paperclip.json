@@ -1,0 +1,9 @@
+{
+  "name": "Paperclip",
+  "url": "https://paperclip.ing",
+  "category": "orchestrators",
+  "description": "Orchestration for teams of agents that run a company.",
+  "open_source": true,
+  "repo": "https://github.com/paperclipai/paperclip",
+  "logo": "paperclip.png"
+}

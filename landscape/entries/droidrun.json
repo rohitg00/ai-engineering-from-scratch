@@ -1,0 +1,10 @@
+{
+  "name": "droidrun",
+  "url": "https://droidrun.ai/",
+  "category": "computers",
+  "description": "The phone layer for AI agents.",
+  "open_source": true,
+  "repo": "https://github.com/droidrun/droidrun",
+  "x": "droid_run",
+  "logo": "droidrun.png"
+}

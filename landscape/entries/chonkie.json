@@ -1,0 +1,9 @@
+{
+  "name": "Chonkie",
+  "url": "https://chonkie.ai",
+  "category": "rag",
+  "description": "Library for chunking text.",
+  "open_source": true,
+  "repo": "https://github.com/chonkie-inc/chonkie",
+  "logo": "chonkie.png"
+}

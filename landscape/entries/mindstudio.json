@@ -1,0 +1,8 @@
+{
+  "name": "MindStudio",
+  "url": "https://mindstudio.ai",
+  "category": "agent-platforms",
+  "description": "No-code builder for AI agents.",
+  "open_source": false,
+  "logo": "mindstudio.png"
+}

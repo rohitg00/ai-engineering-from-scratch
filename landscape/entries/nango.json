@@ -1,0 +1,10 @@
+{
+  "name": "Nango",
+  "url": "https://www.nango.dev/",
+  "category": "connectors",
+  "description": "API integrations for AI agents.",
+  "open_source": true,
+  "repo": "https://github.com/NangoHQ/nango",
+  "x": "nangohq",
+  "logo": "nango.png"
+}

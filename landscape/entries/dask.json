@@ -1,0 +1,9 @@
+{
+  "name": "Dask",
+  "url": "https://dask.org",
+  "category": "data-platforms",
+  "description": "Parallel computing library for Python.",
+  "open_source": true,
+  "repo": "https://github.com/dask/dask",
+  "logo": "dask.png"
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Engineering Landscape - AI Engineering from Scratch</title>
+  <meta name="description" content="An open map of the tools AI engineers build with, open source and closed source, grouped by job and linked to the lessons that teach each one. Add your tool with one pull request.">
+  <link rel="canonical" href="https://aiengineeringfromscratch.com/landscape.html">
+  <link rel="alternate" type="text/markdown" href="https://aiengineeringfromscratch.com/llms.txt">
+  <meta property="og:title" content="AI Engineering Landscape · AI Engineering from Scratch">
+  <meta property="og:description" content="An open map of AI engineering tools, open and closed source. Add yours with one pull request.">
+  <meta property="og:image" content="https://aiengineeringfromscratch.com/og/page/landscape.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AI Engineering Landscape - AI Engineering from Scratch">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og/page/landscape.png">
+  <meta name="twitter:image:alt" content="AI Engineering Landscape - AI Engineering from Scratch">
+  <meta property="og:url" content="https://aiengineeringfromscratch.com/landscape.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:title" content="AI Engineering Landscape · AI Engineering from Scratch">
+  <meta name="twitter:description" content="An open map of AI engineering tools, open and closed source. Add yours with one pull request.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261015a">
+  <link rel="stylesheet" href="landscape.css">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body class="ls-body">
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#contents">Contents</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="about.html">About</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span>
+        </a>
+      </nav>
+      <button class="search-toggle" type="button" data-cmd-palette
+        aria-label="Search (⌘K)" title="Search (⌘K)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+        <span class="theme-icon" id="themeIcon">N</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="ls-main" id="main">
+    <article class="ls-page">
+      <div class="ls-hero">
+        <div class="ls-hero-top">
+          <div class="ls-hero-copy">
+            <div class="ls-eyebrow">Landscape · open data in <a href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/landscape" target="_blank" rel="noopener">landscape/</a></div>
+            <h1>AI Engineering Landscape</h1>
+            <p class="ls-lede">The tools AI engineers build with, open source and closed source, grouped by the job each one does. Select a tool for details.</p>
+          </div>
+          <div class="ls-actions">
+            <a class="ls-button ls-button-primary" href="#add">Add your tool</a>
+            <a class="ls-button" href="#rules">Listing rules</a>
+          </div>
+        </div>
+        <div class="ls-band">
+          <dl class="ls-stat" id="landscapeStat"></dl>
+          <aside class="ls-promo" aria-labelledby="promoTitle">
+            <div class="ls-promo-copy">
+              <div class="ls-promo-eyebrow">Free map, maintained by</div>
+              <h2 id="promoTitle">AI Engineering from Scratch</h2>
+              <p>The open source course that teaches you to build what is on this map by hand. <strong><span id="promoLessons">500+</span> lessons</strong>, <strong><span id="promoPhases">20</span> phases</strong>, free.</p>
+            </div>
+            <div class="ls-promo-actions">
+              <a class="ls-button ls-button-star" href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"/></svg>
+                Star on GitHub
+                <span class="ls-star-count" data-gh-stars="rohitg00/ai-engineering-from-scratch" data-loading="true"></span>
+              </a>
+              <a class="ls-button" href="catalog.html">Start the course</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div class="ls-toolbar">
+        <input class="ls-search" id="landscapeSearch" type="search" placeholder="Search tools" aria-label="Search tools">
+        <div class="ls-chips" id="landscapeCategories"></div>
+        <div class="ls-segment" role="group" aria-label="License">
+          <button type="button" data-license="all" aria-pressed="true">All</button>
+          <button type="button" data-license="open" aria-pressed="false">Open source</button>
+          <button type="button" data-license="closed" aria-pressed="false">Closed source</button>
+        </div>
+        <div class="ls-segment" role="group" aria-label="View">
+          <button type="button" data-view="grid" aria-pressed="true">Grid</button>
+          <button type="button" data-view="card" aria-pressed="false">Card</button>
+        </div>
+        <div class="ls-segment ls-zoom" role="group" aria-label="Zoom">
+          <button type="button" id="zoomOut" aria-label="Smaller tiles">&minus;</button>
+          <button type="button" id="zoomIn" aria-label="Larger tiles">+</button>
+        </div>
+        <span class="ls-count" id="landscapeCount" aria-live="polite"></span>
+      </div>
+      <div class="ls-grid" id="landscapeGrid" data-view="grid"></div>
+
+      <section class="ls-add" id="add">
+        <h2>Add your tool</h2>
+        <p>Listing is free. Fill in the form, then GitHub opens with your entry ready to submit as a pull request. You do not need to clone the repository or write JSON.</p>
+        <div class="ls-add-layout">
+          <form id="addForm" novalidate>
+            <div class="ls-row">
+              <div class="ls-field">
+                <label for="addName">Tool name</label>
+                <input id="addName" type="text" maxlength="60" autocomplete="off" placeholder="Acme Evals">
+              </div>
+              <div class="ls-field">
+                <label for="addUrl">Website</label>
+                <input id="addUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://acme.dev">
+              </div>
+            </div>
+            <div class="ls-field">
+              <label for="addCategory">Category</label>
+              <select id="addCategory"></select>
+            </div>
+            <div class="ls-field">
+              <label for="addDescription">What it does, in one sentence</label>
+              <textarea id="addDescription" rows="2" maxlength="200" placeholder="Runs evaluation suites against model outputs and reports regressions."></textarea>
+              <span class="ls-hint"><span id="addCounter">0 / 200</span> · plain description, ends with a period</span>
+            </div>
+            <div class="ls-field ls-check">
+              <input id="addOpenSource" type="checkbox">
+              <label for="addOpenSource">This tool is open source</label>
+            </div>
+            <div class="ls-field" id="addRepoRow" hidden>
+              <label for="addRepo">Source repository</label>
+              <input id="addRepo" type="url" autocomplete="off" placeholder="https://github.com/acme/evals">
+            </div>
+            <div class="ls-row">
+              <div class="ls-field">
+                <label for="addLogoUrl">Link to your logo (SVG or PNG)</label>
+                <input id="addLogoUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://acme.dev/logo.svg">
+                <span class="ls-hint">Copied into the repository after merge. No upload.</span>
+              </div>
+              <div class="ls-field">
+                <label for="addX">X account (optional)</label>
+                <input id="addX" type="text" maxlength="60" autocomplete="off" autocapitalize="off" placeholder="@acme">
+              </div>
+            </div>
+            <ul class="ls-errors" id="addErrors" aria-live="polite"></ul>
+            <a class="ls-button ls-button-primary" id="addSubmit" href="#add" target="_blank" rel="noopener" aria-disabled="true">Open pull request on GitHub</a>
+          </form>
+          <div>
+            <div class="ls-field-label">Your entry</div>
+            <div class="ls-preview-path" id="addPath"></div>
+            <pre class="ls-preview" id="addPreview"></pre>
+            <div class="ls-actions">
+              <button class="ls-button" id="addCopy" type="button">Copy JSON</button>
+              <button class="ls-button" id="addPrompt" type="button">Copy prompt for your agent</button>
+            </div>
+            <p class="ls-hint">Use a coding agent? Copy the prompt and paste it into the agent. It adds the entry and opens the pull request for you.</p>
+            <ol class="ls-steps">
+              <li>Select <strong>Open pull request on GitHub</strong>. GitHub opens the new file with your entry filled in.</li>
+              <li>Select <strong>Commit changes</strong>, then <strong>Create pull request</strong>. GitHub makes the fork for you.</li>
+              <li>An automated check reads the entry and reports any problem in plain words. A maintainer merges valid entries within 7 days.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="ls-rules" id="rules">
+        <h2>Listing rules</h2>
+        <ul>
+          <li>Open source tools need a public repository with 2,500 or more stars. Closed source tools need a live product on their own domain and public documentation.</li>
+          <li>One entry per tool, in the one category where it fits best.</li>
+          <li>The description says what the tool does in one plain sentence. No rankings, no claims.</li>
+          <li>Someone who works on the tool submits it, or a maintainer adds it.</li>
+          <li>Listing is free and is separate from <a href="sponsors.html">sponsorship</a>. Sponsors of the course are shown at a larger size and marked as sponsors. Links carry <code>rel="nofollow"</code>.</li>
+          <li>Entries with no release or commit for 12 months are removed.</li>
+        </ul>
+        <p>Not on GitHub? <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new?template=landscape_tool.yml" target="_blank" rel="noopener">Send the details in an issue</a> and a maintainer adds the entry. The full guide is in <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/landscape/README.md" target="_blank" rel="noopener">landscape/README.md</a>. Logos are trademarks of their owners.</p>
+      </section>
+    </article>
+  </main>
+
+  <dialog class="ls-detail" id="landscapeDetail" aria-labelledby="detailName">
+    <div class="ls-detail-inner">
+      <button class="ls-detail-close" id="detailClose" type="button" aria-label="Close">&times;</button>
+      <div class="ls-detail-head">
+        <span class="ls-detail-logo" id="detailLogo"></span>
+        <div>
+          <h2 id="detailName"></h2>
+          <div class="ls-detail-badges" id="detailBadges"></div>
+        </div>
+      </div>
+      <p class="ls-detail-description" id="detailDescription"></p>
+      <dl class="ls-detail-list" id="detailList"></dl>
+      <div class="ls-detail-actions">
+        <a class="ls-button ls-button-primary" id="detailVisit" href="#" target="_blank" rel="nofollow noopener">Visit website</a>
+        <a class="ls-button" id="detailEdit" href="#" target="_blank" rel="noopener">Edit this entry</a>
+      </div>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 · open source · free forever</p>
+      <div class="footer-links">
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
+        <a href="about.html">About</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="sponsors.html">Sponsor us</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://aiengineeringfromscratch.com/landscape.html#page",
+    "url": "https://aiengineeringfromscratch.com/landscape.html",
+    "name": "AI Engineering Landscape",
+    "description": "An open map of the tools AI engineers build with, open source and closed source, grouped by job and linked to the lessons that teach each one. Add your tool with one pull request.",
+    "isPartOf": { "@id": "https://aiengineeringfromscratch.com/#website" }
+  }
+  </script>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var stored = '';
+      try { stored = localStorage.getItem('theme') || ''; } catch (_) {}
+      if (stored) {
+        root.setAttribute('data-theme', stored);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        root.setAttribute('data-theme', 'dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
+      }
+
+      function updateIcon() {
+        var icon = document.getElementById('themeIcon');
+        if (!icon) return;
+        icon.textContent = root.getAttribute('data-theme') === 'light' ? 'N' : 'D';
+      }
+
+
+      updateIcon();
+
+      document.addEventListener('DOMContentLoaded', function () {
+        updateIcon();
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+          btn.addEventListener('click', function () {
+            var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            root.setAttribute('data-theme', next);
+            try { localStorage.setItem('theme', next); } catch (_) {}
+            updateIcon();
+          });
+        }
+      });
+    })();
+  </script>
+  <script src="landscape-data.js"></script>
+  <script src="landscape-rules.js"></script>
+  <script src="landscape.js" defer></script>
+  <script src="data.js?v=20260821c"></script>
+  <script src="progress.js?v=20260822a"></script>
+  <script src="header.js?v=20261118a" defer></script>
+  <script src="cmdpalette.js?v=20261103a" defer></script>
+  <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
+</body>
+</html>

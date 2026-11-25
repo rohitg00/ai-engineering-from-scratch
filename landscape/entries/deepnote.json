@@ -1,0 +1,9 @@
+{
+  "name": "Deepnote",
+  "url": "https://deepnote.com",
+  "category": "notebooks",
+  "description": "Collaborative data notebooks.",
+  "open_source": true,
+  "repo": "https://github.com/deepnote/deepnote",
+  "logo": "deepnote.png"
+}

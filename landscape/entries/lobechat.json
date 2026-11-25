@@ -1,0 +1,9 @@
+{
+  "name": "LobeChat",
+  "url": "https://lobehub.com",
+  "category": "builders",
+  "description": "Chat framework with plugins and many providers.",
+  "open_source": true,
+  "repo": "https://github.com/lobehub/lobe-chat",
+  "logo": "lobechat.png"
+}

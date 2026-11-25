@@ -1,0 +1,8 @@
+{
+  "name": "Fluidstack",
+  "url": "https://fluidstack.io",
+  "category": "gpu-clouds",
+  "description": "Large GPU clusters for AI labs and enterprises.",
+  "open_source": false,
+  "logo": "fluidstack.png"
+}

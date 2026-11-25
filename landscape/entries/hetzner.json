@@ -1,0 +1,8 @@
+{
+  "name": "Hetzner",
+  "url": "https://hetzner.com",
+  "category": "hosting",
+  "description": "European cloud and dedicated servers.",
+  "open_source": false,
+  "logo": "hetzner.png"
+}

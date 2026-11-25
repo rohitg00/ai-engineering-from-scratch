@@ -1,0 +1,9 @@
+{
+  "name": "Ollama",
+  "url": "https://ollama.com",
+  "category": "inference",
+  "description": "Runs open-weight language models on a local machine behind a simple API.",
+  "open_source": true,
+  "repo": "https://github.com/ollama/ollama",
+  "logo": "ollama.png"
+}

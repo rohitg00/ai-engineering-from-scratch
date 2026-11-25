@@ -1,0 +1,8 @@
+{
+  "name": "FriendliAI",
+  "url": "https://friendli.ai",
+  "category": "inference-providers",
+  "description": "Inference engine and endpoints for generative models.",
+  "open_source": false,
+  "logo": "friendliai.png"
+}

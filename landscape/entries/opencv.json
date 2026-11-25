@@ -1,0 +1,9 @@
+{
+  "name": "OpenCV",
+  "url": "https://opencv.org",
+  "category": "media",
+  "description": "Computer vision library.",
+  "open_source": true,
+  "repo": "https://github.com/opencv/opencv",
+  "logo": "opencv.png"
+}

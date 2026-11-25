@@ -1,0 +1,9 @@
+{
+  "name": "GraphRAG",
+  "url": "https://microsoft.github.io/graphrag",
+  "category": "rag",
+  "description": "Graph-based retrieval over private text.",
+  "open_source": true,
+  "repo": "https://github.com/microsoft/graphrag",
+  "logo": "graphrag.png"
+}

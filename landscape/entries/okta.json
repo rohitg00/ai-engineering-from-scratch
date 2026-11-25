@@ -1,0 +1,8 @@
+{
+  "name": "Okta",
+  "url": "https://okta.com",
+  "category": "identity",
+  "description": "Identity platform for workforce and customers.",
+  "open_source": false,
+  "logo": "okta.png"
+}

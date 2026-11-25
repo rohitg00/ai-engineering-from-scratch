@@ -1,0 +1,9 @@
+{
+  "name": "Rye",
+  "url": "https://rye.com/",
+  "category": "commerce",
+  "description": "Checkout infrastructure for shopping agents.",
+  "open_source": false,
+  "x": "rye",
+  "logo": "rye.png"
+}

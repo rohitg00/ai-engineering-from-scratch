@@ -1,0 +1,9 @@
+{
+  "name": "Semantic Kernel",
+  "url": "https://learn.microsoft.com/semantic-kernel",
+  "category": "agents",
+  "description": "SDK for adding models and agents to applications.",
+  "open_source": true,
+  "repo": "https://github.com/microsoft/semantic-kernel",
+  "logo": "semantic-kernel.png"
+}

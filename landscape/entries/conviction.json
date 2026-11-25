@@ -1,0 +1,9 @@
+{
+  "name": "Conviction",
+  "url": "https://www.convictiontrade.ai/",
+  "category": "finance-agents",
+  "description": "Describe a trading idea; an AI agent backtests it, monitors the market and trades.",
+  "open_source": false,
+  "x": "tryconviction",
+  "logo": "conviction.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Bifrost",
+  "url": "https://getmaxim.ai/bifrost",
+  "category": "gateways",
+  "description": "Gateway for model providers written in Go.",
+  "open_source": true,
+  "repo": "https://github.com/maximhq/bifrost",
+  "logo": "bifrost.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "GPT4All",
+  "url": "https://nomic.ai/gpt4all",
+  "category": "inference",
+  "description": "Desktop app and library for local model chat.",
+  "open_source": true,
+  "repo": "https://github.com/nomic-ai/gpt4all",
+  "logo": "gpt4all.png"
+}

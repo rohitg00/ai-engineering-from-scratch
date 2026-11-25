@@ -1,0 +1,9 @@
+{
+  "name": "Crawlee",
+  "url": "https://crawlee.dev",
+  "category": "search",
+  "description": "Web scraping and browser automation library.",
+  "open_source": true,
+  "repo": "https://github.com/apify/crawlee",
+  "logo": "crawlee.png"
+}

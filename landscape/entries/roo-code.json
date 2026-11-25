@@ -1,0 +1,12 @@
+{
+  "name": "Roo Code",
+  "url": "https://roocode.com",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Editor coding agent with custom modes.",
+  "open_source": true,
+  "repo": "https://github.com/RooCodeInc/Roo-Code",
+  "logo": "roo-code.png"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "AutoGPT",
+  "url": "https://agpt.co/",
+  "category": "open-assistants",
+  "description": "An open-source platform for building and running agents.",
+  "open_source": true,
+  "repo": "https://github.com/Significant-Gravitas/AutoGPT",
+  "x": "Auto_GPT",
+  "logo": "autogpt.png"
+}

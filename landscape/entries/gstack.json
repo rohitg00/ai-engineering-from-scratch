@@ -1,0 +1,9 @@
+{
+  "name": "gstack",
+  "url": "https://github.com/garrytan/gstack",
+  "category": "agent-workflows",
+  "description": "Skill pack that gives coding agents planning, review and QA workflows.",
+  "open_source": true,
+  "repo": "https://github.com/garrytan/gstack",
+  "logo": "gstack.png"
+}

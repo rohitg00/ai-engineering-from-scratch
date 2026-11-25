@@ -1,0 +1,9 @@
+{
+  "name": "Prava",
+  "url": "https://prava.space/",
+  "category": "payments",
+  "description": "Payments API for AI agents.",
+  "open_source": false,
+  "x": "pravapayments",
+  "logo": "prava.png"
+}

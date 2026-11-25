@@ -1,0 +1,9 @@
+{
+  "name": "LiveKit",
+  "url": "https://livekit.io",
+  "category": "voice-platforms",
+  "description": "Real-time audio and video infrastructure for agents.",
+  "open_source": true,
+  "repo": "https://github.com/livekit/livekit",
+  "logo": "livekit.png"
+}

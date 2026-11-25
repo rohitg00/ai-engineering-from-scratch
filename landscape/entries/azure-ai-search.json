@@ -1,0 +1,8 @@
+{
+  "name": "Azure AI Search",
+  "url": "https://azure.microsoft.com/products/ai-services/ai-search",
+  "category": "databases",
+  "description": "Managed search with vector and hybrid retrieval.",
+  "open_source": false,
+  "logo": "azure-ai-search.png"
+}

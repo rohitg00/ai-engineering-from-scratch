@@ -1,0 +1,9 @@
+{
+  "name": "SonarQube",
+  "url": "https://sonarsource.com",
+  "category": "review",
+  "description": "Static analysis for code quality and security.",
+  "open_source": true,
+  "repo": "https://github.com/SonarSource/sonarqube",
+  "logo": "sonarqube.png"
+}

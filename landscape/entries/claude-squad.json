@@ -1,0 +1,9 @@
+{
+  "name": "Claude Squad",
+  "url": "https://github.com/smtg-ai/claude-squad",
+  "category": "orchestrators",
+  "description": "Terminal app that manages several coding agents at once.",
+  "open_source": true,
+  "repo": "https://github.com/smtg-ai/claude-squad",
+  "logo": "claude-squad.png"
+}

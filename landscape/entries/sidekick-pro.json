@@ -1,0 +1,9 @@
+{
+  "name": "Sidekick Pro",
+  "url": "https://sidekickpro.com/",
+  "category": "work-assistants",
+  "description": "An agent for completing work tasks.",
+  "open_source": false,
+  "x": "GetSidekickPro",
+  "logo": "sidekick-pro.png"
+}

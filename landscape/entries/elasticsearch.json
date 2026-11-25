@@ -1,0 +1,9 @@
+{
+  "name": "Elasticsearch",
+  "url": "https://elastic.co",
+  "category": "databases",
+  "description": "Search and analytics engine with vector search.",
+  "open_source": true,
+  "repo": "https://github.com/elastic/elasticsearch",
+  "logo": "elasticsearch.png"
+}

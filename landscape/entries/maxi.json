@@ -1,0 +1,8 @@
+{
+  "name": "Maxi",
+  "url": "https://www.usemaxi.app/",
+  "category": "finance-agents",
+  "description": "A personal finance assistant accessed through text messages.",
+  "open_source": false,
+  "logo": "maxi.png"
+}

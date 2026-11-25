@@ -1,0 +1,8 @@
+{
+  "name": "Vast.ai",
+  "url": "https://vast.ai",
+  "category": "gpu-clouds",
+  "description": "Marketplace for renting GPUs from many hosts.",
+  "open_source": false,
+  "logo": "vast-ai.png"
+}

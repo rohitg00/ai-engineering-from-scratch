@@ -1,0 +1,8 @@
+{
+  "name": "Ellipsis",
+  "url": "https://ellipsis.dev",
+  "category": "review",
+  "description": "Agent that reviews code and fixes bugs.",
+  "open_source": false,
+  "logo": "ellipsis.png"
+}

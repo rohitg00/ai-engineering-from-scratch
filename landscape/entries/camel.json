@@ -1,0 +1,9 @@
+{
+  "name": "CAMEL",
+  "url": "https://camel-ai.org",
+  "category": "agents",
+  "description": "Framework for multi-agent research and applications.",
+  "open_source": true,
+  "repo": "https://github.com/camel-ai/camel",
+  "logo": "camel.png"
+}

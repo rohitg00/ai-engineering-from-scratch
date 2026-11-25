@@ -1,0 +1,8 @@
+{
+  "name": "Stitch",
+  "url": "https://stitch.withgoogle.com",
+  "category": "builders",
+  "description": "Generates interface designs and code from prompts.",
+  "open_source": false,
+  "logo": "stitch.png"
+}

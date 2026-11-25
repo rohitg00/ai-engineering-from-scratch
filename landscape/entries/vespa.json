@@ -1,0 +1,9 @@
+{
+  "name": "Vespa",
+  "url": "https://vespa.ai",
+  "category": "databases",
+  "description": "Search and vector engine for large data.",
+  "open_source": true,
+  "repo": "https://github.com/vespa-engine/vespa",
+  "logo": "vespa.png"
+}

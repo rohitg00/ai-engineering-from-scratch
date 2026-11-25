@@ -1,0 +1,9 @@
+{
+  "name": "TruLens",
+  "url": "https://trulens.org",
+  "category": "evaluation",
+  "description": "Evaluation and tracing for agents.",
+  "open_source": true,
+  "repo": "https://github.com/truera/trulens",
+  "logo": "trulens.png"
+}

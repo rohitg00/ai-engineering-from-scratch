@@ -1,0 +1,9 @@
+{
+  "name": "FiftyOne",
+  "url": "https://voxel51.com",
+  "category": "data",
+  "description": "Tool for exploring and curating visual datasets.",
+  "open_source": true,
+  "repo": "https://github.com/voxel51/fiftyone",
+  "logo": "fiftyone.png"
+}

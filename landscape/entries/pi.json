@@ -1,0 +1,12 @@
+{
+  "name": "Pi",
+  "url": "https://pi.dev",
+  "category": "harnesses",
+  "also": [
+    "coding"
+  ],
+  "description": "Minimal terminal coding agent.",
+  "open_source": true,
+  "repo": "https://github.com/earendil-works/pi",
+  "logo": "pi.png"
+}

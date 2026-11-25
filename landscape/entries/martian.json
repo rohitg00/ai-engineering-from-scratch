@@ -1,0 +1,8 @@
+{
+  "name": "Martian",
+  "url": "https://withmartian.com",
+  "category": "gateways",
+  "description": "Model router that selects a model for each request.",
+  "open_source": false,
+  "logo": "martian.png"
+}

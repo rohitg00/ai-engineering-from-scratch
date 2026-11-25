@@ -1,0 +1,9 @@
+{
+  "name": "Spring AI",
+  "url": "https://spring.io/projects/spring-ai",
+  "category": "agents",
+  "description": "Application framework for AI on the JVM.",
+  "open_source": true,
+  "repo": "https://github.com/spring-projects/spring-ai",
+  "logo": "spring-ai.png"
+}

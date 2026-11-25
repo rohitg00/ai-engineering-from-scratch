@@ -1,0 +1,9 @@
+{
+  "name": "Observable",
+  "url": "https://observablehq.com",
+  "category": "notebooks",
+  "description": "Notebooks and tools for data visualization.",
+  "open_source": true,
+  "repo": "https://github.com/observablehq/framework",
+  "logo": "observable.png"
+}

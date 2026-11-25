@@ -1,0 +1,9 @@
+{
+  "name": "Flyte",
+  "url": "https://flyte.org",
+  "category": "orchestration",
+  "description": "Workflow orchestrator for data and ML.",
+  "open_source": true,
+  "repo": "https://github.com/flyteorg/flyte",
+  "logo": "flyte.png"
+}

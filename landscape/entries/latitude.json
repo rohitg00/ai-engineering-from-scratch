@@ -1,0 +1,9 @@
+{
+  "name": "Latitude",
+  "url": "https://latitude.so",
+  "category": "evaluation",
+  "description": "Prompt engineering and evaluation platform.",
+  "open_source": true,
+  "repo": "https://github.com/latitude-dev/latitude-llm",
+  "logo": "latitude.png"
+}

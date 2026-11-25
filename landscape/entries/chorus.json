@@ -1,0 +1,9 @@
+{
+  "name": "Chorus",
+  "url": "https://chorus.com/",
+  "category": "work-assistants",
+  "description": "AI employees for marketing, ops, data, finance and engineering.",
+  "open_source": false,
+  "x": "chorus_agent",
+  "logo": "chorus.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Docker",
+  "url": "https://docker.com",
+  "category": "sandboxes",
+  "description": "Containers and tools for building and running applications.",
+  "open_source": false,
+  "logo": "docker.png"
+}

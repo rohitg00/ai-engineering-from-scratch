@@ -1,0 +1,9 @@
+{
+  "name": "Pyodide",
+  "url": "https://pyodide.org",
+  "category": "sandboxes",
+  "description": "Python runtime for the browser.",
+  "open_source": true,
+  "repo": "https://github.com/pyodide/pyodide",
+  "logo": "pyodide.png"
+}

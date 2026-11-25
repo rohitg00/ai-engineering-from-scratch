@@ -1,0 +1,9 @@
+{
+  "name": "BeeAI",
+  "url": "https://github.com/i-am-bee/beeai-framework",
+  "category": "agents",
+  "description": "Framework for production agents in Python and TypeScript.",
+  "open_source": true,
+  "repo": "https://github.com/i-am-bee/beeai-framework",
+  "logo": "beeai.png"
+}

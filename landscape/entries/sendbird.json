@@ -1,0 +1,8 @@
+{
+  "name": "Sendbird",
+  "url": "https://sendbird.com",
+  "category": "messaging",
+  "description": "Chat, calls and AI agents in apps.",
+  "open_source": false,
+  "logo": "sendbird.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Porter",
+  "url": "https://porter.run",
+  "category": "hosting",
+  "description": "Deploys apps to your own cloud account.",
+  "open_source": false,
+  "logo": "porter.png"
+}

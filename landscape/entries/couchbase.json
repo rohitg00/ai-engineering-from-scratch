@@ -1,0 +1,8 @@
+{
+  "name": "Couchbase",
+  "url": "https://couchbase.com",
+  "category": "databases",
+  "description": "Distributed document database with vector search.",
+  "open_source": false,
+  "logo": "couchbase.png"
+}

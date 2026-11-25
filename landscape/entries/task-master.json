@@ -1,0 +1,9 @@
+{
+  "name": "Task Master",
+  "url": "https://github.com/eyaltoledano/claude-task-master",
+  "category": "agent-workflows",
+  "description": "Task management system that drives coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/eyaltoledano/claude-task-master",
+  "logo": "task-master.png"
+}

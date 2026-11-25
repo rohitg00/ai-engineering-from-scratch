@@ -1,0 +1,9 @@
+{
+  "name": "Fooocus",
+  "url": "https://github.com/lllyasviel/Fooocus",
+  "category": "media",
+  "description": "Image generation software focused on prompting.",
+  "open_source": true,
+  "repo": "https://github.com/lllyasviel/Fooocus",
+  "logo": "fooocus.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "agentgateway",
+  "url": "https://agentgateway.dev",
+  "category": "protocols",
+  "description": "Data plane for agent and MCP traffic.",
+  "open_source": true,
+  "repo": "https://github.com/agentgateway/agentgateway",
+  "logo": "agentgateway.png"
+}

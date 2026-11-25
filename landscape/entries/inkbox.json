@@ -1,0 +1,9 @@
+{
+  "name": "Inkbox",
+  "url": "https://inkbox.ai/",
+  "category": "computers",
+  "description": "A computer for your agents, with email, phone, iMessage and WhatsApp.",
+  "open_source": false,
+  "x": "inkbox_ai",
+  "logo": "inkbox.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "szn",
+  "url": "https://theszn.ai/",
+  "category": "personal-assistants",
+  "description": "An assistant for calls, email, bookings, and follow-up.",
+  "open_source": false,
+  "x": "thesznai",
+  "logo": "szn.png"
+}

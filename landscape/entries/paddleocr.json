@@ -1,0 +1,9 @@
+{
+  "name": "PaddleOCR",
+  "url": "https://paddleocr.ai",
+  "category": "docs",
+  "description": "OCR and document parsing toolkit.",
+  "open_source": true,
+  "repo": "https://github.com/PaddlePaddle/PaddleOCR",
+  "logo": "paddleocr.png"
+}

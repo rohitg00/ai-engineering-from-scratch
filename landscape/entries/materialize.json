@@ -1,0 +1,9 @@
+{
+  "name": "Materialize",
+  "url": "https://materialize.com",
+  "category": "data-platforms",
+  "description": "Live data layer with incremental SQL views.",
+  "open_source": true,
+  "repo": "https://github.com/MaterializeInc/materialize",
+  "logo": "materialize.png"
+}

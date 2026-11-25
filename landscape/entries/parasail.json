@@ -1,0 +1,8 @@
+{
+  "name": "Parasail",
+  "url": "https://parasail.io",
+  "category": "inference-providers",
+  "description": "Inference network for open models on rented GPUs.",
+  "open_source": false,
+  "logo": "parasail.png"
+}

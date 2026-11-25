@@ -1,0 +1,9 @@
+{
+  "name": "Milvus",
+  "url": "https://milvus.io",
+  "category": "databases",
+  "description": "Vector database built for similarity search at large scale.",
+  "open_source": true,
+  "repo": "https://github.com/milvus-io/milvus",
+  "logo": "milvus.svg"
+}

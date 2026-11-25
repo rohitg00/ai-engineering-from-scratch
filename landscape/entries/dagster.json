@@ -1,0 +1,9 @@
+{
+  "name": "Dagster",
+  "url": "https://dagster.io",
+  "category": "orchestration",
+  "description": "Orchestrator built around data assets.",
+  "open_source": true,
+  "repo": "https://github.com/dagster-io/dagster",
+  "logo": "dagster.png"
+}

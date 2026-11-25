@@ -1,0 +1,9 @@
+{
+  "name": "TensorZero",
+  "url": "https://tensorzero.com",
+  "category": "gateways",
+  "description": "Gateway, observability and optimization for model applications.",
+  "open_source": true,
+  "repo": "https://github.com/tensorzero/tensorzero",
+  "logo": "tensorzero.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "FlashRAG",
+  "url": "https://github.com/RUC-NLPIR/FlashRAG",
+  "category": "rag",
+  "description": "Toolkit for RAG research.",
+  "open_source": true,
+  "repo": "https://github.com/RUC-NLPIR/FlashRAG",
+  "logo": "flashrag.png"
+}

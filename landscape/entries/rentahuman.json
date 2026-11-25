@@ -1,0 +1,9 @@
+{
+  "name": "RentAHuman",
+  "url": "https://rentahuman.ai/",
+  "category": "connectors",
+  "description": "Marketplace so AI agents can hire people for real-world tasks.",
+  "open_source": false,
+  "x": "rentahumanx",
+  "logo": "rentahuman.png"
+}

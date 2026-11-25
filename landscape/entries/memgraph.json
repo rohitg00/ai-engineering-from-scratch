@@ -1,0 +1,9 @@
+{
+  "name": "Memgraph",
+  "url": "https://memgraph.com",
+  "category": "databases",
+  "description": "In-memory graph database.",
+  "open_source": true,
+  "repo": "https://github.com/memgraph/memgraph",
+  "logo": "memgraph.png"
+}

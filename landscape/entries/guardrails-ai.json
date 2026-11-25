@@ -1,0 +1,9 @@
+{
+  "name": "Guardrails AI",
+  "url": "https://guardrailsai.com",
+  "category": "security",
+  "description": "Validators that check model input and output.",
+  "open_source": true,
+  "repo": "https://github.com/guardrails-ai/guardrails",
+  "logo": "guardrails-ai.png"
+}

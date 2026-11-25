@@ -1,0 +1,8 @@
+{
+  "name": "Snyk",
+  "url": "https://snyk.io",
+  "category": "security",
+  "description": "Developer security for code, dependencies and AI.",
+  "open_source": false,
+  "logo": "snyk.png"
+}

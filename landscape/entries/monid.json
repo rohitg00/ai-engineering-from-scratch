@@ -1,0 +1,9 @@
+{
+  "name": "Monid",
+  "url": "https://monid.ai/",
+  "category": "connectors",
+  "description": "An agent skill for accessing tools and APIs.",
+  "open_source": false,
+  "x": "monidhq",
+  "logo": "monid.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Agent Orchestrator",
+  "url": "https://orchestrator.inc",
+  "category": "orchestrators",
+  "description": "Runs parallel coding agents, each in its own worktree and pull request.",
+  "open_source": true,
+  "repo": "https://github.com/OrchestratorInc/agent-orchestrator",
+  "logo": "agent-orchestrator.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "garak",
+  "url": "https://garak.ai",
+  "category": "security",
+  "description": "Vulnerability scanner for language models.",
+  "open_source": true,
+  "repo": "https://github.com/NVIDIA/garak",
+  "logo": "garak.png"
+}

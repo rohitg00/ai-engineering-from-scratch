@@ -1,0 +1,8 @@
+{
+  "name": "SerpApi",
+  "url": "https://serpapi.com",
+  "category": "search",
+  "description": "API for search engine results.",
+  "open_source": false,
+  "logo": "serpapi.png"
+}

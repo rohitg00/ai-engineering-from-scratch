@@ -1,0 +1,8 @@
+{
+  "name": "Zyte",
+  "url": "https://zyte.com",
+  "category": "search",
+  "description": "Web scraping API and managed data extraction.",
+  "open_source": false,
+  "logo": "zyte.png"
+}

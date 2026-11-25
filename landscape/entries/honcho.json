@@ -1,0 +1,10 @@
+{
+  "name": "Honcho",
+  "url": "https://honcho.dev/",
+  "category": "memory",
+  "description": "Open-source AI memory for agents.",
+  "open_source": true,
+  "repo": "https://github.com/plastic-labs/honcho",
+  "x": "honchodotdev",
+  "logo": "honcho.png"
+}

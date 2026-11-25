@@ -1,0 +1,8 @@
+{
+  "name": "LangGraph Platform",
+  "url": "https://langchain.com/langgraph-platform",
+  "category": "agent-platforms",
+  "description": "Deployment and management for long-running agents.",
+  "open_source": false,
+  "logo": "langgraph-platform.png"
+}

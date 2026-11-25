@@ -1,0 +1,8 @@
+{
+  "name": "Oso",
+  "url": "https://osohq.com",
+  "category": "identity",
+  "description": "Authorization service for applications and agents.",
+  "open_source": false,
+  "logo": "oso.png"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Browser Use",
+  "url": "https://browser-use.com/",
+  "category": "browser-infra",
+  "description": "Open-source browser agents and cloud browsers for automating the web.",
+  "open_source": true,
+  "repo": "https://github.com/browser-use/browser-use",
+  "x": "browser_use",
+  "logo": "browser-use.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Latitude.sh",
+  "url": "https://latitude.sh",
+  "category": "gpu-clouds",
+  "description": "Bare metal cloud with GPU servers.",
+  "open_source": false,
+  "logo": "latitude-sh.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "LangWatch",
+  "url": "https://langwatch.ai",
+  "category": "evaluation",
+  "description": "Testing and monitoring for agents.",
+  "open_source": true,
+  "repo": "https://github.com/langwatch/langwatch",
+  "logo": "langwatch.png"
+}

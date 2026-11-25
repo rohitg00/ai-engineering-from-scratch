@@ -1,0 +1,8 @@
+{
+  "name": "Wordware",
+  "url": "https://wordware.ai",
+  "category": "agent-platforms",
+  "description": "Builds agents with natural language programs.",
+  "open_source": false,
+  "logo": "wordware.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Agent Client Protocol",
+  "url": "https://agentclientprotocol.com",
+  "category": "protocols",
+  "description": "Protocol that connects coding agents to editors.",
+  "open_source": true,
+  "repo": "https://github.com/agentclientprotocol/agent-client-protocol",
+  "logo": "agent-client-protocol.png"
+}

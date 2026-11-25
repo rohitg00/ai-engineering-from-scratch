@@ -1,0 +1,9 @@
+{
+  "name": "OpenMail",
+  "url": "https://openmail.sh/",
+  "category": "messaging",
+  "description": "Email API for AI agents: inboxes, webhooks and delivery.",
+  "open_source": false,
+  "x": "openmailsh",
+  "logo": "openmail.png"
+}

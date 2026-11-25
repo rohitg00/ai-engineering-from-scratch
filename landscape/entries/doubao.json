@@ -1,0 +1,8 @@
+{
+  "name": "Doubao",
+  "url": "https://www.doubao.com/",
+  "category": "chat-assistants",
+  "description": "ByteDance's AI assistant for chat, writing, translation and coding.",
+  "open_source": false,
+  "logo": "doubao.png"
+}

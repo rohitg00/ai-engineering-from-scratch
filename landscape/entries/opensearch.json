@@ -1,0 +1,9 @@
+{
+  "name": "OpenSearch",
+  "url": "https://opensearch.org",
+  "category": "databases",
+  "description": "Search and analytics suite with vector search.",
+  "open_source": true,
+  "repo": "https://github.com/opensearch-project/OpenSearch",
+  "logo": "opensearch.png"
+}

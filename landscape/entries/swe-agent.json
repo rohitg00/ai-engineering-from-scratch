@@ -1,0 +1,9 @@
+{
+  "name": "SWE-agent",
+  "url": "https://swe-agent.com",
+  "category": "coding",
+  "description": "Agent that fixes issues in real repositories.",
+  "open_source": true,
+  "repo": "https://github.com/SWE-agent/SWE-agent",
+  "logo": "swe-agent.png"
+}

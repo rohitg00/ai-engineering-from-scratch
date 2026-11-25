@@ -1,0 +1,8 @@
+{
+  "name": "Pika",
+  "url": "https://pika.art",
+  "category": "media",
+  "description": "Video generation from text and images.",
+  "open_source": false,
+  "logo": "pika.png"
+}

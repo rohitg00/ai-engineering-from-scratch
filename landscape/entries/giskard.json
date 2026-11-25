@@ -1,0 +1,9 @@
+{
+  "name": "Giskard",
+  "url": "https://giskard.ai",
+  "category": "evaluation",
+  "description": "Testing for model quality and safety.",
+  "open_source": true,
+  "repo": "https://github.com/Giskard-AI/giskard",
+  "logo": "giskard.png"
+}

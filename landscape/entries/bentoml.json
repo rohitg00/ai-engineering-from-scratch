@@ -1,0 +1,9 @@
+{
+  "name": "BentoML",
+  "url": "https://github.com/bentoml/BentoML",
+  "category": "inference",
+  "description": "Framework for packaging and serving models.",
+  "open_source": true,
+  "repo": "https://github.com/bentoml/BentoML",
+  "logo": "bentoml.png"
+}

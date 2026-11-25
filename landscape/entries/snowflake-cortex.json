@@ -1,0 +1,8 @@
+{
+  "name": "Snowflake Cortex",
+  "url": "https://snowflake.com",
+  "category": "model-clouds",
+  "description": "Model and agent services inside the Snowflake data cloud.",
+  "open_source": false,
+  "logo": "snowflake-cortex.png"
+}

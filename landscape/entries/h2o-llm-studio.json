@@ -1,0 +1,9 @@
+{
+  "name": "H2O LLM Studio",
+  "url": "https://h2o.ai",
+  "category": "finetuning",
+  "description": "No-code interface for fine-tuning language models.",
+  "open_source": true,
+  "repo": "https://github.com/h2oai/h2o-llmstudio",
+  "logo": "h2o-llm-studio.png"
+}

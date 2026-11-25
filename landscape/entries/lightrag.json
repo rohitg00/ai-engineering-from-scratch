@@ -1,0 +1,9 @@
+{
+  "name": "LightRAG",
+  "url": "https://github.com/HKUDS/LightRAG",
+  "category": "rag",
+  "description": "Retrieval that uses a knowledge graph.",
+  "open_source": true,
+  "repo": "https://github.com/HKUDS/LightRAG",
+  "logo": "lightrag.png"
+}

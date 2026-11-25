@@ -1,0 +1,9 @@
+{
+  "name": "mcp-use",
+  "url": "https://mcp-use.com",
+  "category": "protocols",
+  "description": "Library for connecting agents to MCP servers.",
+  "open_source": true,
+  "repo": "https://github.com/mcp-use/mcp-use",
+  "logo": "mcp-use.png"
+}

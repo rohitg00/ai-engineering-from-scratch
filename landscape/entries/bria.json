@@ -1,0 +1,8 @@
+{
+  "name": "Bria",
+  "url": "https://bria.ai",
+  "category": "media",
+  "description": "Image generation trained on licensed data.",
+  "open_source": false,
+  "logo": "bria.png"
+}

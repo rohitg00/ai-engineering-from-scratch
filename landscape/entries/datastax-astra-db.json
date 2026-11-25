@@ -1,0 +1,8 @@
+{
+  "name": "DataStax Astra DB",
+  "url": "https://datastax.com",
+  "category": "databases",
+  "description": "Managed Cassandra with vector search.",
+  "open_source": false,
+  "logo": "datastax-astra-db.png"
+}

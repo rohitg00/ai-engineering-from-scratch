@@ -1,0 +1,8 @@
+{
+  "name": "fal",
+  "url": "https://fal.ai",
+  "category": "inference-providers",
+  "description": "Hosted inference for image, video and audio models.",
+  "open_source": false,
+  "logo": "fal.png"
+}

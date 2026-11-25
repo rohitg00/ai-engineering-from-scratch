@@ -1,0 +1,9 @@
+{
+  "name": "Pipecat",
+  "url": "https://pipecat.ai",
+  "category": "voice-platforms",
+  "description": "Framework for voice and multimodal agents.",
+  "open_source": true,
+  "repo": "https://github.com/pipecat-ai/pipecat",
+  "logo": "pipecat.png"
+}

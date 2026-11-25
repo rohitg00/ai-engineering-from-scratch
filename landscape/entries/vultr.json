@@ -1,0 +1,8 @@
+{
+  "name": "Vultr",
+  "url": "https://vultr.com",
+  "category": "gpu-clouds",
+  "description": "Cloud provider with GPU instances.",
+  "open_source": false,
+  "logo": "vultr.png"
+}

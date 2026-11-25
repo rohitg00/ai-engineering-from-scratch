@@ -1,0 +1,8 @@
+{
+  "name": "Mastercard Agent Pay",
+  "url": "https://mastercard.com/us/en/business/artificial-intelligence/mastercard-agent-pay.html",
+  "category": "payments",
+  "description": "Tokenized card payments for agent purchases.",
+  "open_source": false,
+  "logo": "mastercard-agent-pay.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Hugging Face",
+  "url": "https://huggingface.co",
+  "category": "models",
+  "description": "Model hub and open source libraries for training and running pretrained models.",
+  "open_source": true,
+  "repo": "https://github.com/huggingface/transformers",
+  "logo": "hugging-face.png"
+}

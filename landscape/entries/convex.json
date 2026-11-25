@@ -1,0 +1,9 @@
+{
+  "name": "Convex",
+  "url": "https://convex.dev",
+  "category": "databases",
+  "description": "Reactive database with server functions.",
+  "open_source": true,
+  "repo": "https://github.com/get-convex/convex-backend",
+  "logo": "convex.png"
+}

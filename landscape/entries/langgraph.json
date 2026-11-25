@@ -1,0 +1,9 @@
+{
+  "name": "LangGraph",
+  "url": "https://www.langchain.com/langgraph",
+  "category": "agents",
+  "description": "Library for building stateful agents as graphs of steps.",
+  "open_source": true,
+  "repo": "https://github.com/langchain-ai/langgraph",
+  "logo": "langgraph.svg"
+}

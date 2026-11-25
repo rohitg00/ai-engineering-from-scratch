@@ -1,0 +1,9 @@
+{
+  "name": "Aim",
+  "url": "https://aimstack.io",
+  "category": "tracking",
+  "description": "Self-hosted experiment tracker.",
+  "open_source": true,
+  "repo": "https://github.com/aimhubio/aim",
+  "logo": "aim.png"
+}

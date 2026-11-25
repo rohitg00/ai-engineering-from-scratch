@@ -1,0 +1,8 @@
+{
+  "name": "Augment Code",
+  "url": "https://augmentcode.com",
+  "category": "coding",
+  "description": "Coding agent with a context engine for large codebases.",
+  "open_source": false,
+  "logo": "augment-code.png"
+}

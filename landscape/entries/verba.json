@@ -1,0 +1,9 @@
+{
+  "name": "Verba",
+  "url": "https://github.com/weaviate/Verba",
+  "category": "rag",
+  "description": "RAG chat application built on Weaviate.",
+  "open_source": true,
+  "repo": "https://github.com/weaviate/Verba",
+  "logo": "verba.png"
+}

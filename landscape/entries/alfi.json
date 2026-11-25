@@ -1,0 +1,9 @@
+{
+  "name": "Alfi",
+  "url": "https://www.text.ai/",
+  "category": "group-chat-agents",
+  "description": "Bringing Alfi to every group chat, from Text.ai.",
+  "open_source": false,
+  "x": "textdotai",
+  "logo": "alfi.png"
+}

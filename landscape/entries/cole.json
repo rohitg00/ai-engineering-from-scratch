@@ -1,0 +1,9 @@
+{
+  "name": "Cole",
+  "url": "https://pocodot.ai/",
+  "category": "work-assistants",
+  "description": "AI assistant for WhatsApp, iMessage, LINE and group chats, from Pocodot.",
+  "open_source": false,
+  "x": "PocodotAI",
+  "logo": "cole.png"
+}

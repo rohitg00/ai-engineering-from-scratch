@@ -1,0 +1,8 @@
+{
+  "name": "FusionAuth",
+  "url": "https://fusionauth.io",
+  "category": "identity",
+  "description": "Customer identity platform for developers.",
+  "open_source": false,
+  "logo": "fusionauth.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Airtap",
+  "url": "https://airtap.ai/",
+  "category": "personal-assistants",
+  "description": "Invite-only personal AI that operates real phone apps over chat.",
+  "open_source": false,
+  "x": "airtap_ai",
+  "logo": "airtap.png"
+}

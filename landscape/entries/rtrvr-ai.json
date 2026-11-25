@@ -1,0 +1,8 @@
+{
+  "name": "rtrvr.ai",
+  "url": "https://rtrvr.ai",
+  "category": "browser-infra",
+  "description": "Web agent that runs in a browser extension.",
+  "open_source": false,
+  "logo": "rtrvr-ai.png"
+}

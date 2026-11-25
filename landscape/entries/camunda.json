@@ -1,0 +1,8 @@
+{
+  "name": "Camunda",
+  "url": "https://camunda.com",
+  "category": "orchestration",
+  "description": "Process orchestration with agent support.",
+  "open_source": false,
+  "logo": "camunda.png"
+}

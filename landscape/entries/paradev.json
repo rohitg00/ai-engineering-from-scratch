@@ -1,0 +1,9 @@
+{
+  "name": "Paradev",
+  "url": "https://paradev.com",
+  "category": "orchestrators",
+  "description": "Terminal for running many coding agents in parallel.",
+  "open_source": true,
+  "repo": "https://github.com/ParadevAI/Paradev",
+  "logo": "paradev.png"
+}

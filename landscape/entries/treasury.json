@@ -1,0 +1,9 @@
+{
+  "name": "Treasury",
+  "url": "https://treasury.sh/",
+  "category": "finance-agents",
+  "description": "AI budgeting and personal finance app, ask your money anything.",
+  "open_source": false,
+  "x": "treasury_sh",
+  "logo": "treasury.png"
+}

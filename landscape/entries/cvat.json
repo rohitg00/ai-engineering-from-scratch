@@ -1,0 +1,9 @@
+{
+  "name": "CVAT",
+  "url": "https://cvat.ai",
+  "category": "data",
+  "description": "Annotation tool for images and video.",
+  "open_source": true,
+  "repo": "https://github.com/cvat-ai/cvat",
+  "logo": "cvat.png"
+}

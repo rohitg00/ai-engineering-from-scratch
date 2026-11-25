@@ -1,0 +1,9 @@
+{
+  "name": "Metorial",
+  "url": "https://metorial.com",
+  "category": "protocols",
+  "description": "Platform for connecting agents to MCP servers.",
+  "open_source": true,
+  "repo": "https://github.com/metorial/metorial",
+  "logo": "metorial.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Stumpy",
+  "url": "https://stumpy.ai/",
+  "category": "personal-assistants",
+  "description": "Persistent AI agents that show up in Telegram, texts and email.",
+  "open_source": false,
+  "logo": "stumpy.png"
+}

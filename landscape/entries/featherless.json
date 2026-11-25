@@ -1,0 +1,8 @@
+{
+  "name": "Featherless",
+  "url": "https://featherless.ai",
+  "category": "inference-providers",
+  "description": "Serverless inference for a large catalog of open models.",
+  "open_source": false,
+  "logo": "featherless.png"
+}

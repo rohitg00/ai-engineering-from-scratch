@@ -1,0 +1,8 @@
+{
+  "name": "CC",
+  "url": "https://labs.google.com/cc/landing",
+  "category": "home-health-agents",
+  "description": "Google Labs family AI agent for shared calendars, email and household logistics.",
+  "open_source": false,
+  "logo": "cc.png"
+}

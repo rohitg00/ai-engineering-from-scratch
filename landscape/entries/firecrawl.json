@@ -1,0 +1,10 @@
+{
+  "name": "Firecrawl",
+  "url": "https://www.firecrawl.dev/",
+  "category": "search",
+  "description": "Knowledge infrastructure for AI agents that need to read the web.",
+  "open_source": true,
+  "repo": "https://github.com/firecrawl/firecrawl",
+  "x": "firecrawl",
+  "logo": "firecrawl.png"
+}

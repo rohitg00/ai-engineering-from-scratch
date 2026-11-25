@@ -1,0 +1,8 @@
+{
+  "name": "Jina AI",
+  "url": "https://jina.ai",
+  "category": "embeddings",
+  "description": "Embedding, rerank and reader APIs for search.",
+  "open_source": false,
+  "logo": "jina-ai.png"
+}

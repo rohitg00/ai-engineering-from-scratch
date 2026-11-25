@@ -1,0 +1,8 @@
+{
+  "name": "Amazon Q Developer",
+  "url": "https://aws.amazon.com/q/developer",
+  "category": "coding",
+  "description": "Coding assistant and agents from AWS.",
+  "open_source": false,
+  "logo": "amazon-q-developer.png"
+}

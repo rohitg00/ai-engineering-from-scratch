@@ -1,0 +1,9 @@
+{
+  "name": "Dokploy",
+  "url": "https://dokploy.com",
+  "category": "hosting",
+  "description": "Self-hosted deployment platform.",
+  "open_source": true,
+  "repo": "https://github.com/Dokploy/dokploy",
+  "logo": "dokploy.png"
+}

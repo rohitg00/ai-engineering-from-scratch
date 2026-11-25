@@ -1,0 +1,9 @@
+{
+  "name": "DVC",
+  "url": "https://dvc.org",
+  "category": "tracking",
+  "description": "Version control for data and models.",
+  "open_source": true,
+  "repo": "https://github.com/iterative/dvc",
+  "logo": "dvc.png"
+}

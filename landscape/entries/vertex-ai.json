@@ -1,0 +1,8 @@
+{
+  "name": "Vertex AI",
+  "url": "https://cloud.google.com/vertex-ai",
+  "category": "model-clouds",
+  "description": "Google Cloud platform for models, tuning and agents.",
+  "open_source": false,
+  "logo": "vertex-ai.png"
+}

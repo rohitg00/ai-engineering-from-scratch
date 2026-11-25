@@ -1,0 +1,9 @@
+{
+  "name": "Segment Anything",
+  "url": "https://segment-anything.com",
+  "category": "media",
+  "description": "Promptable segmentation for images and video.",
+  "open_source": true,
+  "repo": "https://github.com/facebookresearch/sam2",
+  "logo": "segment-anything.png"
+}

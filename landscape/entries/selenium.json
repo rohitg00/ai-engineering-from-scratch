@@ -1,0 +1,9 @@
+{
+  "name": "Selenium",
+  "url": "https://selenium.dev",
+  "category": "browser-infra",
+  "description": "Browser automation framework.",
+  "open_source": true,
+  "repo": "https://github.com/SeleniumHQ/selenium",
+  "logo": "selenium.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Volaren",
+  "url": "https://www.volaren.ai/",
+  "category": "finance-agents",
+  "description": "Personal investing agent that explains your portfolio and can trade for you.",
+  "open_source": false,
+  "x": "volaren_ai",
+  "logo": "volaren.png"
+}

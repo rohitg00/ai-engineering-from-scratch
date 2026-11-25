@@ -1,0 +1,8 @@
+{
+  "name": "LangSmith",
+  "url": "https://smith.langchain.com",
+  "category": "evaluation",
+  "description": "Tracing, evaluation and deployment for agents.",
+  "open_source": false,
+  "logo": "langsmith.png"
+}

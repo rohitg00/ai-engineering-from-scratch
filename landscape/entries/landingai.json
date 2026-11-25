@@ -1,0 +1,8 @@
+{
+  "name": "LandingAI",
+  "url": "https://landing.ai",
+  "category": "docs",
+  "description": "Agentic document extraction and vision tools.",
+  "open_source": false,
+  "logo": "landingai.png"
+}

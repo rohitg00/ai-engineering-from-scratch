@@ -1,0 +1,9 @@
+{
+  "name": "Keycloak",
+  "url": "https://keycloak.org",
+  "category": "identity",
+  "description": "Identity and access management server.",
+  "open_source": true,
+  "repo": "https://github.com/keycloak/keycloak",
+  "logo": "keycloak.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Prompt Security",
+  "url": "https://prompt.security",
+  "category": "security",
+  "description": "Protection for employee and application use of AI.",
+  "open_source": false,
+  "logo": "prompt-security.png"
+}

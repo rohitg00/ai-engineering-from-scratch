@@ -1,0 +1,9 @@
+{
+  "name": "Captum",
+  "url": "https://captum.ai",
+  "category": "interpretability",
+  "description": "Model interpretability library for PyTorch.",
+  "open_source": true,
+  "repo": "https://github.com/pytorch/captum",
+  "logo": "captum.png"
+}

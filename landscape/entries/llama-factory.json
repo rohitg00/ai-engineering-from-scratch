@@ -1,0 +1,9 @@
+{
+  "name": "LLaMA-Factory",
+  "url": "https://llamafactory.readthedocs.io",
+  "category": "finetuning",
+  "description": "Web and command line tool for fine-tuning many models.",
+  "open_source": true,
+  "repo": "https://github.com/hiyouga/LLaMA-Factory",
+  "logo": "llama-factory.png"
+}

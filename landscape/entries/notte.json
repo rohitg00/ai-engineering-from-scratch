@@ -1,0 +1,9 @@
+{
+  "name": "Notte",
+  "url": "https://notte.cc/",
+  "category": "browser-infra",
+  "description": "Browser platform and framework for AI agents that use the web.",
+  "open_source": false,
+  "x": "nottecore",
+  "logo": "notte.png"
+}

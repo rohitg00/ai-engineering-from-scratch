@@ -1,0 +1,8 @@
+{
+  "name": "Cloudflare",
+  "url": "https://cloudflare.com",
+  "category": "hosting",
+  "description": "Developer platform for apps and agents at the edge.",
+  "open_source": false,
+  "logo": "cloudflare.png"
+}

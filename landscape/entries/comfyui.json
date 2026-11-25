@@ -1,0 +1,9 @@
+{
+  "name": "ComfyUI",
+  "url": "https://comfy.org",
+  "category": "media",
+  "description": "Node-based interface for diffusion models.",
+  "open_source": true,
+  "repo": "https://github.com/comfyanonymous/ComfyUI",
+  "logo": "comfyui.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Smallest.ai",
+  "url": "https://smallest.ai",
+  "category": "voice-apis",
+  "description": "Low-latency speech models and voice agents.",
+  "open_source": false,
+  "logo": "smallest-ai.png"
+}

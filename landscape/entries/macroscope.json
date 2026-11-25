@@ -1,0 +1,8 @@
+{
+  "name": "Macroscope",
+  "url": "https://macroscope.com",
+  "category": "review",
+  "description": "Code review and codebase understanding.",
+  "open_source": false,
+  "logo": "macroscope.png"
+}

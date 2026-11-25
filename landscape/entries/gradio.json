@@ -1,0 +1,9 @@
+{
+  "name": "Gradio",
+  "url": "https://www.gradio.app",
+  "category": "builders",
+  "description": "Python library for building web demos of machine learning models.",
+  "open_source": true,
+  "repo": "https://github.com/gradio-app/gradio",
+  "logo": "gradio.png"
+}

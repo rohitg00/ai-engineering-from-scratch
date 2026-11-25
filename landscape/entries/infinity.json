@@ -1,0 +1,9 @@
+{
+  "name": "Infinity",
+  "url": "https://github.com/michaelfeil/infinity",
+  "category": "embeddings",
+  "description": "Server for embedding and rerank models.",
+  "open_source": true,
+  "repo": "https://github.com/michaelfeil/infinity",
+  "logo": "infinity.png"
+}

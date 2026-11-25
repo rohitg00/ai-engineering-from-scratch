@@ -1,0 +1,9 @@
+{
+  "name": "Typesense",
+  "url": "https://typesense.org",
+  "category": "databases",
+  "description": "Search engine with typo tolerance and vector search.",
+  "open_source": true,
+  "repo": "https://github.com/typesense/typesense",
+  "logo": "typesense.png"
+}

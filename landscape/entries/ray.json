@@ -1,0 +1,9 @@
+{
+  "name": "Ray",
+  "url": "https://ray.io",
+  "category": "inference",
+  "description": "Distributed compute engine for training and serving.",
+  "open_source": true,
+  "repo": "https://github.com/ray-project/ray",
+  "logo": "ray.png"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Cursor",
+  "url": "https://cursor.com",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Code editor with built-in model chat, completion and coding agents.",
+  "open_source": false,
+  "logo": "cursor.png"
+}

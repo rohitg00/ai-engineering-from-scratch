@@ -1,0 +1,9 @@
+{
+  "name": "Memori",
+  "url": "https://memorilabs.ai",
+  "category": "memory",
+  "description": "SQL-native memory engine for agents.",
+  "open_source": true,
+  "repo": "https://github.com/MemoriLabs/Memori",
+  "logo": "memori.png"
+}

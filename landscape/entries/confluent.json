@@ -1,0 +1,8 @@
+{
+  "name": "Confluent",
+  "url": "https://confluent.io",
+  "category": "data-platforms",
+  "description": "Managed data streaming platform.",
+  "open_source": false,
+  "logo": "confluent.png"
+}

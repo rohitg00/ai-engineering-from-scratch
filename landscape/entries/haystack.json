@@ -1,0 +1,9 @@
+{
+  "name": "Haystack",
+  "url": "https://haystack.deepset.ai",
+  "category": "agents",
+  "description": "Framework for retrieval and agent pipelines.",
+  "open_source": true,
+  "repo": "https://github.com/deepset-ai/haystack",
+  "logo": "haystack.png"
+}

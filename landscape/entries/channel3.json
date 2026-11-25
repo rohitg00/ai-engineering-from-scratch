@@ -1,0 +1,9 @@
+{
+  "name": "Channel3",
+  "url": "https://www.trychannel3.com/",
+  "category": "commerce",
+  "description": "Product graph so agents can search, recommend and purchase.",
+  "open_source": false,
+  "x": "channel3_ai",
+  "logo": "channel3.png"
+}

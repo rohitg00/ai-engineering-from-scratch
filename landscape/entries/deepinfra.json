@@ -1,0 +1,8 @@
+{
+  "name": "DeepInfra",
+  "url": "https://deepinfra.com",
+  "category": "inference-providers",
+  "description": "Hosted inference for open models with per-token pricing.",
+  "open_source": false,
+  "logo": "deepinfra.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Cartesia",
+  "url": "https://cartesia.ai",
+  "category": "voice-apis",
+  "description": "Low-latency speech synthesis and transcription.",
+  "open_source": false,
+  "logo": "cartesia.png"
+}

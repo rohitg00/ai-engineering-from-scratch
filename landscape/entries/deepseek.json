@@ -1,0 +1,8 @@
+{
+  "name": "DeepSeek",
+  "url": "https://deepseek.com",
+  "category": "models",
+  "description": "Reasoning and chat models with an OpenAI-compatible API.",
+  "open_source": false,
+  "logo": "deepseek.png"
+}

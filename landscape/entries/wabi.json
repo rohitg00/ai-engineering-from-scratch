@@ -1,0 +1,9 @@
+{
+  "name": "Wabi",
+  "url": "https://wabi.ai/",
+  "category": "group-chat-agents",
+  "description": "The AI assistant you use together, in shared threads.",
+  "open_source": false,
+  "x": "wabi",
+  "logo": "wabi.png"
+}

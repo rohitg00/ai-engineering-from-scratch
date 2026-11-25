@@ -1,0 +1,9 @@
+{
+  "name": "FastMCP",
+  "url": "https://gofastmcp.com",
+  "category": "protocols",
+  "description": "Python framework for MCP servers and clients.",
+  "open_source": true,
+  "repo": "https://github.com/jlowin/fastmcp",
+  "logo": "fastmcp.png"
+}

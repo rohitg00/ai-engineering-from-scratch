@@ -1,0 +1,9 @@
+{
+  "name": "Klavis AI",
+  "url": "https://klavis.ai",
+  "category": "protocols",
+  "description": "Hosted MCP servers with managed authentication.",
+  "open_source": true,
+  "repo": "https://github.com/Klavis-AI/klavis",
+  "logo": "klavis-ai.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Sentence Transformers",
+  "url": "https://sbert.net",
+  "category": "embeddings",
+  "description": "Library for sentence and text embeddings.",
+  "open_source": true,
+  "repo": "https://github.com/UKPLab/sentence-transformers",
+  "logo": "sentence-transformers.png"
+}

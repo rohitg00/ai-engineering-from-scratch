@@ -1,0 +1,9 @@
+{
+  "name": "Prefect",
+  "url": "https://prefect.io",
+  "category": "orchestration",
+  "description": "Workflow orchestration for data pipelines.",
+  "open_source": true,
+  "repo": "https://github.com/PrefectHQ/prefect",
+  "logo": "prefect.png"
+}

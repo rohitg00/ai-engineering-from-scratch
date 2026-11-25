@@ -1,0 +1,9 @@
+{
+  "name": "Crystal",
+  "url": "https://github.com/stravu/crystal",
+  "category": "orchestrators",
+  "description": "Desktop app for running coding agent sessions in parallel worktrees.",
+  "open_source": true,
+  "repo": "https://github.com/stravu/crystal",
+  "logo": "crystal.png"
+}

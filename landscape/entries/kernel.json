@@ -1,0 +1,9 @@
+{
+  "name": "Kernel",
+  "url": "https://www.kernel.sh/",
+  "category": "browser-infra",
+  "description": "Browser infrastructure for web agents and automations.",
+  "open_source": false,
+  "x": "usekernel",
+  "logo": "kernel.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "DuckDB",
+  "url": "https://duckdb.org",
+  "category": "databases",
+  "description": "In-process analytical SQL database.",
+  "open_source": true,
+  "repo": "https://github.com/duckdb/duckdb",
+  "logo": "duckdb.png"
+}

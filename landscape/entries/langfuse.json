@@ -1,0 +1,9 @@
+{
+  "name": "Langfuse",
+  "url": "https://langfuse.com",
+  "category": "evaluation",
+  "description": "Tracing, evals and prompt management for model apps.",
+  "open_source": true,
+  "repo": "https://github.com/langfuse/langfuse",
+  "logo": "langfuse.png"
+}

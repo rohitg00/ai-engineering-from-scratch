@@ -1,0 +1,9 @@
+{
+  "name": "Kuzu",
+  "url": "https://github.com/kuzudb/kuzu",
+  "category": "databases",
+  "description": "Embedded graph database.",
+  "open_source": true,
+  "repo": "https://github.com/kuzudb/kuzu",
+  "logo": "kuzu.png"
+}

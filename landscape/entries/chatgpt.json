@@ -1,0 +1,8 @@
+{
+  "name": "ChatGPT",
+  "url": "https://chatgpt.com",
+  "category": "chat-assistants",
+  "description": "Chat assistant from OpenAI for answers, writing and search.",
+  "open_source": false,
+  "logo": "chatgpt.png"
+}

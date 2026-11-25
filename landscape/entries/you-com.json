@@ -1,0 +1,8 @@
+{
+  "name": "You.com",
+  "url": "https://you.com",
+  "category": "search",
+  "description": "Search and research APIs for agents.",
+  "open_source": false,
+  "logo": "you-com.png"
+}

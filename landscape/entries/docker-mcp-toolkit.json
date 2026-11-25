@@ -1,0 +1,8 @@
+{
+  "name": "Docker MCP Toolkit",
+  "url": "https://docker.com/products/mcp-catalog-and-toolkit",
+  "category": "protocols",
+  "description": "Catalog and gateway for containerized MCP servers.",
+  "open_source": false,
+  "logo": "docker-mcp-toolkit.png"
+}

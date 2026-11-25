@@ -1,0 +1,9 @@
+{
+  "name": "PostgreSQL",
+  "url": "https://postgresql.org",
+  "category": "databases",
+  "description": "Relational database with a large extension ecosystem.",
+  "open_source": true,
+  "repo": "https://github.com/postgres/postgres",
+  "logo": "postgresql.png"
+}

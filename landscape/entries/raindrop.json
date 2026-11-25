@@ -1,0 +1,8 @@
+{
+  "name": "Raindrop",
+  "url": "https://raindrop.ai",
+  "category": "evaluation",
+  "description": "Monitoring that finds failures in agent behavior.",
+  "open_source": false,
+  "logo": "raindrop.png"
+}

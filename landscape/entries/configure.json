@@ -1,0 +1,9 @@
+{
+  "name": "Configure",
+  "url": "https://configure.dev/",
+  "category": "context",
+  "description": "Plaid-like infrastructure so users can connect memory and apps across agents.",
+  "open_source": false,
+  "x": "configuredotdev",
+  "logo": "configure.png"
+}

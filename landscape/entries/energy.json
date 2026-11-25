@@ -1,0 +1,9 @@
+{
+  "name": "Energy",
+  "url": "https://getenergy.com/",
+  "category": "work-assistants",
+  "description": "A desktop workspace where AI carries out tasks across apps.",
+  "open_source": false,
+  "x": "GetEnergy_",
+  "logo": "energy.png"
+}

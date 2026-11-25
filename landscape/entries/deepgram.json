@@ -1,0 +1,8 @@
+{
+  "name": "Deepgram",
+  "url": "https://deepgram.com",
+  "category": "voice-apis",
+  "description": "Speech-to-text, text-to-speech and voice agent APIs.",
+  "open_source": false,
+  "logo": "deepgram.png"
+}

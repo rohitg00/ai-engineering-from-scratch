@@ -1,0 +1,9 @@
+{
+  "name": "Miso",
+  "url": "https://miso.com/",
+  "category": "travel-agents",
+  "description": "Personal AI travel agent over iMessage, for flights and hotels.",
+  "open_source": false,
+  "x": "bookwithmiso",
+  "logo": "miso.png"
+}

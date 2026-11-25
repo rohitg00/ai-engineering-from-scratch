@@ -1,0 +1,9 @@
+{
+  "name": "Neo4j",
+  "url": "https://neo4j.com",
+  "category": "databases",
+  "description": "Graph database with vector search.",
+  "open_source": true,
+  "repo": "https://github.com/neo4j/neo4j",
+  "logo": "neo4j.png"
+}

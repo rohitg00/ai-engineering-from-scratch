@@ -1,0 +1,9 @@
+{
+  "name": "Jobright",
+  "url": "https://jobright.ai/",
+  "category": "work-assistants",
+  "description": "AI job-search agent that matches roles, tailors resumes and autofills applications.",
+  "open_source": false,
+  "x": "jobrightai",
+  "logo": "jobright.png"
+}

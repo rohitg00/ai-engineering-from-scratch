@@ -1,0 +1,9 @@
+{
+  "name": "Chainlit",
+  "url": "https://chainlit.io",
+  "category": "builders",
+  "description": "Python framework for conversational apps.",
+  "open_source": true,
+  "repo": "https://github.com/Chainlit/chainlit",
+  "logo": "chainlit.png"
+}

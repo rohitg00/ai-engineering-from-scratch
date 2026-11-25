@@ -1,0 +1,8 @@
+{
+  "name": "LMNT",
+  "url": "https://lmnt.com",
+  "category": "voice-apis",
+  "description": "Low-latency text-to-speech API.",
+  "open_source": false,
+  "logo": "lmnt.png"
+}

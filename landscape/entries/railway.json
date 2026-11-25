@@ -1,0 +1,8 @@
+{
+  "name": "Railway",
+  "url": "https://railway.com",
+  "category": "hosting",
+  "description": "Deploys apps and databases from a repository.",
+  "open_source": false,
+  "logo": "railway.png"
+}

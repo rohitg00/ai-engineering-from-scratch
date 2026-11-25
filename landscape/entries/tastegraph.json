@@ -1,0 +1,8 @@
+{
+  "name": "TasteGraph",
+  "url": "https://tastegraph.ai/",
+  "category": "context",
+  "description": "Preference data for shopping-agent recommendations.",
+  "open_source": false,
+  "logo": "tastegraph.png"
+}

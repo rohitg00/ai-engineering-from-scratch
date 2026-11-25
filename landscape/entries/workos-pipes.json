@@ -1,0 +1,9 @@
+{
+  "name": "WorkOS Pipes",
+  "url": "https://workos.com/docs/pipes",
+  "category": "connectors",
+  "description": "Connects users' third-party accounts so apps and AI agents can act in them.",
+  "open_source": false,
+  "x": "workos",
+  "logo": "workos-pipes.png"
+}

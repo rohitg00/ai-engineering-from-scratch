@@ -1,0 +1,9 @@
+{
+  "name": "Pipedream",
+  "url": "https://pipedream.com/",
+  "category": "connectors",
+  "description": "Integration layer for AI agents.",
+  "open_source": false,
+  "x": "pipedream",
+  "logo": "pipedream.png"
+}

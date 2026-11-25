@@ -1,0 +1,9 @@
+{
+  "name": "Coolify",
+  "url": "https://coolify.io",
+  "category": "hosting",
+  "description": "Self-hosted platform for apps and databases.",
+  "open_source": true,
+  "repo": "https://github.com/coollabsio/coolify",
+  "logo": "coolify.png"
+}

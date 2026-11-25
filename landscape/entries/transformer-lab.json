@@ -1,0 +1,9 @@
+{
+  "name": "Transformer Lab",
+  "url": "https://lab.cloud",
+  "category": "finetuning",
+  "description": "Desktop workspace to train, tune and evaluate models.",
+  "open_source": true,
+  "repo": "https://github.com/transformerlab/transformerlab-app",
+  "logo": "transformer-lab.png"
+}

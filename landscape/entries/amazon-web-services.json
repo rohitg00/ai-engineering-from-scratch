@@ -1,0 +1,8 @@
+{
+  "name": "Amazon Web Services",
+  "url": "https://aws.amazon.com",
+  "category": "hosting",
+  "description": "Cloud platform with compute, storage and AI services.",
+  "open_source": false,
+  "logo": "amazon-web-services.png"
+}

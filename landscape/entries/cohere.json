@@ -1,0 +1,8 @@
+{
+  "name": "Cohere",
+  "url": "https://cohere.com",
+  "category": "models",
+  "description": "Language, embedding and rerank models for enterprise applications.",
+  "open_source": false,
+  "logo": "cohere.png"
+}

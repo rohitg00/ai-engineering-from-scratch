@@ -1,0 +1,9 @@
+{
+  "name": "Motia",
+  "url": "https://motia.dev",
+  "category": "agents",
+  "description": "Framework that unifies APIs, jobs and agents.",
+  "open_source": true,
+  "repo": "https://github.com/MotiaDev/motia",
+  "logo": "motia.png"
+}

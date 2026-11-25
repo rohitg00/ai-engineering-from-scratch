@@ -1,0 +1,9 @@
+{
+  "name": "llama.cpp",
+  "url": "https://github.com/ggml-org/llama.cpp",
+  "category": "inference",
+  "description": "C++ inference for language models on consumer hardware.",
+  "open_source": true,
+  "repo": "https://github.com/ggml-org/llama.cpp",
+  "logo": "llama-cpp.png"
+}

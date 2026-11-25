@@ -1,0 +1,9 @@
+{
+  "name": "Magica",
+  "url": "https://magica.com/",
+  "category": "work-assistants",
+  "description": "An AI worker for delegated tasks.",
+  "open_source": false,
+  "x": "magica_ai",
+  "logo": "magica.png"
+}

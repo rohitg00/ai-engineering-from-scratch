@@ -1,0 +1,8 @@
+{
+  "name": "SendGrid",
+  "url": "https://sendgrid.com",
+  "category": "messaging",
+  "description": "Email delivery API.",
+  "open_source": false,
+  "logo": "sendgrid.png"
+}

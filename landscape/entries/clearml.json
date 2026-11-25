@@ -1,0 +1,9 @@
+{
+  "name": "ClearML",
+  "url": "https://clear.ml",
+  "category": "tracking",
+  "description": "Experiment manager, orchestration and serving suite.",
+  "open_source": true,
+  "repo": "https://github.com/clearml/clearml",
+  "logo": "clearml.png"
+}

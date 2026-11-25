@@ -1,0 +1,9 @@
+{
+  "name": "Tiger Data",
+  "url": "https://tigerdata.com",
+  "category": "databases",
+  "description": "Postgres for time series and AI workloads.",
+  "open_source": true,
+  "repo": "https://github.com/timescale/pgai",
+  "logo": "tiger-data.png"
+}

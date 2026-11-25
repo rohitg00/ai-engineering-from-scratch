@@ -1,0 +1,9 @@
+{
+  "name": "Airbyte",
+  "url": "https://airbyte.com",
+  "category": "connectors",
+  "description": "Data integration with many connectors.",
+  "open_source": true,
+  "repo": "https://github.com/airbytehq/airbyte",
+  "logo": "airbyte.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Gas Town",
+  "url": "https://github.com/gastownhall/gastown",
+  "category": "orchestrators",
+  "description": "Workspace manager for coordinating many coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/gastownhall/gastown",
+  "logo": "gas-town.png"
+}

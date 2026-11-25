@@ -1,0 +1,8 @@
+{
+  "name": "Pulse",
+  "url": "https://runpulse.com",
+  "category": "docs",
+  "description": "Document extraction API for complex files.",
+  "open_source": false,
+  "logo": "pulse.png"
+}

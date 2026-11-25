@@ -1,0 +1,9 @@
+{
+  "name": "MLX",
+  "url": "https://ml-explore.github.io/mlx",
+  "category": "inference",
+  "description": "Array framework for machine learning on Apple silicon.",
+  "open_source": true,
+  "repo": "https://github.com/ml-explore/mlx",
+  "logo": "mlx.png"
+}

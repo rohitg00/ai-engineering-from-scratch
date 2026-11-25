@@ -1,0 +1,8 @@
+{
+  "name": "Momentic",
+  "url": "https://momentic.ai",
+  "category": "review",
+  "description": "End-to-end tests written in natural language.",
+  "open_source": false,
+  "logo": "momentic.png"
+}

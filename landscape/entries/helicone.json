@@ -1,0 +1,9 @@
+{
+  "name": "Helicone",
+  "url": "https://helicone.ai",
+  "category": "evaluation",
+  "description": "Logging and monitoring for model requests.",
+  "open_source": true,
+  "repo": "https://github.com/Helicone/helicone",
+  "logo": "helicone.png"
+}

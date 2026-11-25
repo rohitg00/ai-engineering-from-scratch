@@ -1,0 +1,10 @@
+{
+  "name": "Cua",
+  "url": "https://www.trycua.com/",
+  "category": "computers",
+  "description": "Computer infrastructure for AI agents.",
+  "open_source": true,
+  "repo": "https://github.com/trycua/cua",
+  "x": "trycua",
+  "logo": "cua.png"
+}

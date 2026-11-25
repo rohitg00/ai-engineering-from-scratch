@@ -1,0 +1,8 @@
+{
+  "name": "SF Compute",
+  "url": "https://sfcompute.com",
+  "category": "gpu-clouds",
+  "description": "Market for buying and selling GPU cluster time.",
+  "open_source": false,
+  "logo": "sf-compute.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "QA Wolf",
+  "url": "https://qawolf.com",
+  "category": "review",
+  "description": "Automated end-to-end test coverage as a service.",
+  "open_source": false,
+  "logo": "qa-wolf.png"
+}

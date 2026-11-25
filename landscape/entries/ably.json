@@ -1,0 +1,8 @@
+{
+  "name": "Ably",
+  "url": "https://ably.com",
+  "category": "messaging",
+  "description": "Real-time messaging infrastructure.",
+  "open_source": false,
+  "logo": "ably.png"
+}

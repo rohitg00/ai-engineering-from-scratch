@@ -1,0 +1,9 @@
+{
+  "name": "Marvin",
+  "url": "https://askmarvin.ai",
+  "category": "agents",
+  "description": "Python toolkit for structured outputs and agents.",
+  "open_source": true,
+  "repo": "https://github.com/PrefectHQ/marvin",
+  "logo": "marvin.png"
+}

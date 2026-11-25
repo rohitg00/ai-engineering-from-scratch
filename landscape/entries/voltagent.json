@@ -1,0 +1,9 @@
+{
+  "name": "VoltAgent",
+  "url": "https://voltagent.dev",
+  "category": "agents",
+  "description": "TypeScript framework for agents.",
+  "open_source": true,
+  "repo": "https://github.com/VoltAgent/voltagent",
+  "logo": "voltagent.png"
+}

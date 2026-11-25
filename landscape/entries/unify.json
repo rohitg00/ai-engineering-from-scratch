@@ -1,0 +1,8 @@
+{
+  "name": "Unify",
+  "url": "https://unify.ai",
+  "category": "gateways",
+  "description": "Routes each prompt to a model by quality, cost and speed.",
+  "open_source": false,
+  "logo": "unify.png"
+}

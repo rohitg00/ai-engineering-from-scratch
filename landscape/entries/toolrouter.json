@@ -1,0 +1,9 @@
+{
+  "name": "ToolRouter",
+  "url": "https://toolrouter.com/",
+  "category": "protocols",
+  "description": "A single MCP connection to hosted agent tools.",
+  "open_source": false,
+  "x": "tool_router",
+  "logo": "toolrouter.png"
+}

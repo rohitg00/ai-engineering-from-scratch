@@ -1,0 +1,9 @@
+{
+  "name": "Apache Kafka",
+  "url": "https://kafka.apache.org",
+  "category": "data-platforms",
+  "description": "Distributed event streaming platform.",
+  "open_source": true,
+  "repo": "https://github.com/apache/kafka",
+  "logo": "apache-kafka.png"
+}

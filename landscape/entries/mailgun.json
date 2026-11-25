@@ -1,0 +1,8 @@
+{
+  "name": "Mailgun",
+  "url": "https://mailgun.com",
+  "category": "messaging",
+  "description": "Email sending and validation APIs.",
+  "open_source": false,
+  "logo": "mailgun.png"
+}

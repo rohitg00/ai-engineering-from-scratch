@@ -1,0 +1,9 @@
+{
+  "name": "Dial",
+  "url": "https://getdial.ai/",
+  "category": "messaging",
+  "description": "Phone numbers for AI agents.",
+  "open_source": false,
+  "x": "dialagent",
+  "logo": "dial.png"
+}

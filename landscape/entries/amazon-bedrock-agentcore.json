@@ -1,0 +1,8 @@
+{
+  "name": "Amazon Bedrock AgentCore",
+  "url": "https://aws.amazon.com/bedrock/agentcore",
+  "category": "agent-platforms",
+  "description": "Runtime and services for deploying agents on AWS.",
+  "open_source": false,
+  "logo": "amazon-bedrock-agentcore.png"
+}

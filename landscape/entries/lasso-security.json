@@ -1,0 +1,8 @@
+{
+  "name": "Lasso Security",
+  "url": "https://lasso.security",
+  "category": "security",
+  "description": "Security for model applications and agents.",
+  "open_source": false,
+  "logo": "lasso-security.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Resemble AI",
+  "url": "https://resemble.ai",
+  "category": "voice-apis",
+  "description": "Voice cloning, synthesis and deepfake detection.",
+  "open_source": false,
+  "logo": "resemble-ai.png"
+}

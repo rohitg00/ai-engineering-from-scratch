@@ -17,6 +17,7 @@ const { TRANSLATION_LANGUAGES, TRANSLATION_SOURCE, NATIVE_NAMES, isIndexedLangua
 const { socialCards } = require('../lib/og-cards');
 const { phaseHubPath, phaseLabel, glossaryLookupKey, lessonCleanPath } = require('../lib/hub-routes');
 const { writeHubs } = require('./build-hubs.js');
+const { writeLandscape } = require('./build-landscape.js');
 const { writeCheatsheets, loadTopics, coverage } = require('./build-cheatsheets.js');
 const { writePractice } = require('./build-practice.js');
 const { writeLessonCode } = require('./build-lessons.js');
@@ -2311,6 +2312,7 @@ const ARTIFACTS = ${JSON.stringify(artifacts, null, 2)};
 
   syncCounts(totalLessons, phases.length, artifacts.length);
   writeSponsorsPage();
+  writeLandscape();
   syncCertificationStats(certifications);
   syncReadme(totalLessons);
   const projects = buildProjectData().projects;
@@ -2382,6 +2384,7 @@ function writeSitemap(lessonManifest, glossaryCount, certifications, projects, h
     { loc: '/contact.html', priority: '0.3', freq: 'yearly' },
     { loc: '/privacy.html', priority: '0.3', freq: 'yearly' },
     { loc: '/sponsors.html', priority: '0.5', freq: 'monthly' },
+    { loc: '/landscape.html', priority: '0.7', freq: 'weekly' },
   ];
   if (glossaryCount > 0) urls.push({ loc: '/glossary.html', priority: '0.6', freq: 'monthly' });
   if (certifications && certifications.programs && certifications.programs.length) {
@@ -2531,6 +2534,7 @@ function writeLlms(phases, glossaryCount, artifactCount, certifications, lessonM
   out += `- [AI Engineering Learning Paths](${SITE_ORIGIN}/learning-paths.html) — four core domain paths and six career routes connected to practical lessons\n`;
   if (glossaryCount > 0) out += `- [Glossary](${SITE_ORIGIN}/glossary.html) — plain-language definitions of ${glossaryCount} terms\n`;
   out += `- [Sponsor the project](${SITE_ORIGIN}/sponsors.html) — sponsorship tiers, rules, and current sponsors from SPONSORS.md\n`;
+  out += `- [AI Engineering Landscape](${SITE_ORIGIN}/landscape.html) - open and closed source AI engineering tools by category, with the data in landscape/entries\n`;
   if (certifications && certifications.programs && certifications.programs.length) {
     out += `\n## Certification preparation\n`;
     out += `Independent, open-source practice material. Practice scores are not official exam scores and completion does not guarantee certification.\n\n`;

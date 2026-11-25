@@ -1,0 +1,9 @@
+{
+  "name": "Orbit",
+  "url": "https://developer.orbitsearch.com/",
+  "category": "context",
+  "description": "Agent login and people context so products can personalize from the first session.",
+  "open_source": false,
+  "x": "orbitai",
+  "logo": "orbit.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Arize Phoenix",
+  "url": "https://phoenix.arize.com",
+  "category": "evaluation",
+  "description": "Tracing and evaluation for model applications.",
+  "open_source": true,
+  "repo": "https://github.com/Arize-ai/phoenix",
+  "logo": "arize-phoenix.png"
+}

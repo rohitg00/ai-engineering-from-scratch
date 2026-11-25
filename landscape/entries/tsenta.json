@@ -1,0 +1,9 @@
+{
+  "name": "Tsenta",
+  "url": "https://tsenta.com/",
+  "category": "work-assistants",
+  "description": "AI agent that auto-applies to jobs on company career pages.",
+  "open_source": false,
+  "x": "tsentaai",
+  "logo": "tsenta.png"
+}

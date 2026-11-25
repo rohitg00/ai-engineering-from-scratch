@@ -1,0 +1,9 @@
+{
+  "name": "Tabby",
+  "url": "https://tabbyml.com",
+  "category": "coding",
+  "description": "Self-hosted coding assistant.",
+  "open_source": true,
+  "repo": "https://github.com/TabbyML/tabby",
+  "logo": "tabby.png"
+}

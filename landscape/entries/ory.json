@@ -1,0 +1,9 @@
+{
+  "name": "Ory",
+  "url": "https://ory.com",
+  "category": "identity",
+  "description": "Identity, OAuth2 and permission services.",
+  "open_source": true,
+  "repo": "https://github.com/ory/kratos",
+  "logo": "ory.png"
+}

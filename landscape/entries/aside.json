@@ -1,0 +1,9 @@
+{
+  "name": "Aside",
+  "url": "https://aside.com/",
+  "category": "browser-infra",
+  "description": "An AI assistant that is also a browser.",
+  "open_source": false,
+  "x": "AsideAI",
+  "logo": "aside.png"
+}

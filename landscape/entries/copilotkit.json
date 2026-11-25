@@ -1,0 +1,9 @@
+{
+  "name": "CopilotKit",
+  "url": "https://copilotkit.ai",
+  "category": "builders",
+  "description": "React framework for in-app agents.",
+  "open_source": true,
+  "repo": "https://github.com/CopilotKit/CopilotKit",
+  "logo": "copilotkit.png"
+}

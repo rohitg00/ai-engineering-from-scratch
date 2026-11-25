@@ -1,0 +1,9 @@
+{
+  "name": "Firecracker",
+  "url": "https://firecracker-microvm.github.io",
+  "category": "sandboxes",
+  "description": "MicroVMs for secure multi-tenant workloads.",
+  "open_source": true,
+  "repo": "https://github.com/firecracker-microvm/firecracker",
+  "logo": "firecracker.png"
+}

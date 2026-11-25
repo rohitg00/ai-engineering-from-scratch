@@ -1,0 +1,8 @@
+{
+  "name": "Cloudflare Vectorize",
+  "url": "https://developers.cloudflare.com/vectorize",
+  "category": "databases",
+  "description": "Vector database on the Cloudflare network.",
+  "open_source": false,
+  "logo": "cloudflare-vectorize.png"
+}

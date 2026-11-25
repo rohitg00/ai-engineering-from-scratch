@@ -1,0 +1,9 @@
+{
+  "name": "fastai",
+  "url": "https://fast.ai",
+  "category": "training",
+  "description": "Deep learning library with high-level training APIs.",
+  "open_source": true,
+  "repo": "https://github.com/fastai/fastai",
+  "logo": "fastai.png"
+}

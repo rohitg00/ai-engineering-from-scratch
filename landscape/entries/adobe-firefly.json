@@ -1,0 +1,8 @@
+{
+  "name": "Adobe Firefly",
+  "url": "https://firefly.adobe.com",
+  "category": "media",
+  "description": "Image, video and audio generation from Adobe.",
+  "open_source": false,
+  "logo": "adobe-firefly.png"
+}

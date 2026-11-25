@@ -1,0 +1,9 @@
+{
+  "name": "Faiss",
+  "url": "https://faiss.ai",
+  "category": "databases",
+  "description": "Library for similarity search of dense vectors.",
+  "open_source": true,
+  "repo": "https://github.com/facebookresearch/faiss",
+  "logo": "faiss.png"
+}

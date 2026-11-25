@@ -1,0 +1,8 @@
+{
+  "name": "SambaNova",
+  "url": "https://sambanova.ai",
+  "category": "inference-providers",
+  "description": "Model inference on custom dataflow hardware.",
+  "open_source": false,
+  "logo": "sambanova.png"
+}

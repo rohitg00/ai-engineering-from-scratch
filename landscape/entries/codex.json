@@ -1,0 +1,12 @@
+{
+  "name": "Codex",
+  "url": "https://openai.com/codex",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Coding agent from OpenAI for the terminal, IDE and cloud.",
+  "open_source": true,
+  "repo": "https://github.com/openai/codex",
+  "logo": "codex.png"
+}

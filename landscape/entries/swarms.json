@@ -1,0 +1,9 @@
+{
+  "name": "Swarms",
+  "url": "https://swarms.ai",
+  "category": "agents",
+  "description": "Framework for orchestrating many agents.",
+  "open_source": true,
+  "repo": "https://github.com/kyegomez/swarms",
+  "logo": "swarms.png"
+}

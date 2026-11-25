@@ -1,0 +1,9 @@
+{
+  "name": "HiringCafe",
+  "url": "https://hiring.cafe/",
+  "category": "work-assistants",
+  "description": "Job search engine with Talent Agent, which finds matching roles for you every day.",
+  "open_source": false,
+  "x": "hiring_cafe",
+  "logo": "hiringcafe.png"
+}

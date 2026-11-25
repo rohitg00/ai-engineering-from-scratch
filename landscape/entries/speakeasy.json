@@ -1,0 +1,8 @@
+{
+  "name": "Speakeasy",
+  "url": "https://speakeasy.com",
+  "category": "connectors",
+  "description": "Generates SDKs, docs and MCP servers from OpenAPI.",
+  "open_source": false,
+  "logo": "speakeasy.png"
+}

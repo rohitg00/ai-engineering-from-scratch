@@ -1,0 +1,8 @@
+{
+  "name": "Jarvislabs",
+  "url": "https://jarvislabs.ai",
+  "category": "gpu-clouds",
+  "description": "GPU instances for training and experiments.",
+  "open_source": false,
+  "logo": "jarvislabs.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Apache Iceberg",
+  "url": "https://iceberg.apache.org",
+  "category": "data-platforms",
+  "description": "Table format for large analytic datasets.",
+  "open_source": true,
+  "repo": "https://github.com/apache/iceberg",
+  "logo": "apache-iceberg.png"
+}

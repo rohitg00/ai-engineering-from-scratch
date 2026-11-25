@@ -1,0 +1,9 @@
+{
+  "name": "assistant-ui",
+  "url": "https://assistant-ui.com",
+  "category": "builders",
+  "description": "React components for AI chat.",
+  "open_source": true,
+  "repo": "https://github.com/assistant-ui/assistant-ui",
+  "logo": "assistant-ui.png"
+}

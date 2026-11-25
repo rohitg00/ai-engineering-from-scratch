@@ -1,0 +1,9 @@
+{
+  "name": "Auth0 AI Token Vault",
+  "url": "https://auth0.com/ai",
+  "category": "identity",
+  "description": "Identity and token vault so agents can call APIs securely.",
+  "open_source": false,
+  "x": "auth0",
+  "logo": "auth0-ai-token-vault.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Symphony",
+  "url": "https://github.com/openai/symphony",
+  "category": "orchestrators",
+  "description": "Orchestrates coding agents from project work items.",
+  "open_source": true,
+  "repo": "https://github.com/openai/symphony",
+  "logo": "symphony.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Kong AI Gateway",
+  "url": "https://konghq.com",
+  "category": "gateways",
+  "description": "API gateway with plugins for model traffic.",
+  "open_source": false,
+  "logo": "kong-ai-gateway.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Udio",
+  "url": "https://udio.com",
+  "category": "media",
+  "description": "Music generation from text.",
+  "open_source": false,
+  "logo": "udio.png"
+}

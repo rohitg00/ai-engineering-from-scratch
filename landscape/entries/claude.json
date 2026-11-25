@@ -1,0 +1,8 @@
+{
+  "name": "Claude",
+  "url": "https://claude.ai",
+  "category": "chat-assistants",
+  "description": "Chat assistant from Anthropic for writing, analysis and code.",
+  "open_source": false,
+  "logo": "claude.png"
+}

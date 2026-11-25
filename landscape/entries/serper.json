@@ -1,0 +1,8 @@
+{
+  "name": "Serper",
+  "url": "https://serper.dev",
+  "category": "search",
+  "description": "Google search results API.",
+  "open_source": false,
+  "logo": "serper.png"
+}

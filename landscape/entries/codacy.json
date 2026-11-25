@@ -1,0 +1,8 @@
+{
+  "name": "Codacy",
+  "url": "https://codacy.com",
+  "category": "review",
+  "description": "Automated code quality and security checks.",
+  "open_source": false,
+  "logo": "codacy.png"
+}

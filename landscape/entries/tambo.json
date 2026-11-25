@@ -1,0 +1,9 @@
+{
+  "name": "Tambo",
+  "url": "https://tambo.co",
+  "category": "builders",
+  "description": "Generative UI toolkit for React.",
+  "open_source": true,
+  "repo": "https://github.com/tambo-ai/tambo",
+  "logo": "tambo.png"
+}

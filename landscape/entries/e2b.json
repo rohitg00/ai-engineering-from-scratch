@@ -1,0 +1,10 @@
+{
+  "name": "E2B",
+  "url": "https://e2b.dev/",
+  "category": "sandboxes",
+  "description": "Cloud sandboxes and runtime for enterprise AI agents.",
+  "open_source": true,
+  "repo": "https://github.com/e2b-dev/E2B",
+  "x": "e2b",
+  "logo": "e2b.png"
+}

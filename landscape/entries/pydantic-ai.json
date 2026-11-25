@@ -1,0 +1,9 @@
+{
+  "name": "Pydantic AI",
+  "url": "https://ai.pydantic.dev",
+  "category": "agents",
+  "description": "Agent framework with typed outputs.",
+  "open_source": true,
+  "repo": "https://github.com/pydantic/pydantic-ai",
+  "logo": "pydantic-ai.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Orgo",
+  "url": "https://www.orgo.ai/",
+  "category": "computers",
+  "description": "Cloud computers for AI agents.",
+  "open_source": false,
+  "x": "orgo",
+  "logo": "orgo.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Nuclia",
+  "url": "https://nuclia.com",
+  "category": "rag",
+  "description": "RAG service for unstructured data.",
+  "open_source": false,
+  "logo": "nuclia.png"
+}

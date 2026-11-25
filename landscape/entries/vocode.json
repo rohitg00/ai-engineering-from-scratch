@@ -1,0 +1,9 @@
+{
+  "name": "Vocode",
+  "url": "https://vocode.dev",
+  "category": "voice-platforms",
+  "description": "Library for voice agents.",
+  "open_source": true,
+  "repo": "https://github.com/vocodedev/vocode-core",
+  "logo": "vocode.png"
+}

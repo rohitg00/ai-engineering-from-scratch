@@ -1,0 +1,9 @@
+{
+  "name": "Jack & Jill",
+  "url": "https://www.jackandjill.ai/",
+  "category": "work-assistants",
+  "description": "Two agents: Jack finds your next job, Jill recruits for companies.",
+  "open_source": false,
+  "x": "Jackandjillai",
+  "logo": "jack-and-jill.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "ScrapingBee",
+  "url": "https://scrapingbee.com",
+  "category": "search",
+  "description": "Web scraping API that handles browsers and proxies.",
+  "open_source": false,
+  "logo": "scrapingbee.png"
+}

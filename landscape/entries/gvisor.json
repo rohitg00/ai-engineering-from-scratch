@@ -1,0 +1,9 @@
+{
+  "name": "gVisor",
+  "url": "https://gvisor.dev",
+  "category": "sandboxes",
+  "description": "Application kernel that sandboxes containers.",
+  "open_source": true,
+  "repo": "https://github.com/google/gvisor",
+  "logo": "gvisor.png"
+}

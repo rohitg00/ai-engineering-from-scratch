@@ -1,0 +1,9 @@
+{
+  "name": "Ibis",
+  "url": "https://ibis-project.org",
+  "category": "data-platforms",
+  "description": "Portable DataFrame API for many backends.",
+  "open_source": true,
+  "repo": "https://github.com/ibis-project/ibis",
+  "logo": "ibis.png"
+}

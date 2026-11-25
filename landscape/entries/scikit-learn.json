@@ -1,0 +1,9 @@
+{
+  "name": "scikit-learn",
+  "url": "https://scikit-learn.org",
+  "category": "training",
+  "description": "Classical machine learning library for Python.",
+  "open_source": true,
+  "repo": "https://github.com/scikit-learn/scikit-learn",
+  "logo": "scikit-learn.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "MemOS",
+  "url": "https://memos.openmem.net",
+  "category": "memory",
+  "description": "Memory operating system for language models.",
+  "open_source": true,
+  "repo": "https://github.com/MemTensor/MemOS",
+  "logo": "memos.png"
+}

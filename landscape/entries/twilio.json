@@ -1,0 +1,8 @@
+{
+  "name": "Twilio",
+  "url": "https://twilio.com",
+  "category": "voice-platforms",
+  "description": "Voice, messaging and video APIs.",
+  "open_source": false,
+  "logo": "twilio.png"
+}

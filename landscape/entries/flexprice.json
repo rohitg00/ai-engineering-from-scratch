@@ -1,0 +1,9 @@
+{
+  "name": "Flexprice",
+  "url": "https://flexprice.io",
+  "category": "payments",
+  "description": "Usage metering and billing for AI companies.",
+  "open_source": true,
+  "repo": "https://github.com/flexprice/flexprice",
+  "logo": "flexprice.png"
+}

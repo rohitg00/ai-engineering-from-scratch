@@ -1,0 +1,9 @@
+{
+  "name": "Hatchet",
+  "url": "https://hatchet.run",
+  "category": "orchestration",
+  "description": "Task queue and durable workflow engine.",
+  "open_source": true,
+  "repo": "https://github.com/hatchet-dev/hatchet",
+  "logo": "hatchet.png"
+}

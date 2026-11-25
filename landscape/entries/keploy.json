@@ -1,0 +1,9 @@
+{
+  "name": "Keploy",
+  "url": "https://keploy.io",
+  "category": "review",
+  "description": "Generates tests and mocks from real traffic.",
+  "open_source": true,
+  "repo": "https://github.com/keploy/keploy",
+  "logo": "keploy.png"
+}

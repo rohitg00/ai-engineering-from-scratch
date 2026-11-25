@@ -1,0 +1,9 @@
+{
+  "name": "Inspect",
+  "url": "https://inspect.aisi.org.uk",
+  "category": "evaluation",
+  "description": "Framework for large language model evaluations.",
+  "open_source": true,
+  "repo": "https://github.com/UKGovernmentBEIS/inspect_ai",
+  "logo": "inspect.png"
+}

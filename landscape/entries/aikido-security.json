@@ -1,0 +1,8 @@
+{
+  "name": "Aikido Security",
+  "url": "https://aikido.dev",
+  "category": "security",
+  "description": "Code and cloud security with automated fixes.",
+  "open_source": false,
+  "logo": "aikido-security.png"
+}

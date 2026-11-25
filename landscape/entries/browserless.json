@@ -1,0 +1,10 @@
+{
+  "name": "Browserless",
+  "url": "https://www.browserless.io/",
+  "category": "browser-infra",
+  "description": "Hosted browsers for AI agents.",
+  "open_source": true,
+  "repo": "https://github.com/browserless/browserless",
+  "x": "browserless",
+  "logo": "browserless.png"
+}

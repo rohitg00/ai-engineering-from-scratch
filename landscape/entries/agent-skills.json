@@ -1,0 +1,9 @@
+{
+  "name": "Agent Skills",
+  "url": "https://agentskills.io",
+  "category": "protocols",
+  "description": "Open format for packaging skills for agents.",
+  "open_source": true,
+  "repo": "https://github.com/agentskills/agentskills",
+  "logo": "agent-skills.png"
+}

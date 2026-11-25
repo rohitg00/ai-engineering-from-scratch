@@ -1,0 +1,8 @@
+{
+  "name": "Lakera",
+  "url": "https://lakera.ai",
+  "category": "security",
+  "description": "Runtime protection against prompt attacks.",
+  "open_source": false,
+  "logo": "lakera.png"
+}

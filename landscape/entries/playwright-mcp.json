@@ -1,0 +1,9 @@
+{
+  "name": "Playwright MCP",
+  "url": "https://github.com/microsoft/playwright-mcp",
+  "category": "browser-infra",
+  "description": "MCP server for browser automation with Playwright.",
+  "open_source": true,
+  "repo": "https://github.com/microsoft/playwright-mcp",
+  "logo": "playwright-mcp.png"
+}

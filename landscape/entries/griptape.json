@@ -1,0 +1,9 @@
+{
+  "name": "Griptape",
+  "url": "https://griptape.ai",
+  "category": "agents",
+  "description": "Python framework for agents and workflows.",
+  "open_source": true,
+  "repo": "https://github.com/griptape-ai/griptape",
+  "logo": "griptape.png"
+}

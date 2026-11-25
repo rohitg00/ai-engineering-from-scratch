@@ -1,0 +1,9 @@
+{
+  "name": "Keras",
+  "url": "https://keras.io",
+  "category": "training",
+  "description": "High-level deep learning API for several backends.",
+  "open_source": true,
+  "repo": "https://github.com/keras-team/keras",
+  "logo": "keras.png"
+}

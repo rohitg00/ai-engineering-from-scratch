@@ -1,0 +1,9 @@
+{
+  "name": "LocalAI",
+  "url": "https://localai.io",
+  "category": "inference",
+  "description": "Self-hosted server with an OpenAI-compatible API.",
+  "open_source": true,
+  "repo": "https://github.com/mudler/LocalAI",
+  "logo": "localai.png"
+}

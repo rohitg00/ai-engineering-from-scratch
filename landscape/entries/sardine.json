@@ -1,0 +1,9 @@
+{
+  "name": "Sardine",
+  "url": "https://www.sardine.ai/",
+  "category": "payments",
+  "description": "Agentic financial-crime platform for fraud prevention and AML.",
+  "open_source": false,
+  "x": "sardine",
+  "logo": "sardine.png"
+}

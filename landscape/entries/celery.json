@@ -1,0 +1,9 @@
+{
+  "name": "Celery",
+  "url": "https://docs.celeryq.dev",
+  "category": "orchestration",
+  "description": "Distributed task queue for Python.",
+  "open_source": true,
+  "repo": "https://github.com/celery/celery",
+  "logo": "celery.png"
+}

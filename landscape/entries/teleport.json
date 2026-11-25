@@ -1,0 +1,9 @@
+{
+  "name": "Teleport",
+  "url": "https://goteleport.com",
+  "category": "identity",
+  "description": "Access to infrastructure with identity.",
+  "open_source": true,
+  "repo": "https://github.com/gravitational/teleport",
+  "logo": "teleport.png"
+}

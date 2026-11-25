@@ -1,0 +1,8 @@
+{
+  "name": "Hyperbrowser",
+  "url": "https://hyperbrowser.ai",
+  "category": "browser-infra",
+  "description": "Cloud browsers for agents.",
+  "open_source": false,
+  "logo": "hyperbrowser.png"
+}

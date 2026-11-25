@@ -1,0 +1,9 @@
+{
+  "name": "Ruflo",
+  "url": "https://github.com/ruvnet/ruflo",
+  "category": "orchestrators",
+  "description": "Orchestration platform for swarms of coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/ruvnet/ruflo",
+  "logo": "ruflo.png"
+}

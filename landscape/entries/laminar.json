@@ -1,0 +1,9 @@
+{
+  "name": "Laminar",
+  "url": "https://laminar.sh",
+  "category": "evaluation",
+  "description": "Tracing and evaluation for agents.",
+  "open_source": true,
+  "repo": "https://github.com/lmnr-ai/lmnr",
+  "logo": "laminar.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Sourcery",
+  "url": "https://sourcery.ai",
+  "category": "review",
+  "description": "Automated code review for pull requests.",
+  "open_source": false,
+  "logo": "sourcery.png"
+}

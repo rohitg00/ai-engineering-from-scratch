@@ -1,0 +1,8 @@
+{
+  "name": "Freestyle",
+  "url": "https://freestyle.sh",
+  "category": "sandboxes",
+  "description": "Infrastructure for running code that agents write.",
+  "open_source": false,
+  "logo": "freestyle.png"
+}

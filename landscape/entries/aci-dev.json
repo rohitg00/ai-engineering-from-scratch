@@ -1,0 +1,9 @@
+{
+  "name": "ACI.dev",
+  "url": "https://aci.dev",
+  "category": "connectors",
+  "description": "Tool-calling platform for agents.",
+  "open_source": true,
+  "repo": "https://github.com/aipotheosis-labs/aci",
+  "logo": "aci-dev.png"
+}

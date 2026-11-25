@@ -1,0 +1,8 @@
+{
+  "name": "Paid",
+  "url": "https://paid.ai",
+  "category": "payments",
+  "description": "Billing and margin tracking for AI agents.",
+  "open_source": false,
+  "logo": "paid.png"
+}

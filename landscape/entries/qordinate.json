@@ -1,0 +1,9 @@
+{
+  "name": "Qordinate",
+  "url": "https://www.qordinate.ai/",
+  "category": "group-chat-agents",
+  "description": "An AI assistant designed for collaborative work.",
+  "open_source": false,
+  "x": "qordinate_ai",
+  "logo": "qordinate.png"
+}

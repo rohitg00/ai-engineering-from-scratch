@@ -1,0 +1,9 @@
+{
+  "name": "Deep Agents",
+  "url": "https://docs.langchain.com/deepagents",
+  "category": "harnesses",
+  "description": "Agent harness with planning, subagents and a file system.",
+  "open_source": true,
+  "repo": "https://github.com/langchain-ai/deepagents",
+  "logo": "deep-agents.png"
+}

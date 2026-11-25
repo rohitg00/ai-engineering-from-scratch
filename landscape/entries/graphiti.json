@@ -1,0 +1,9 @@
+{
+  "name": "Graphiti",
+  "url": "https://github.com/getzep/graphiti",
+  "category": "memory",
+  "description": "Temporal knowledge graphs for agent memory.",
+  "open_source": true,
+  "repo": "https://github.com/getzep/graphiti",
+  "logo": "graphiti.png"
+}

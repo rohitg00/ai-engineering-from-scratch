@@ -1,0 +1,8 @@
+{
+  "name": "Heroku",
+  "url": "https://heroku.com",
+  "category": "hosting",
+  "description": "Platform for deploying apps.",
+  "open_source": false,
+  "logo": "heroku.png"
+}

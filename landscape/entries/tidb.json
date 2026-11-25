@@ -1,0 +1,9 @@
+{
+  "name": "TiDB",
+  "url": "https://pingcap.com",
+  "category": "databases",
+  "description": "Distributed SQL database with vector search.",
+  "open_source": true,
+  "repo": "https://github.com/pingcap/tidb",
+  "logo": "tidb.png"
+}

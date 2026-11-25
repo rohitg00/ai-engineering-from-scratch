@@ -1,0 +1,9 @@
+{
+  "name": "Claude Duet",
+  "url": "https://claude.com/product/claude-duet",
+  "category": "lab-assistants",
+  "description": "A proactive personal agent from Anthropic for work and everyday tasks.",
+  "open_source": false,
+  "x": "claudeai",
+  "logo": "claude-duet.png"
+}

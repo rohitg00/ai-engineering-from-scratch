@@ -1,0 +1,9 @@
+{
+  "name": "Espa",
+  "url": "https://espa.ai/",
+  "category": "work-assistants",
+  "description": "AI assistant that schedules meetings, organizes email and follows through on to-dos.",
+  "open_source": false,
+  "x": "EspaLabs",
+  "logo": "espa.png"
+}

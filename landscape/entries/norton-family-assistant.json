@@ -1,0 +1,9 @@
+{
+  "name": "Norton Family Assistant",
+  "url": "https://us.norton.com/products/family-assistant",
+  "category": "home-health-agents",
+  "description": "A secure AI agent for busy parents and families.",
+  "open_source": false,
+  "x": "Norton",
+  "logo": "norton-family-assistant.png"
+}

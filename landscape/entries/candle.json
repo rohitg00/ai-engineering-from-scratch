@@ -1,0 +1,9 @@
+{
+  "name": "Candle",
+  "url": "https://github.com/huggingface/candle",
+  "category": "training",
+  "description": "Minimal machine learning framework for Rust.",
+  "open_source": true,
+  "repo": "https://github.com/huggingface/candle",
+  "logo": "candle.png"
+}

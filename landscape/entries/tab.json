@@ -1,0 +1,9 @@
+{
+  "name": "Tab",
+  "url": "https://tab.bot/",
+  "category": "personal-assistants",
+  "description": "A personal AI assistant in Messages.",
+  "open_source": false,
+  "x": "tabdotbot",
+  "logo": "tab.png"
+}

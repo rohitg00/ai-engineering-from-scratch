@@ -1,0 +1,9 @@
+{
+  "name": "Sai",
+  "url": "https://www.sai.work/",
+  "category": "work-assistants",
+  "description": "Robosecretary that runs work on an autonomous computer fleet, from Simular.",
+  "open_source": false,
+  "x": "sai_borg",
+  "logo": "sai.png"
+}

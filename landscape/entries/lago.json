@@ -1,0 +1,9 @@
+{
+  "name": "Lago",
+  "url": "https://getlago.com",
+  "category": "payments",
+  "description": "Usage-based billing.",
+  "open_source": true,
+  "repo": "https://github.com/getlago/lago",
+  "logo": "lago.png"
+}

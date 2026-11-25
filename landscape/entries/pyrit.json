@@ -1,0 +1,9 @@
+{
+  "name": "PyRIT",
+  "url": "https://azure.github.io/PyRIT",
+  "category": "security",
+  "description": "Red teaming framework for generative AI.",
+  "open_source": true,
+  "repo": "https://github.com/microsoft/PyRIT",
+  "logo": "pyrit.png"
+}

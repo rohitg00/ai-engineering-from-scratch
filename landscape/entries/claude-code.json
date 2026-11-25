@@ -1,0 +1,11 @@
+{
+  "name": "Claude Code",
+  "url": "https://claude.com/product/claude-code",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Coding agent from Anthropic that works in the terminal and IDE.",
+  "open_source": false,
+  "logo": "claude-code.png"
+}

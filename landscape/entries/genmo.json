@@ -1,0 +1,9 @@
+{
+  "name": "Genmo",
+  "url": "https://genmo.ai",
+  "category": "media",
+  "description": "Open video generation models.",
+  "open_source": true,
+  "repo": "https://github.com/genmoai/mochi",
+  "logo": "genmo.png"
+}

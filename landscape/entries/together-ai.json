@@ -1,0 +1,8 @@
+{
+  "name": "Together AI",
+  "url": "https://together.ai",
+  "category": "inference-providers",
+  "description": "Hosted inference and fine-tuning for open models.",
+  "open_source": false,
+  "logo": "together-ai.png"
+}

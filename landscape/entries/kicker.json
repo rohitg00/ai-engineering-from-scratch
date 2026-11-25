@@ -1,0 +1,9 @@
+{
+  "name": "Kicker",
+  "url": "https://kickerai.xyz/",
+  "category": "home-health-agents",
+  "description": "AI health friend that connects wearables and your calendar to keep you on track.",
+  "open_source": false,
+  "x": "kickerai",
+  "logo": "kicker.png"
+}

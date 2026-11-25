@@ -1,0 +1,8 @@
+{
+  "name": "Picovoice",
+  "url": "https://picovoice.ai",
+  "category": "voice-apis",
+  "description": "On-device voice recognition and wake words.",
+  "open_source": false,
+  "logo": "picovoice.png"
+}

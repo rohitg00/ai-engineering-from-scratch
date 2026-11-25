@@ -1,0 +1,9 @@
+{
+  "name": "SST",
+  "url": "https://sst.dev",
+  "category": "hosting",
+  "description": "Framework for building on your own cloud account.",
+  "open_source": true,
+  "repo": "https://github.com/sst/sst",
+  "logo": "sst.png"
+}

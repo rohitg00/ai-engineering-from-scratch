@@ -1,0 +1,9 @@
+{
+  "name": "txtai",
+  "url": "https://neuml.github.io/txtai",
+  "category": "rag",
+  "description": "Embeddings database for search and workflows.",
+  "open_source": true,
+  "repo": "https://github.com/neuml/txtai",
+  "logo": "txtai.png"
+}

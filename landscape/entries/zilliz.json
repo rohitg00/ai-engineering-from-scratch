@@ -1,0 +1,8 @@
+{
+  "name": "Zilliz",
+  "url": "https://zilliz.com",
+  "category": "databases",
+  "description": "Managed Milvus vector database.",
+  "open_source": false,
+  "logo": "zilliz.png"
+}

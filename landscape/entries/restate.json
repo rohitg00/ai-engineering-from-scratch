@@ -1,0 +1,9 @@
+{
+  "name": "Restate",
+  "url": "https://restate.dev",
+  "category": "orchestration",
+  "description": "Durable execution engine for services and agents.",
+  "open_source": true,
+  "repo": "https://github.com/restatedev/restate",
+  "logo": "restate.png"
+}

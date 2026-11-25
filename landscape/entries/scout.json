@@ -1,0 +1,9 @@
+{
+  "name": "Scout",
+  "url": "https://shoponscout.com/",
+  "category": "shopping-agents",
+  "description": "A voice-based shopping assistant.",
+  "open_source": false,
+  "x": "ShopOnScout",
+  "logo": "scout.png"
+}

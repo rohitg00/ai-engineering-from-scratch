@@ -1,0 +1,9 @@
+{
+  "name": "Tasklet",
+  "url": "https://tasklet.ai/",
+  "category": "work-assistants",
+  "description": "Agents for running business workflows.",
+  "open_source": false,
+  "x": "taskletai",
+  "logo": "tasklet.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Moonvalley",
+  "url": "https://moonvalley.com",
+  "category": "media",
+  "description": "Video generation trained on licensed data.",
+  "open_source": false,
+  "logo": "moonvalley.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Hark",
+  "url": "https://hark.com/",
+  "category": "personal-assistants",
+  "description": "A personal AI assistant for delegated tasks.",
+  "open_source": false,
+  "x": "hark_labs",
+  "logo": "hark.png"
+}

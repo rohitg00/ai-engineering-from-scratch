@@ -1,0 +1,8 @@
+{
+  "name": "Coval",
+  "url": "https://coval.dev",
+  "category": "voice-platforms",
+  "description": "Simulation and evaluation for voice and chat agents.",
+  "open_source": false,
+  "logo": "coval.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "asaply",
+  "url": "https://asaply.ai/",
+  "category": "personal-assistants",
+  "description": "Text-based errand assistant for coffee, tickets, rides and pickups.",
+  "open_source": false,
+  "x": "AsaplyAi",
+  "logo": "asaply.png"
+}

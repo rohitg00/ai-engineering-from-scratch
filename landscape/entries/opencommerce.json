@@ -1,0 +1,9 @@
+{
+  "name": "opencommerce",
+  "url": "https://opencommerce.sh/",
+  "category": "commerce",
+  "description": "A unified API for purchases across stores.",
+  "open_source": false,
+  "x": "agentcardhq",
+  "logo": "opencommerce.png"
+}

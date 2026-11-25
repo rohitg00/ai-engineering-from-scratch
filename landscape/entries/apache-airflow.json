@@ -1,0 +1,9 @@
+{
+  "name": "Apache Airflow",
+  "url": "https://airflow.apache.org",
+  "category": "orchestration",
+  "description": "Scheduler for data and ML pipelines.",
+  "open_source": true,
+  "repo": "https://github.com/apache/airflow",
+  "logo": "apache-airflow.png"
+}

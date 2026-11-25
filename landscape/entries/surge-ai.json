@@ -1,0 +1,8 @@
+{
+  "name": "Surge AI",
+  "url": "https://surgehq.ai",
+  "category": "data",
+  "description": "Human data labeling for language models.",
+  "open_source": false,
+  "logo": "surge-ai.png"
+}

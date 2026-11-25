@@ -1,0 +1,9 @@
+{
+  "name": "Khoj",
+  "url": "https://khoj.dev",
+  "category": "builders",
+  "description": "Self-hostable personal AI for search and chat.",
+  "open_source": true,
+  "repo": "https://github.com/khoj-ai/khoj",
+  "logo": "khoj.png"
+}

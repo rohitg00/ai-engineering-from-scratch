@@ -1,0 +1,8 @@
+{
+  "name": "Stripe",
+  "url": "https://stripe.com",
+  "category": "payments",
+  "description": "Payments, billing and agentic commerce tools.",
+  "open_source": false,
+  "logo": "stripe.png"
+}

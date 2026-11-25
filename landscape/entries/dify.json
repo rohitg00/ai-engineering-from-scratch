@@ -1,0 +1,9 @@
+{
+  "name": "Dify",
+  "url": "https://dify.ai",
+  "category": "agent-platforms",
+  "description": "Platform for building agent and workflow apps.",
+  "open_source": true,
+  "repo": "https://github.com/langgenius/dify",
+  "logo": "dify.png"
+}

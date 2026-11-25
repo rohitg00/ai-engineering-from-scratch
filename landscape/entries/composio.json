@@ -1,0 +1,10 @@
+{
+  "name": "Composio",
+  "url": "https://composio.dev/",
+  "category": "connectors",
+  "description": "Integrations that give AI agents access to apps and tools.",
+  "open_source": true,
+  "repo": "https://github.com/ComposioHQ/composio",
+  "x": "composio",
+  "logo": "composio.png"
+}

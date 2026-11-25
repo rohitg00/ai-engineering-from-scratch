@@ -1,0 +1,8 @@
+{
+  "name": "Stream",
+  "url": "https://getstream.io",
+  "category": "messaging",
+  "description": "Chat, video and activity feed APIs.",
+  "open_source": false,
+  "logo": "stream.png"
+}

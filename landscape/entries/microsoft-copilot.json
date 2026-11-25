@@ -1,0 +1,9 @@
+{
+  "name": "Microsoft Copilot",
+  "url": "https://copilot.com/",
+  "category": "chat-assistants",
+  "description": "An AI assistant across Windows, Microsoft 365, and the web.",
+  "open_source": false,
+  "x": "Microsoft",
+  "logo": "microsoft-copilot.png"
+}

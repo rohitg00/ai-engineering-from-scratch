@@ -1,0 +1,8 @@
+{
+  "name": "Plivo",
+  "url": "https://plivo.com",
+  "category": "voice-platforms",
+  "description": "Voice and messaging APIs with voice agents.",
+  "open_source": false,
+  "logo": "plivo.png"
+}

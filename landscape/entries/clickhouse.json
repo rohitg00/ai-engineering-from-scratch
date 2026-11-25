@@ -1,0 +1,9 @@
+{
+  "name": "ClickHouse",
+  "url": "https://clickhouse.com",
+  "category": "databases",
+  "description": "Column database for real-time analytics.",
+  "open_source": true,
+  "repo": "https://github.com/ClickHouse/ClickHouse",
+  "logo": "clickhouse.png"
+}

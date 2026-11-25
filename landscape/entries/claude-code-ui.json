@@ -1,0 +1,9 @@
+{
+  "name": "Claude Code UI",
+  "url": "https://github.com/siteboon/claudecodeui",
+  "category": "orchestrators",
+  "description": "Web and mobile interface for coding agent sessions.",
+  "open_source": true,
+  "repo": "https://github.com/siteboon/claudecodeui",
+  "logo": "claude-code-ui.png"
+}
