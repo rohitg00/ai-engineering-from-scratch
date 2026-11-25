@@ -98,6 +98,7 @@ A maintainer merges valid entries within 7 days.
 | `node site/build-landscape.js --check` | Checks every entry and logo file. No network. |
 | `node site/build-landscape.js --check --remote` | Also downloads each pending `logo_url` and checks the file. |
 | `node site/build-landscape.js --fetch-logos` | Saves each pending `logo_url` into `site/logos/landscape/`. |
+| `node site/build-landscape.js --stars <entry files>` | Reads the star count of each open source repository and fails below 2,500. CI runs it on the entries a pull request adds or changes. |
 | `node site/build-landscape.js` | Writes `site/landscape-data.js`. |
 | `node --test site/test_landscape.js` | Runs the tests. |
 

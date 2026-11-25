@@ -2,10 +2,16 @@
 
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
+const { Readable } = require('node:stream');
 const test = require('node:test');
+const zlib = require('node:zlib');
 const rules = require('./landscape-rules.js');
-const { loadLandscape, publicData, writeLandscape } = require('./build-landscape.js');
+const {
+  loadLandscape, publicData, packLogos, writeLandscape, logoProblems,
+  isPublicAddress, publicLookup, readCapped, checkStars
+} = require('./build-landscape.js');
 
 const CATEGORY_IDS = ['models', 'evaluation'];
 const VALID = {
@@ -17,6 +23,49 @@ const VALID = {
   repo: 'https://github.com/acme/evals',
   logo_url: 'https://acme.dev/logo.svg'
 };
+
+function chunk(type, data) {
+  const head = Buffer.alloc(8);
+  head.writeUInt32BE(data.length, 0);
+  head.write(type, 4, 'ascii');
+  const crc = Buffer.alloc(4);
+  crc.writeUInt32BE(zlib.crc32(Buffer.concat([Buffer.from(type, 'ascii'), data])), 0);
+  return Buffer.concat([head, data, crc]);
+}
+
+// A real RGBA PNG: a header, deflated scanlines for every row, and an end chunk.
+function makePng(width, height, { pixels } = {}) {
+  const header = Buffer.alloc(13);
+  header.writeUInt32BE(width, 0);
+  header.writeUInt32BE(height, 4);
+  header[8] = 8;
+  header[9] = 6;
+  const rows = pixels || Buffer.alloc(height * (1 + width * 4), 0x7f).fill(0, 0, 0);
+  if (!pixels) for (let y = 0; y < height; y += 1) rows[y * (1 + width * 4)] = 0;
+  return Buffer.concat([
+    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
+    chunk('IHDR', header),
+    chunk('IDAT', zlib.deflateSync(rows)),
+    chunk('IEND', Buffer.alloc(0))
+  ]);
+}
+
+const FIXTURE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z"/></svg>';
+
+function fixture(entries, logos) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'landscape-'));
+  const dirs = { entryDir: path.join(root, 'entries'), logoDir: path.join(root, 'logos'), categoryPath: path.join(root, 'categories.json') };
+  fs.mkdirSync(dirs.entryDir);
+  fs.mkdirSync(dirs.logoDir);
+  const categories = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'landscape', 'categories.json'), 'utf8')).slice(0, 2)
+    .map(({ pinned, featured, sponsors, ...category }) => category);
+  fs.writeFileSync(dirs.categoryPath, JSON.stringify(categories));
+  for (const [slug, entry] of Object.entries(entries)) {
+    fs.writeFileSync(path.join(dirs.entryDir, `${slug}.json`), JSON.stringify({ ...VALID, logo_url: undefined, category: categories[0].id, ...entry }));
+  }
+  for (const [name, bytes] of Object.entries(logos)) fs.writeFileSync(path.join(dirs.logoDir, name), bytes);
+  return dirs;
+}
 
 function errorsFor(change, slug = 'acme-evals') {
   const entry = { ...VALID, ...change };
@@ -32,14 +81,19 @@ test('the committed landscape has no problems', () => {
   for (const category of landscape.categories) assert.ok(category.group, category.id);
 });
 
-test('every committed entry shows a real logo and a known category', () => {
-  const data = publicData(loadLandscape());
+test('every committed entry shows a real logo or waits for its logo_url, in a known category', () => {
+  const landscape = loadLandscape();
+  const pending = new Set(landscape.entries.filter((entry) => !entry.logo).map((entry) => entry.slug));
+  for (const entry of landscape.entries) {
+    if (pending.has(entry.slug)) assert.ok(entry.logo_url, `${entry.slug} has neither a logo file nor a logo_url`);
+  }
+  const data = publicData(landscape);
   const ids = new Set(data.categories.map((category) => category.id));
   for (const entry of data.entries) {
     assert.ok(ids.has(entry.category), `${entry.slug} category`);
-    assert.ok(entry.logo, `${entry.slug} logo`);
-    assert.ok(fs.existsSync(path.join(__dirname, entry.logo)), `${entry.slug} logo file`);
     assert.equal(entry.logo_url, undefined);
+    if (pending.has(entry.slug)) assert.equal(entry.logo, null, `${entry.slug} logo`);
+    else assert.ok(fs.existsSync(path.join(__dirname, entry.logo)), `${entry.slug} logo file`);
   }
   for (const category of data.categories) assert.match(category.learn, /^\/phase\/[a-z0-9-]+$/);
 });
@@ -50,11 +104,95 @@ test('logo packs hold every logo at the recorded offset', () => {
   for (const name of data.packs) assert.match(name, /^landscape-logos-\d+-[0-9a-f]{10}\.bin$/);
   const packs = data.packs.map((name) => fs.readFileSync(path.join(__dirname, name)));
   for (const entry of data.entries) {
+    if (!entry.logo) {
+      assert.equal(entry.pack, undefined, entry.slug);
+      continue;
+    }
     const [index, offset, length] = entry.pack;
     const original = fs.readFileSync(path.join(__dirname, entry.logo));
     assert.equal(length, original.length, entry.slug);
     assert.ok(packs[index].subarray(offset, offset + length).equals(original), entry.slug);
   }
+});
+
+test('a pending logo_url entry builds without a logo or pack, next to a local one', () => {
+  const png = makePng(64, 64);
+  const dirs = fixture({
+    'acme-evals': { logo_url: 'https://acme.dev/logo.png' },
+    'beta-evals': { name: 'Beta Evals', logo: 'beta-evals.png' }
+  }, { 'beta-evals.png': png });
+  const landscape = loadLandscape(dirs);
+  assert.deepEqual(landscape.errors, []);
+  const data = publicData(landscape);
+  const packs = packLogos(data, (entry) => fs.readFileSync(path.join(dirs.logoDir, path.basename(entry.logo))));
+  const pending = data.entries.find((entry) => entry.slug === 'acme-evals');
+  const local = data.entries.find((entry) => entry.slug === 'beta-evals');
+  assert.equal(pending.logo, null);
+  assert.equal(pending.pack, undefined);
+  assert.equal(local.logo, 'logos/landscape/beta-evals.png');
+  const [index, offset, length] = local.pack;
+  assert.ok(packs[index].subarray(offset, offset + length).equals(png));
+});
+
+test('the logo field picks the exact file even when the other type is still there', () => {
+  const dirs = fixture({ 'acme-evals': { logo: 'acme-evals.png' } }, { 'acme-evals.svg': FIXTURE_SVG, 'acme-evals.png': makePng(64, 64) });
+  const landscape = loadLandscape(dirs);
+  assert.equal(landscape.entries[0].logo, 'logos/landscape/acme-evals.png');
+  assert.deepEqual(landscape.errors, ['site/logos/landscape/acme-evals.svg: no entry uses this logo']);
+  const missing = loadLandscape(fixture({ 'acme-evals': { logo: 'acme-evals.png' } }, { 'acme-evals.svg': FIXTURE_SVG }));
+  assert.ok(missing.errors.some((problem) => /acme-evals\.png is missing/.test(problem)), missing.errors.join(' | '));
+});
+
+test('a saved logo_url file is the one that matches the link type', () => {
+  const dirs = fixture({ 'acme-evals': { logo_url: 'https://acme.dev/logo.png' } }, { 'acme-evals.svg': FIXTURE_SVG });
+  const landscape = loadLandscape(dirs);
+  assert.equal(landscape.entries[0].logo, null);
+  assert.deepEqual(landscape.errors, ['site/logos/landscape/acme-evals.svg: no entry uses this logo']);
+});
+
+test('logo downloads only connect to public addresses', async () => {
+  for (const address of ['127.0.0.1', '10.1.2.3', '172.16.0.1', '192.168.1.1', '169.254.169.254', '100.64.0.1', '0.0.0.0', '::1', '::', 'fd00::1', 'fe80::1', '::ffff:127.0.0.1', '64:ff9b::a9fe:a9fe', 'not-an-ip']) {
+    assert.equal(isPublicAddress(address), false, address);
+  }
+  for (const address of ['93.184.216.34', '1.1.1.1', '2606:4700:4700::1111']) assert.equal(isPublicAddress(address), true, address);
+  const resolveTo = (answer) => (hostname, options, callback) => callback(null, ...(options.all ? [answer] : [answer[0].address, answer[0].family]));
+  const lookupWith = (answer, options) => new Promise((resolve) => publicLookup(resolveTo(answer))('logo.example', options, (error, address) => resolve({ error, address })));
+  assert.match((await lookupWith([{ address: '127.0.0.1', family: 4 }], {})).error.message, /private or reserved address \(127\.0\.0\.1\)/);
+  assert.match((await lookupWith([{ address: '1.1.1.1', family: 4 }, { address: '10.0.0.1', family: 4 }], { all: true })).error.message, /10\.0\.0\.1/);
+  assert.deepEqual(await lookupWith([{ address: '1.1.1.1', family: 4 }], {}), { error: null, address: '1.1.1.1' });
+});
+
+test('logo downloads stop reading once the body passes the size limit', async () => {
+  let pulled = 0;
+  const endless = new Readable({ read() { pulled += 1; this.push(Buffer.alloc(16 * 1024)); } });
+  await assert.rejects(readCapped(endless, rules.MAX_LOGO_BYTES), /larger than 100 KB/);
+  assert.ok(pulled * 16 * 1024 <= rules.MAX_LOGO_BYTES + 64 * 1024, `read ${pulled} chunks`);
+  assert.equal((await readCapped(Readable.from([Buffer.from('ab'), Buffer.from('c')]), 10)).toString(), 'abc');
+});
+
+test('the star check reads the threshold from the repository host', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'landscape-stars-'));
+  const write = (slug, entry) => {
+    const file = path.join(root, `${slug}.json`);
+    fs.writeFileSync(file, JSON.stringify({ ...VALID, ...entry }));
+    return file;
+  };
+  const files = [
+    write('popular', { repo: 'https://github.com/acme/popular' }),
+    write('small', { repo: 'https://github.com/acme/small' }),
+    write('hidden', { repo: 'https://github.com/acme/hidden' }),
+    write('closed', { open_source: false, repo: undefined })
+  ];
+  const answers = {
+    'https://github.com/acme/popular': { found: true, stars: rules.MIN_STARS, open: true },
+    'https://github.com/acme/small': { found: true, stars: 12, open: true },
+    'https://github.com/acme/hidden': { found: false }
+  };
+  const result = await checkStars(files, async (repo) => answers[repo]);
+  assert.equal(result.checked, 3);
+  assert.equal(result.errors.length, 2);
+  assert.match(result.errors[0], /small\.json: .* has 12 stars/);
+  assert.match(result.errors[1], /hidden\.json: .* not a public repository/);
 });
 
 test('a complete entry passes', () => {
@@ -80,6 +218,7 @@ test('each broken field is reported in plain words', () => {
     [{ open_source: 'yes' }, /true or false/],
     [{ repo: undefined }, /"repo" is required/],
     [{ repo: 'https://example.com/acme/evals' }, /"repo" is required/],
+    [{ repo: 'https://github.com/../evals' }, /"repo" is required/],
     [{ open_source: false }, /only for open source/],
     [{ open_source: false, repo: undefined, url: 'https://acme.vercel.app' }, /own domain/],
     [{ logo_url: undefined }, /give "logo_url"/],
@@ -134,17 +273,30 @@ test('unsafe SVG files are rejected', () => {
 });
 
 test('PNG logos must be real PNG files of a usable size', () => {
-  const png = (width, height) => {
-    const bytes = Buffer.alloc(32);
-    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]).copy(bytes);
-    bytes.writeUInt32BE(width, 16);
-    bytes.writeUInt32BE(height, 20);
-    return bytes;
-  };
-  assert.deepEqual(rules.pngErrors(png(128, 128)), []);
-  assert.ok(rules.pngErrors(png(16, 16)).length > 0);
+  const good = makePng(128, 128);
+  assert.deepEqual(rules.pngErrors(good), []);
+  assert.deepEqual(logoProblems('png', good), []);
+  assert.ok(rules.pngErrors(makePng(16, 16)).length > 0);
   assert.ok(rules.pngErrors(Buffer.from('<svg></svg>')).length > 0);
-  assert.ok(rules.pngErrors(Buffer.concat([png(128, 128), Buffer.alloc(rules.MAX_LOGO_BYTES)])).length > 0);
+  const huge = Buffer.concat([good.subarray(0, -12), chunk('tEXt', Buffer.alloc(rules.MAX_LOGO_BYTES)), good.subarray(-12)]);
+  assert.match(rules.pngErrors(huge).join(' '), /larger than 100 KB/);
+
+  const headerOnly = Buffer.alloc(32);
+  Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]).copy(headerOnly);
+  headerOnly.writeUInt32BE(128, 16);
+  headerOnly.writeUInt32BE(128, 20);
+  assert.ok(rules.pngErrors(headerOnly).length > 0, 'a signature and size without image data');
+
+  const damaged = Buffer.from(good);
+  damaged[good.length - 20] ^= 0xff;
+  assert.match(rules.pngErrors(damaged).join(' '), /damaged/);
+  assert.match(rules.pngErrors(good.subarray(0, good.length - 12)).join(' '), /cut short/);
+
+  const short = makePng(128, 128, { pixels: Buffer.alloc(10) });
+  assert.deepEqual(rules.pngErrors(short), []);
+  assert.match(logoProblems('png', short).join(' '), /does not match its size/);
+  const garbage = Buffer.concat([good.subarray(0, 33), chunk('IDAT', Buffer.from('not zlib')), good.subarray(-12)]);
+  assert.match(logoProblems('png', garbage).join(' '), /damaged/);
 });
 
 test('the form output is the same shape the check accepts', () => {

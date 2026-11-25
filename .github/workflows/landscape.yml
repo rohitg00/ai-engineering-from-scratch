@@ -31,6 +31,7 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
+          fetch-depth: 2
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -38,6 +39,17 @@ jobs:
         run: node site/build-landscape.js --check
       - name: Check logo links
         run: node site/build-landscape.js --check --remote
+      - name: Check stars for added or changed entries
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          mapfile -t files < <(git diff --name-only --diff-filter=AM HEAD^1 HEAD -- 'landscape/entries/*.json')
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "no added or changed entries"
+            exit 0
+          fi
+          node site/build-landscape.js --stars "${files[@]}"
       - name: Run landscape tests
         run: node --test site/test_landscape.js
 
