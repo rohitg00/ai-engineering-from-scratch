@@ -10,7 +10,7 @@ const zlib = require('node:zlib');
 const rules = require('./landscape-rules.js');
 const {
   loadLandscape, publicData, packLogos, writeLandscape, logoProblems,
-  isPublicAddress, publicLookup, readCapped, checkStars
+  isPublicAddress, publicLookup, readCapped, checkStars, githubStars
 } = require('./build-landscape.js');
 
 const CATEGORY_IDS = ['models', 'evaluation'];
@@ -338,4 +338,37 @@ test('the issue form lists the same categories as categories.json', () => {
   const categories = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'landscape', 'categories.json'), 'utf8'));
   const form = fs.readFileSync(path.join(__dirname, '..', '.github', 'ISSUE_TEMPLATE', 'landscape_tool.yml'), 'utf8');
   for (const category of categories) assert.ok(form.includes(`- ${category.name}\n`), category.name);
+});
+
+test('GitHub stars are read in batches of 50', async () => {
+  const repos = Array.from({ length: 51 }, (_, index) => `https://github.com/acme/tool-${index}`);
+  const queries = [];
+  const realFetch = global.fetch;
+  const realToken = process.env.GITHUB_TOKEN;
+  process.env.GITHUB_TOKEN = 'test-token';
+  global.fetch = async (url, options) => {
+    assert.equal(url, 'https://api.github.com/graphql');
+    assert.equal(options.headers.authorization, 'Bearer test-token');
+    const { query } = JSON.parse(options.body);
+    queries.push(query);
+    const data = {};
+    for (const [, alias, name] of query.matchAll(/(r\d+): repository\(owner: "acme", name: "(tool-\d+)"\)/g)) {
+      data[alias] = name === 'tool-1' ? null : { stargazerCount: name === 'tool-0' ? 9000 : 10, isPrivate: name === 'tool-2' };
+    }
+    return { ok: true, json: async () => ({ data }) };
+  };
+  try {
+    const found = await githubStars(repos);
+    assert.equal(queries.length, 2);
+    assert.equal(found.size, 51);
+    assert.deepEqual(found.get(repos[0]), { found: true, stars: 9000, open: true });
+    assert.deepEqual(found.get(repos[1]), { found: false });
+    assert.deepEqual(found.get(repos[2]), { found: true, stars: 10, open: false });
+    global.fetch = async () => ({ ok: false, status: 502 });
+    await assert.rejects(githubStars(repos.slice(0, 1)), /HTTP 502/);
+  } finally {
+    global.fetch = realFetch;
+    if (realToken === undefined) delete process.env.GITHUB_TOKEN;
+    else process.env.GITHUB_TOKEN = realToken;
+  }
 });

@@ -497,5 +497,4 @@ module.exports = {
   downloadLogo,
   checkStars,
   resolveRemoteLogos,
-  OUTPUT_PATH
-};
+  OUTPUT_PATH, githubStars };
