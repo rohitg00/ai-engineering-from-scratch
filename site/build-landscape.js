@@ -2,8 +2,12 @@
 'use strict';
 
 const crypto = require('node:crypto');
+const dns = require('node:dns');
 const fs = require('node:fs');
+const https = require('node:https');
+const net = require('node:net');
 const path = require('node:path');
+const zlib = require('node:zlib');
 const rules = require('./landscape-rules.js');
 const { phaseSlug, phasePath } = require('../lib/hub-routes');
 
@@ -16,13 +20,27 @@ const LOGO_WEB_PATH = 'logos/landscape';
 const OUTPUT_PATH = path.join(__dirname, 'landscape-data.js');
 const FETCH_TIMEOUT_MS = 15000;
 const PACK_PREFIX = 'landscape-logos-';
+const MAX_REDIRECTS = 5;
+const USER_AGENT = 'ai-engineering-from-scratch-landscape';
+const DEFAULT_DIRS = { entryDir: ENTRY_DIR, categoryPath: CATEGORY_PATH, logoDir: LOGO_DIR };
+
+const BLOCKED_ADDRESSES = new net.BlockList();
+for (const [address, prefix] of [
+  ['0.0.0.0', 8], ['10.0.0.0', 8], ['100.64.0.0', 10], ['127.0.0.0', 8], ['169.254.0.0', 16],
+  ['172.16.0.0', 12], ['192.0.0.0', 24], ['192.0.2.0', 24], ['192.88.99.0', 24], ['192.168.0.0', 16],
+  ['198.18.0.0', 15], ['198.51.100.0', 24], ['203.0.113.0', 24], ['224.0.0.0', 4], ['240.0.0.0', 4]
+]) BLOCKED_ADDRESSES.addSubnet(address, prefix, 'ipv4');
+for (const [address, prefix] of [
+  ['::', 96], ['::1', 128], ['64:ff9b::', 96], ['64:ff9b:1::', 48], ['100::', 64],
+  ['2001::', 23], ['2001:db8::', 32], ['2002::', 16], ['fc00::', 7], ['fe80::', 10], ['fec0::', 10], ['ff00::', 8]
+]) BLOCKED_ADDRESSES.addSubnet(address, prefix, 'ipv6');
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
 
-function loadCategories() {
-  const categories = readJson(CATEGORY_PATH);
+function loadCategories(categoryPath) {
+  const categories = readJson(categoryPath);
   const errors = [];
   const seen = new Set();
   for (const category of categories) {
@@ -39,24 +57,49 @@ function loadCategories() {
   return { categories, errors };
 }
 
-function logoFile(slug, type) {
-  return path.join(LOGO_DIR, `${slug}.${type}`);
+function logoType(name) {
+  const match = /\.(svg|png)$/i.exec(String(name));
+  return match ? match[1].toLowerCase() : null;
 }
 
-function localLogo(slug) {
-  return rules.LOGO_TYPES.find((type) => fs.existsSync(logoFile(slug, type))) || null;
+// The file the entry shows: exactly its "logo", or for a "logo_url" entry the file automation saved for that URL.
+function chosenLogo(slug, entry) {
+  if (typeof entry.logo === 'string') return entry.logo;
+  if (typeof entry.logo_url !== 'string') return null;
+  let pathname;
+  try { pathname = new URL(entry.logo_url).pathname; } catch (_) { return null; }
+  const type = logoType(pathname);
+  return type ? `${slug}.${type}` : null;
+}
+
+function pngDataProblems(bytes) {
+  const png = rules.readPng(bytes);
+  if (png.error) return [];
+  const expected = rules.pngDataLength(png.header);
+  let pixels;
+  try {
+    pixels = zlib.inflateSync(Buffer.concat(png.idat), { maxOutputLength: expected + 1 });
+  } catch (_) {
+    return ['PNG logo image data is damaged or larger than its size says'];
+  }
+  if (pixels.length !== expected) return ['PNG logo image data does not match its size'];
+  return [];
 }
 
 function logoProblems(type, bytes) {
-  return type === 'svg' ? rules.svgErrors(bytes.toString('utf8')) : rules.pngErrors(bytes);
+  if (type === 'svg') return rules.svgErrors(bytes.toString('utf8'));
+  const problems = rules.pngErrors(bytes);
+  return problems.length ? problems : pngDataProblems(bytes);
 }
 
-function loadLandscape() {
-  const { categories, errors } = loadCategories();
+function loadLandscape(dirs = DEFAULT_DIRS) {
+  const { entryDir, categoryPath, logoDir } = { ...DEFAULT_DIRS, ...dirs };
+  const { categories, errors } = loadCategories(categoryPath);
   const categoryIds = categories.map((category) => category.id);
   const entries = [];
   const names = new Map();
-  const files = fs.existsSync(ENTRY_DIR) ? fs.readdirSync(ENTRY_DIR).sort() : [];
+  const files = fs.existsSync(entryDir) ? fs.readdirSync(entryDir).sort() : [];
+  const usedLogos = new Set();
 
   for (const file of files) {
     const label = `${rules.ENTRY_DIR}/${file}`;
@@ -67,15 +110,23 @@ function loadLandscape() {
     const slug = file.slice(0, -'.json'.length);
     let entry;
     try {
-      entry = readJson(path.join(ENTRY_DIR, file));
+      entry = readJson(path.join(entryDir, file));
     } catch (error) {
       errors.push(`${label}: not valid JSON (${error.message})`);
+      for (const type of rules.LOGO_TYPES) usedLogos.add(`${slug}.${type}`);
       continue;
     }
     const entryErrors = rules.validateEntry(slug, entry, categoryIds);
-    const logoType = localLogo(slug);
-    if (entry.logo && !fs.existsSync(path.join(LOGO_DIR, String(entry.logo)))) entryErrors.push(`logo file site/${LOGO_WEB_PATH}/${entry.logo} is missing`);
-    if (logoType) entryErrors.push(...logoProblems(logoType, fs.readFileSync(logoFile(slug, logoType))));
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+      for (const problem of entryErrors) errors.push(`${label}: ${problem}`);
+      continue;
+    }
+    const chosen = chosenLogo(slug, entry);
+    if (chosen) usedLogos.add(chosen);
+    const chosenPath = chosen && path.join(logoDir, path.basename(chosen));
+    const hasLogo = Boolean(chosenPath && fs.existsSync(chosenPath));
+    if (entry.logo && !hasLogo) entryErrors.push(`logo file site/${LOGO_WEB_PATH}/${entry.logo} is missing`);
+    if (hasLogo) entryErrors.push(...logoProblems(logoType(chosen), fs.readFileSync(chosenPath)));
     if (typeof entry.name === 'string') {
       const key = entry.name.trim().toLowerCase();
       if (names.has(key)) entryErrors.push(`"${entry.name}" is already listed in ${names.get(key)}`);
@@ -98,16 +149,15 @@ function loadLandscape() {
       pinned: false,
       featured: false,
       sponsor: false,
-      logo: logoType ? `${LOGO_WEB_PATH}/${slug}.${logoType}` : null,
+      logo: hasLogo ? `${LOGO_WEB_PATH}/${chosen}` : null,
       logo_url: entry.logo_url || null
     });
   }
 
-  if (fs.existsSync(LOGO_DIR)) {
-    const slugs = new Set(files.map((file) => file.replace(/\.json$/, '')));
-    for (const logo of fs.readdirSync(LOGO_DIR)) {
+  if (fs.existsSync(logoDir)) {
+    for (const logo of fs.readdirSync(logoDir)) {
       if (logo.startsWith('.')) continue;
-      if (!slugs.has(logo.replace(/\.(svg|png)$/, ''))) errors.push(`site/${LOGO_WEB_PATH}/${logo}: no entry uses this logo`);
+      if (!usedLogos.has(logo)) errors.push(`site/${LOGO_WEB_PATH}/${logo}: no entry uses this logo`);
     }
   }
 
@@ -144,30 +194,38 @@ function publicData(landscape) {
   };
 }
 
-function packLogos(data) {
+function readSiteLogo(entry) {
+  return fs.readFileSync(path.join(__dirname, entry.logo));
+}
+
+// Records [pack, offset, length] on every entry with a logo and returns the bytes of each pack.
+function packLogos(data, readLogo = readSiteLogo) {
   const groups = [...new Set(data.categories.map((category) => category.group))];
   const groupOf = new Map(data.categories.map((category) => [category.id, groups.indexOf(category.group)]));
   const chunks = groups.map(() => []);
   const sizes = groups.map(() => 0);
   for (const entry of data.entries) {
     if (!entry.logo) continue;
-    const bytes = fs.readFileSync(path.join(__dirname, entry.logo));
+    const bytes = readLogo(entry);
     const index = groupOf.get(entry.category);
     entry.pack = [index, sizes[index], bytes.length];
     chunks[index].push(bytes);
     sizes[index] += bytes.length;
   }
+  return chunks.map((list) => Buffer.concat(list));
+}
+
+function writePacks(data, packs) {
   for (const stale of fs.readdirSync(__dirname)) {
     if (stale.startsWith(PACK_PREFIX) && stale.endsWith('.bin')) fs.unlinkSync(path.join(__dirname, stale));
   }
-  data.packs = chunks.map((list, index) => {
-    const bytes = Buffer.concat(list);
+  data.packs = packs.map((bytes, index) => {
     const hash = crypto.createHash('sha256').update(bytes).digest('hex').slice(0, 10);
     const name = `${PACK_PREFIX}${index}-${hash}.bin`;
     fs.writeFileSync(path.join(__dirname, name), bytes);
     return name;
   });
-  return sizes.reduce((total, size) => total + size, 0);
+  return packs.reduce((total, bytes) => total + bytes.length, 0);
 }
 
 function writeLandscape() {
@@ -176,24 +234,157 @@ function writeLandscape() {
     throw new Error(`landscape has ${landscape.errors.length} problem(s):\n  - ${landscape.errors.join('\n  - ')}`);
   }
   const data = publicData(landscape);
-  const packed = packLogos(data);
+  const packed = writePacks(data, packLogos(data));
   fs.writeFileSync(OUTPUT_PATH, `window.LANDSCAPE = ${JSON.stringify(data)};\n`);
   console.log(`   packed ${data.packs.length} logo files (${Math.round(packed / 1024)} KB)`);
   console.log(`   wrote landscape-data.js (${data.entries.length} tools, ${data.categories.length} categories)`);
   return data;
 }
 
-async function downloadLogo(url) {
-  const response = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
-  if (!response.ok) throw new Error(`logo_url answered HTTP ${response.status}`);
-  if (!rules.parseHttps(response.url)) throw new Error('logo_url redirects to an address that is not public https');
-  const declared = Number(response.headers.get('content-length') || 0);
-  if (declared > rules.MAX_LOGO_BYTES) throw new Error(`logo is larger than ${rules.MAX_LOGO_BYTES / 1024} KB`);
-  const bytes = Buffer.from(await response.arrayBuffer());
-  const type = /\.png$/i.test(new URL(url).pathname) ? 'png' : 'svg';
-  const problems = logoProblems(type, bytes);
-  if (problems.length) throw new Error(problems.join('; '));
-  return { type, bytes };
+function isPublicAddress(address) {
+  const family = net.isIP(String(address));
+  if (!family) return false;
+  return !BLOCKED_ADDRESSES.check(address, family === 6 ? 'ipv6' : 'ipv4');
+}
+
+// Wraps a dns.lookup-style resolver so a connection can only reach public addresses.
+// The check runs on the address the socket connects to, so a DNS answer that changes between checks cannot slip through.
+function publicLookup(resolve = dns.lookup) {
+  return function lookup(hostname, options, callback) {
+    if (typeof options === 'function') {
+      callback = options;
+      options = {};
+    }
+    resolve(hostname, options, (error, address, family) => {
+      if (error) return callback(error);
+      const list = Array.isArray(address) ? address : [{ address, family }];
+      const blocked = list.find((item) => !isPublicAddress(item.address));
+      if (!list.length || blocked) {
+        const problem = new Error(`${hostname} resolves to a private or reserved address${blocked ? ` (${blocked.address})` : ''}`);
+        problem.code = 'ELANDSCAPEPRIVATE';
+        return callback(problem);
+      }
+      return callback(null, address, family);
+    });
+  };
+}
+
+// Reads a response body and stops as soon as it passes the logo size limit.
+function readCapped(stream, limit) {
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    let total = 0;
+    stream.on('data', (chunk) => {
+      total += chunk.length;
+      if (total > limit) {
+        stream.destroy();
+        reject(new Error(`logo is larger than ${limit / 1024} KB`));
+        return;
+      }
+      chunks.push(chunk);
+    });
+    stream.on('error', reject);
+    stream.on('end', () => resolve(Buffer.concat(chunks)));
+  });
+}
+
+function requestLogo(url, { lookup, signal }) {
+  return new Promise((resolve, reject) => {
+    const request = https.get(url, {
+      lookup,
+      signal,
+      agent: false,
+      headers: { 'accept-encoding': 'identity', 'user-agent': USER_AGENT }
+    }, (response) => {
+      const status = response.statusCode;
+      if (status >= 300 && status < 400 && response.headers.location) {
+        response.resume();
+        resolve({ redirect: new URL(response.headers.location, url).href });
+        return;
+      }
+      if (status < 200 || status >= 300) {
+        response.resume();
+        reject(new Error(`logo_url answered HTTP ${status}`));
+        return;
+      }
+      const encoding = String(response.headers['content-encoding'] || 'identity').toLowerCase();
+      if (encoding !== 'identity') {
+        response.destroy();
+        reject(new Error(`logo_url answered with a compressed body (${encoding})`));
+        return;
+      }
+      if (Number(response.headers['content-length'] || 0) > rules.MAX_LOGO_BYTES) {
+        response.destroy();
+        reject(new Error(`logo is larger than ${rules.MAX_LOGO_BYTES / 1024} KB`));
+        return;
+      }
+      readCapped(response, rules.MAX_LOGO_BYTES).then((bytes) => resolve({ bytes }), reject);
+    });
+    request.on('error', (error) => reject(error.code === 'ELANDSCAPEPRIVATE' ? new Error(`logo_url ${error.message}`) : error));
+  });
+}
+
+async function downloadLogo(url, { lookup = publicLookup() } = {}) {
+  const signal = AbortSignal.timeout(FETCH_TIMEOUT_MS);
+  let current = url;
+  for (let hop = 0; hop <= MAX_REDIRECTS; hop += 1) {
+    const target = rules.parseHttps(current);
+    if (!target) throw new Error(hop ? 'logo_url redirects to an address that is not public https' : '"logo_url" must be a public https:// address');
+    const result = await requestLogo(target.href, { lookup, signal });
+    if (result.redirect) {
+      current = result.redirect;
+      continue;
+    }
+    const type = /\.png$/i.test(new URL(url).pathname) ? 'png' : 'svg';
+    const problems = logoProblems(type, result.bytes);
+    if (problems.length) throw new Error(problems.join('; '));
+    return { type, bytes: result.bytes };
+  }
+  throw new Error(`logo_url redirects more than ${MAX_REDIRECTS} times`);
+}
+
+const STAR_APIS = {
+  'github.com': (owner, name) => [`https://api.github.com/repos/${owner}/${name}`, (body) => [body.stargazers_count, body.private === false]],
+  'gitlab.com': (owner, name) => [`https://gitlab.com/api/v4/projects/${encodeURIComponent(`${owner}/${name}`)}`, (body) => [body.star_count, body.visibility === 'public']],
+  'codeberg.org': (owner, name) => [`https://codeberg.org/api/v1/repos/${owner}/${name}`, (body) => [body.stars_count, body.private === false]]
+};
+
+async function repoStars(repo) {
+  const { hostname, pathname } = new URL(repo);
+  const [owner, name] = pathname.slice(1).split('/');
+  const [api, read] = STAR_APIS[hostname](owner, name);
+  const headers = { accept: 'application/json', 'user-agent': USER_AGENT };
+  if (hostname === 'github.com' && process.env.GITHUB_TOKEN) headers.authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  const response = await fetch(api, { headers, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
+  if (response.status === 404) return { found: false };
+  if (!response.ok) throw new Error(`${hostname} answered HTTP ${response.status} for ${repo}`);
+  const [stars, open] = read(await response.json());
+  return { found: true, stars: Number(stars) || 0, open };
+}
+
+// Checks the listing threshold for the given entry files, for example the ones a pull request adds or changes.
+async function checkStars(files, lookupStars = repoStars) {
+  const errors = [];
+  let checked = 0;
+  for (const file of files) {
+    const slug = path.basename(file).replace(/\.json$/, '');
+    let entry;
+    try {
+      entry = readJson(path.resolve(REPO_ROOT, file));
+    } catch (_) {
+      continue;
+    }
+    if (!entry || entry.open_source !== true || typeof entry.repo !== 'string' || rules.validateEntry(slug, { ...entry, category: 'x' }, ['x']).some((problem) => /"repo"/.test(problem))) continue;
+    checked += 1;
+    try {
+      const result = await lookupStars(entry.repo);
+      if (!result.found || !result.open) errors.push(`${rules.entryPath(slug)}: ${entry.repo} is not a public repository`);
+      else if (result.stars < rules.MIN_STARS) errors.push(`${rules.entryPath(slug)}: ${entry.repo} has ${result.stars} stars; open source tools need ${rules.MIN_STARS} or more`);
+    } catch (error) {
+      errors.push(`${rules.entryPath(slug)}: could not read stars (${error.message})`);
+    }
+  }
+  return { errors, checked };
 }
 
 async function resolveRemoteLogos({ write }) {
@@ -206,7 +397,7 @@ async function resolveRemoteLogos({ write }) {
       const logo = await downloadLogo(entry.logo_url);
       if (write) {
         fs.mkdirSync(LOGO_DIR, { recursive: true });
-        fs.writeFileSync(logoFile(entry.slug, logo.type), logo.bytes);
+        fs.writeFileSync(path.join(LOGO_DIR, `${entry.slug}.${logo.type}`), logo.bytes);
       }
       fetched += 1;
     } catch (error) {
@@ -217,6 +408,18 @@ async function resolveRemoteLogos({ write }) {
 }
 
 async function main(argv) {
+  const starsAt = argv.indexOf('--stars');
+  if (starsAt !== -1) {
+    const result = await checkStars(argv.slice(starsAt + 1));
+    if (result.errors.length) {
+      console.error(`Star check failed with ${result.errors.length} problem(s):\n`);
+      for (const problem of result.errors) console.error(`  - ${problem}`);
+      console.error('\nListing rules: landscape/README.md');
+      return 1;
+    }
+    console.log(`Stars OK: ${result.checked} open source tool(s) checked`);
+    return 0;
+  }
   const remote = argv.includes('--remote');
   const fetchLogos = argv.includes('--fetch-logos');
   if (argv.includes('--check') || fetchLogos) {
@@ -247,4 +450,17 @@ if (require.main === module) {
   });
 }
 
-module.exports = { loadLandscape, publicData, writeLandscape, downloadLogo, resolveRemoteLogos, OUTPUT_PATH };
+module.exports = {
+  loadLandscape,
+  publicData,
+  packLogos,
+  writeLandscape,
+  logoProblems,
+  isPublicAddress,
+  publicLookup,
+  readCapped,
+  downloadLogo,
+  checkStars,
+  resolveRemoteLogos,
+  OUTPUT_PATH
+};

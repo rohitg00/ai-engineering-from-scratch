@@ -12,6 +12,10 @@
   var MAX_LOGO_BYTES = 100 * 1024;
   var TOO_LARGE = 'logo is larger than ' + (MAX_LOGO_BYTES / 1024) + ' KB';
   var MIN_PNG_SIDE = 48;
+  var MAX_PNG_SIDE = 4096;
+  var MIN_STARS = 2500;
+  var PNG_CHANNELS = { 0: 1, 2: 3, 3: 1, 4: 2, 6: 4 };
+  var PNG_DEPTHS = { 0: [1, 2, 4, 8, 16], 2: [8, 16], 3: [1, 2, 4, 8], 4: [8, 16], 6: [8, 16] };
   var FIELDS = ['name', 'url', 'category', 'also', 'description', 'open_source', 'repo', 'x', 'logo', 'logo_url'];
   var MAX_ALSO = 3;
   var LOGO_TYPES = ['svg', 'png'];
@@ -91,7 +95,7 @@
 
     if (typeof entry.open_source !== 'boolean') errors.push('"open_source" must be true or false');
     if (entry.open_source === true) {
-      if (typeof entry.repo !== 'string' || !REPO_URL.test(entry.repo)) errors.push('"repo" is required for open source tools, for example "https://github.com/owner/name"');
+      if (typeof entry.repo !== 'string' || !REPO_URL.test(entry.repo) || /\/\.{1,2}(\/|$)/.test(entry.repo)) errors.push('"repo" is required for open source tools, for example "https://github.com/owner/name"');
     } else if (entry.open_source === false) {
       if (entry.repo !== undefined) errors.push('"repo" is only for open source tools');
       if (site && TEMPORARY_HOST.test(site.hostname)) errors.push('"url" must be the product\'s own domain, not a preview or shared host (' + site.hostname + ')');
@@ -124,17 +128,95 @@
     return errors;
   }
 
-  function pngErrors(bytes) {
-    var signature = [137, 80, 78, 71, 13, 10, 26, 10];
-    if (!bytes || bytes.length < 24) return ['logo is not a PNG file'];
-    for (var i = 0; i < signature.length; i++) {
-      if (bytes[i] !== signature[i]) return ['logo is not a PNG file'];
+  var CRC_TABLE = (function () {
+    var table = [];
+    for (var n = 0; n < 256; n++) {
+      var c = n;
+      for (var k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      table.push(c >>> 0);
     }
+    return table;
+  })();
+
+  function crc32(bytes, start, end) {
+    var crc = 0xffffffff;
+    for (var i = start; i < end; i++) crc = CRC_TABLE[(crc ^ bytes[i]) & 0xff] ^ (crc >>> 8);
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+
+  function uint32(bytes, at) {
+    return ((bytes[at] << 24) | (bytes[at + 1] << 16) | (bytes[at + 2] << 8) | bytes[at + 3]) >>> 0;
+  }
+
+  // Walks the PNG chunk list and returns the header and the IDAT chunks, or { error }.
+  function readPng(bytes) {
+    var signature = [137, 80, 78, 71, 13, 10, 26, 10];
+    var notPng = { error: 'logo is not a PNG file' };
+    if (!bytes || bytes.length < 24) return notPng;
+    for (var i = 0; i < signature.length; i++) {
+      if (bytes[i] !== signature[i]) return notPng;
+    }
+    var at = 8;
+    var header = null;
+    var palette = false;
+    var idat = [];
+    while (at + 12 <= bytes.length) {
+      var length = uint32(bytes, at);
+      var type = String.fromCharCode(bytes[at + 4], bytes[at + 5], bytes[at + 6], bytes[at + 7]);
+      var end = at + 8 + length;
+      if (!/^[A-Za-z]{4}$/.test(type) || end + 4 > bytes.length) return { error: 'PNG logo is cut short or damaged' };
+      if (crc32(bytes, at + 4, end) !== uint32(bytes, end)) return { error: 'PNG logo is damaged (' + type + ' checksum does not match)' };
+      if (!header) {
+        if (type !== 'IHDR' || length !== 13) return { error: 'PNG logo has no image header' };
+        header = {
+          width: uint32(bytes, at + 8),
+          height: uint32(bytes, at + 12),
+          bitDepth: bytes[at + 16],
+          colorType: bytes[at + 17],
+          interlace: bytes[at + 20]
+        };
+        var depths = PNG_DEPTHS[header.colorType];
+        if (!depths || depths.indexOf(header.bitDepth) === -1 || bytes[at + 18] !== 0 || bytes[at + 19] !== 0 || header.interlace > 1) {
+          return { error: 'PNG logo has an unsupported image header' };
+        }
+      } else if (type === 'PLTE') {
+        palette = true;
+      } else if (type === 'IDAT') {
+        idat.push(bytes.subarray ? bytes.subarray(at + 8, end) : bytes.slice(at + 8, end));
+      } else if (type === 'IEND') {
+        if (!idat.length) return { error: 'PNG logo has no image data' };
+        if (header.colorType === 3 && !palette) return { error: 'PNG logo has no palette' };
+        return { header: header, idat: idat };
+      }
+      at = end + 4;
+    }
+    return { error: 'PNG logo is cut short or damaged' };
+  }
+
+  // Bytes of filtered scanlines the IDAT stream must inflate to (PNG spec, section 7 and Adam7 in 8.2).
+  function pngDataLength(header) {
+    var bits = PNG_CHANNELS[header.colorType] * header.bitDepth;
+    var passes = header.interlace
+      ? [[0, 0, 8, 8], [4, 0, 8, 8], [0, 4, 4, 8], [2, 0, 4, 4], [0, 2, 2, 4], [1, 0, 2, 2], [0, 1, 1, 2]]
+      : [[0, 0, 1, 1]];
+    var total = 0;
+    passes.forEach(function (pass) {
+      var width = header.width > pass[0] ? Math.ceil((header.width - pass[0]) / pass[2]) : 0;
+      var height = header.height > pass[1] ? Math.ceil((header.height - pass[1]) / pass[3]) : 0;
+      if (width && height) total += height * (1 + Math.ceil(width * bits / 8));
+    });
+    return total;
+  }
+
+  function pngErrors(bytes) {
+    var png = readPng(bytes);
+    if (png.error) return [png.error];
     var errors = [];
     if (bytes.length > MAX_LOGO_BYTES) errors.push(TOO_LARGE);
-    var width = ((bytes[16] << 24) | (bytes[17] << 16) | (bytes[18] << 8) | bytes[19]) >>> 0;
-    var height = ((bytes[20] << 24) | (bytes[21] << 16) | (bytes[22] << 8) | bytes[23]) >>> 0;
+    var width = png.header.width;
+    var height = png.header.height;
     if (width < MIN_PNG_SIDE || height < MIN_PNG_SIDE) errors.push('PNG logo must be at least ' + MIN_PNG_SIDE + ' pixels on each side (now ' + width + ' by ' + height + ')');
+    if (width > MAX_PNG_SIDE || height > MAX_PNG_SIDE) errors.push('PNG logo must be at most ' + MAX_PNG_SIDE + ' pixels on each side (now ' + width + ' by ' + height + ')');
     return errors;
   }
 
@@ -177,12 +259,15 @@
     FIELDS: FIELDS,
     MAX_DESCRIPTION: MAX_DESCRIPTION,
     MAX_LOGO_BYTES: MAX_LOGO_BYTES,
+    MIN_STARS: MIN_STARS,
     LOGO_TYPES: LOGO_TYPES,
     slugify: slugify,
     parseHttps: parseHttps,
     validateEntry: validateEntry,
     svgErrors: svgErrors,
     pngErrors: pngErrors,
+    readPng: readPng,
+    pngDataLength: pngDataLength,
     buildEntry: buildEntry,
     entryJson: entryJson,
     entryPath: entryPath,
