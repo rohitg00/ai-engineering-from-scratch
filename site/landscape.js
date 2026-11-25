@@ -428,7 +428,7 @@
     var entry = rules.buildEntry(values);
     var slug = rules.slugify(entry.name);
     var categoryIds = data.categories.map(function (category) { return category.id; });
-    var errors = slug ? rules.validateEntry(slug, entry, categoryIds) : ['"name" is required'];
+    var errors = rules.validateEntry(slug || 'your-tool', entry, categoryIds);
     var taken = data.entries.some(function (existing) { return existing.slug === slug; });
     if (taken) errors.unshift('"' + entry.name + '" is already listed. Open its file on GitHub to change it.');
 

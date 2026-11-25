@@ -222,14 +222,16 @@
     var text = String(value || '').trim();
     if (!text) return '';
     if (/^http:\/\//i.test(text)) return 'https://' + text.slice(7);
+    if (/^https:/i.test(text)) return text;
     if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(text)) return 'https://' + text.replace(/^\/+/, '');
     return text;
   }
 
   function normalizeRepo(value) {
-    var text = normalizeUrl(value);
-    var known = /^https:\/\/(?:www\.)?(github\.com|gitlab\.com|codeberg\.org)\/([^\/?#]+)\/([^\/?#]+)/i.exec(text);
-    if (known) return 'https://' + known[1].toLowerCase() + '/' + known[2] + '/' + known[3].replace(/\.git$/, '');
+    var text = normalizeUrl(value).replace(/[?#].*$/, '').replace(/^https:\/\/www\./i, 'https://');
+    var page = /^(https:\/\/(?:github\.com|codeberg\.org)\/[^\/]+\/[^\/]+)\/(?:tree|blob|issues|pulls?|releases|wiki|actions|src|commits?)(?:\/.*)?$/i.exec(text);
+    if (page) text = page[1];
+    text = text.replace(/^(https:\/\/gitlab\.com\/.+?)\/-\/.*$/i, '$1');
     return text.replace(/\/+$/, '').replace(/\.git$/, '');
   }
 
