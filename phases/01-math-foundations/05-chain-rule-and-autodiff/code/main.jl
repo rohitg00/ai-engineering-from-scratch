@@ -268,8 +268,9 @@ function demo_gradient_check()
     all_passed = true
     for (name, expr) in cases
         ad, num, diff = gradient_check(expr, 0.5)
-        status = diff < 1e-5 ? "OK" : "FAIL"
-        if diff >= 1e-5
+        ok = diff < 1e-5
+        status = ok ? "OK" : "FAIL"
+        if !ok
             all_passed = false
         end
         @printf("  %-22s %12.8f %12.8f %12.2e  %s\n", name, ad, num, diff, status)
