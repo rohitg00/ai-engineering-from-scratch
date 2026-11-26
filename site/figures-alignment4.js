@@ -254,7 +254,7 @@
     var D = '6s';
     var xs = [80, 205, 330, 455];
     var dates = ['Feb 2025', 'Aug 2025', 'Aug 2026', 'Aug 2027'];
-    var tags = [['prohibited', 'practices'], ['GPAI', 'obligations'], ['full force,', 'penalties'], ['legacy', 'GPAI']];
+    var tags = [['prohibited', 'practices'], ['GPAI', 'obligations'], ['general', 'application'], ['legacy', 'GPAI']];
     svg.appendChild(svgEl('line', { x1: 40, y1: 110, x2: 480, y2: 110, stroke: RULE, 'stroke-width': '1.5' }));
     var draw = svgEl('line', { x1: 40, y1: 110, x2: 480, y2: 110, stroke: BP, 'stroke-width': '2.5', 'stroke-dasharray': '440' });
     draw.appendChild(anim('stroke-dashoffset', '440;440;0;0;440', D, { calcMode: 'spline', keyTimes: '0;0.04;0.72;0.94;1', keySplines: '0 0 1 1;' + EASE + ';0 0 1 1;0.4 0 1 1' }));
@@ -276,7 +276,7 @@
     svg.appendChild(pen);
     card(host, 'EU AI ACT TIMELINE', 'obligations land in waves',
       svg,
-      'The EU AI Act entered into force on 1 August 2024, but its obligations arrive in waves: prohibited practices and AI literacy in February 2025, GPAI model duties in August 2025, full applicability with Article 50 transparency and penalties up to 15M EUR or 3 percent of global turnover in August 2026, then legacy GPAI and embedded high-risk systems in August 2027. Deployers map technical controls to whichever wave has already landed.');
+      'The EU AI Act entered into force on 1 August 2024, but its obligations arrive in waves: prohibited practices and AI literacy in February 2025, GPAI model duties in August 2025, general application with Article 50 transparency and penalties up to 15M EUR or 3 percent of global turnover in August 2026, legacy GPAI models in August 2027, then high-risk systems in December 2027 (Annex III) and August 2028 (Annex I) under Regulation (EU) 2026/1744. Deployers map technical controls to whichever wave has already landed.');
   }
 
   // ── EchoLeak: zero-click packet crosses the org trust boundary ──────────────
