@@ -135,18 +135,22 @@ julia -e 'println("Julia ", VERSION)'
 nvidia-smi
 
 # Install PyTorch with CUDA
-uv pip install --reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
 
-Two parts of that command are easy to get wrong. `--index-url` is what picks the CUDA build: on Windows the PyPI wheel is CPU-only, so a plain `pip install torch` leaves `torch.cuda.is_available()` at `False` on a machine with a working GPU. On Linux the PyPI wheel does bundle CUDA, but it is tied to one CUDA version, and the index is how you choose a different one. `--reinstall` matters when `torch` is already installed: uv keeps any build that already satisfies `torch>=2.0`, so without it a CPU-only torch from an earlier install stays exactly where it is.
+The index has to match your Python version, your GPU and your driver, and those three can disagree:
 
-The index also has to match your Python version. `cu124` stops at `torch 2.6.0` and publishes no Python 3.14 wheels, so on Python 3.14 the command above fails with `No matching distribution found for torch`. Use `cu126` or newer there:
+- **Python version.** `cu124` stops at `torch 2.6.0` and publishes no Python 3.14 wheels, so on Python 3.14 the command above fails with `No matching distribution found for torch`. Use `cu126` or newer there.
+- **GPU generation.** Blackwell cards (RTX 50-series and later) need `cu128` or newer. `cu124` predates them: the install succeeds, then every CUDA operation fails at runtime.
+- **Driver.** A driver older than CUDA 12 needs `cu118`, which requires driver 450.80.02 or newer on Linux and 452.39 or newer on Windows, and Python 3.12.
+
+If you already have a working CUDA build, keep it. Reinstalling from a different index can move you backwards — `cu124` would replace a Blackwell stack with `torch 2.6.0`, which does not support those cards. Only a CPU-only build is worth replacing, and uv will not do it unasked: it keeps an installed `torch` that already satisfies `torch>=2.0`. Add `--reinstall` in that one case:
 
 ```bash
 uv pip install --reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
 ```
 
-Step 2 pins Python 3.12, which works with either index. If your driver predates CUDA 12, stay on Python 3.12 and use `cu118` — it publishes no Python 3.14 wheels either. The selector at pytorch.org pairs a driver with an index.
+Step 2 pins Python 3.12, which works with every index above. On Linux the PyPI wheel already bundles CUDA; on Windows it is CPU-only. pytorch.org lists an index per CUDA version, and NVIDIA's compatibility table maps your driver to one.
 
 **macOS / Apple Silicon (M1/M2/M3/M4):** There is no CUDA on a Mac — that's expected, not a failure. Do **not** pass `--index-url .../cuXXX` (those wheels are Linux/Windows only, so the install fails). Install the plain build, which includes Apple's MPS (Metal) GPU backend:
 
