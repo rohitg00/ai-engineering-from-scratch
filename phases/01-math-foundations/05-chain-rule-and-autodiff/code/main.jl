@@ -9,7 +9,7 @@
 using Random
 using Printf
 
-import Base: +, -, *, /, ^
+import Base: +, -, *, /, ^, inv
 
 
 mutable struct Value
@@ -65,6 +65,15 @@ function ^(a::Value, n::Real)
     out = Value(a.data ^ nf, Value[a], "^$nf")
     out.backward! = () -> begin
         a.grad += nf * a.data ^ (nf - 1) * out.grad
+    end
+    return out
+end
+
+
+function inv(a::Value)
+    out = Value(1 / a.data, Value[a], "inv")
+    out.backward! = () -> begin
+        a.grad += (-1 / a.data ^ 2) * out.grad
     end
     return out
 end
