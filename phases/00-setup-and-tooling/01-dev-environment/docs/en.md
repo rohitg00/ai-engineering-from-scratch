@@ -138,6 +138,14 @@ nvidia-smi
 uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
 
+Do not skip `--index-url`. `pip install -r requirements.txt` pulls the plain PyPI wheels, which are CPU-only, so `torch.cuda.is_available()` returns `False` on a machine with a working GPU. The index also has to match your Python version: `cu124` stops at `torch 2.6.0` and publishes no Python 3.14 wheels, so on Python 3.14 the command above fails with `No matching distribution found for torch`. Use `cu126` or newer there:
+
+```bash
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+```
+
+Step 2 pins Python 3.12, which works with either index. If your driver predates CUDA 12, use `cu118`. The selector at pytorch.org pairs a driver with an index.
+
 **macOS / Apple Silicon (M1/M2/M3/M4):** There is no CUDA on a Mac — that's expected, not a failure. Do **not** pass `--index-url .../cuXXX` (those wheels are Linux/Windows only, so the install fails). Install the plain build, which includes Apple's MPS (Metal) GPU backend:
 
 ```bash
