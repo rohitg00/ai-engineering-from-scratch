@@ -142,9 +142,9 @@ The index has to match your Python version, your GPU and your driver, and those 
 
 - **Python version.** `cu124` stops at `torch 2.6.0` and publishes no Python 3.14 wheels, so on Python 3.14 the command above fails with `No matching distribution found for torch`. Use `cu126` or newer there.
 - **GPU generation.** Blackwell cards (RTX 50-series and later) need `cu128` or newer. `cu124` predates them: the install succeeds, then every CUDA operation fails at runtime.
-- **Driver.** A driver older than CUDA 12 needs `cu118`, which requires driver 450.80.02 or newer on Linux and 452.39 or newer on Windows, and Python 3.12.
+- **Driver.** A driver older than CUDA 12 needs `cu118`, which requires driver 450.80.02 or newer on Linux and 452.39 or newer on Windows, and Python 3.13 or older.
 
-If you already have a working CUDA build, keep it. Reinstalling from a different index can move you backwards — `cu124` would replace a Blackwell stack with `torch 2.6.0`, which does not support those cards. Only a CPU-only build is worth replacing, and uv will not do it unasked: it keeps an installed `torch` that already satisfies `torch>=2.0`. Add `--reinstall` in that one case:
+If you already have a working CUDA build, keep it. Reinstalling from a different index can move you backwards — `cu124` would replace a Blackwell stack with `torch 2.6.0`, which does not support those cards. `--reinstall` is for the opposite case, replacing a build rather than keeping it: a CPU-only torch from `requirements.txt`, or a CUDA build that does not match your GPU. Without it uv leaves the installed packages alone even when you change the index, because they already satisfy `torch>=2.0`:
 
 ```bash
 uv pip install --reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
