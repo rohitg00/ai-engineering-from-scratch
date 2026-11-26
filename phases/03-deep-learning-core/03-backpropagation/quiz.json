@@ -1,35 +1,35 @@
 [
   {
     "question": "What is the chain rule in the context of neural networks?",
-    "options": ["A technique for batching data", "A method for initializing weights", "A rule for chaining layers together", "If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x) -- multiply derivatives along the path"],
+    "options": ["A technique for batching data so that several samples move through the network in one step", "A method for initializing weights so gradients do not vanish during training", "A rule for chaining layers together so that each layer's output feeds the next one in sequence", "If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x) -- multiply derivatives along the path"],
     "correct": 3,
     "explanation": "The chain rule lets you compute the derivative of a composite function by multiplying the local derivatives at each step. Backpropagation applies this systematically through the computational graph.",
     "stage": "pre"
   },
   {
     "question": "Why is backpropagation more efficient than computing each gradient independently?",
-    "options": ["It uses less memory", "It computes all gradients in a single backward pass instead of one forward pass per parameter", "It only works on small networks", "It avoids using the chain rule"],
+    "options": ["It uses less memory by discarding activations instead of caching them for later", "It computes all gradients in a single backward pass instead of one forward pass per parameter", "It only works on small networks, so it avoids the cost of scaling gradients to large models", "It avoids using the chain rule entirely, replacing repeated differentiation with one closed-form update rule"],
     "correct": 1,
     "explanation": "Computing gradients independently requires one forward pass per parameter (millions of passes for a large network). Backpropagation computes all gradients in one backward pass by reusing intermediate values stored during the forward pass.",
     "stage": "pre"
   },
   {
     "question": "In the backward pass, why do we use '+=' instead of '=' when accumulating gradients?",
-    "options": ["It's a Python convention", "A value might be used in multiple operations, so its gradient is the sum of gradients from all paths", "It makes the code run faster", "It prevents overflow"],
+    "options": ["It's a Python convention that the language requires for augmented assignment in loops", "A value might be used in multiple operations, so its gradient is the sum of gradients from all paths", "It makes the gradient contributions from different branches multiply together instead of add up, the way the chain rule combines them", "It prevents overflow by keeping each partial gradient small and bounded inside a narrow range"],
     "correct": 1,
     "explanation": "When a Value is used as input to multiple operations (e.g., x used in both x*w1 and x*w2), its total gradient is the sum of the gradients flowing back from each operation. Using += accumulates these correctly.",
     "stage": "post"
   },
   {
     "question": "What causes the vanishing gradient problem in deep sigmoid networks?",
-    "options": ["The loss function is poorly chosen", "The network has too many parameters", "The learning rate is too small", "Sigmoid's derivative has a maximum of 0.25, so gradients shrink exponentially through layers"],
+    "options": ["The loss function is poorly chosen, so its gradient signal dies out before reaching the early layers", "The network has too many parameters, so the gradient gets diluted as it spreads across every weight", "The learning rate is too small, so the updates vanish long before the network can converge", "Sigmoid's derivative has a maximum of 0.25, so gradients shrink exponentially through layers"],
     "correct": 3,
     "explanation": "The sigmoid derivative peaks at 0.25 (when z=0). Each layer multiplies the gradient by at most 0.25, so after 10 layers the gradient is at most 0.25^10 = ~0.000001 of the original signal.",
     "stage": "post"
   },
   {
     "question": "Why does topological sort matter in the backward pass?",
-    "options": ["It reduces memory usage", "It speeds up the forward pass", "It ensures each node's gradient is fully accumulated before propagating to its children", "It makes the code cleaner"],
+    "options": ["It reduces memory usage by freeing each node's data as soon as that node has been fully processed", "It speeds up the forward pass by reusing cached activations from the backward traversal", "It ensures each node's gradient is fully accumulated before propagating to its children", "It makes the code cleaner by giving the backward loop a predictable processing order"],
     "correct": 2,
     "explanation": "Topological sort ensures we process nodes in the correct order: a node's gradient must be fully accumulated from all downstream paths before we propagate through it. Without this ordering, gradients would be incomplete.",
     "stage": "post"
