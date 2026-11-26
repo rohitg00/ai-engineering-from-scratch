@@ -70,10 +70,10 @@ end
 
 
 function confusion_matrix(y_true::Vector{Int}, y_pred::Vector{Int})
-    tp = sum(1 for i in 1:length(y_true) if y_true[i] == 1 && y_pred[i] == 1)
-    tn = sum(1 for i in 1:length(y_true) if y_true[i] == 0 && y_pred[i] == 0)
-    fp = sum(1 for i in 1:length(y_true) if y_true[i] == 0 && y_pred[i] == 1)
-    fn = sum(1 for i in 1:length(y_true) if y_true[i] == 1 && y_pred[i] == 0)
+    tp = count(i -> y_true[i] == 1 && y_pred[i] == 1, 1:length(y_true))
+    tn = count(i -> y_true[i] == 0 && y_pred[i] == 0, 1:length(y_true))
+    fp = count(i -> y_true[i] == 0 && y_pred[i] == 1, 1:length(y_true))
+    fn = count(i -> y_true[i] == 1 && y_pred[i] == 0, 1:length(y_true))
     return tp, tn, fp, fn
 end
 
@@ -112,8 +112,8 @@ function roc_curve(y_true::Vector{Int}, y_scores::Vector{Float64})
     total_neg = length(y_true) - total_pos
     for t in thresholds
         y_pred = [s >= t ? 1 : 0 for s in y_scores]
-        tp = sum(1 for i in 1:length(y_true) if y_true[i] == 1 && y_pred[i] == 1)
-        fp = sum(1 for i in 1:length(y_true) if y_true[i] == 0 && y_pred[i] == 1)
+        tp = count(i -> y_true[i] == 1 && y_pred[i] == 1, 1:length(y_true))
+        fp = count(i -> y_true[i] == 0 && y_pred[i] == 1, 1:length(y_true))
         push!(tpr_list, total_pos > 0 ? tp / total_pos : 0.0)
         push!(fpr_list, total_neg > 0 ? fp / total_neg : 0.0)
     end
