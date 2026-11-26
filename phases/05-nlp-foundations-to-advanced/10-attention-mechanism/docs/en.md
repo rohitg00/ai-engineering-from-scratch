@@ -203,6 +203,7 @@ For Bahdanau confusion, insist the decoder input is `s_{t-1}` (pre-step state). 
 1. **Easy.** Implement `softmax` masking so padding tokens in the encoder get attention weight zero. Test on a batch with variable-length sequences.
 2. **Medium.** Add multi-head attention to the Luong `general` form. Split `d_h` into `n_heads` groups, run attention per head, concatenate. Verify the single-head case matches your earlier implementation.
 3. **Hard.** Train a GRU encoder-decoder with Bahdanau attention on the toy copy task from lesson 09. Plot accuracy vs sequence length. Compare against the no-attention baseline. You should see the gap widen as length grows, confirming attention lifts the bottleneck.
+4. **Reading transfer.** Read *Pointer Networks*. If the input has 5 positions, what can its decoder point to at one step? What changes when the input has 8 positions? Contrast this with predicting a token from a fixed vocabulary.
 
 ## Key Terms
 
@@ -217,6 +218,7 @@ For Bahdanau confusion, insist the decoder input is `s_{t-1}` (pre-step state). 
 ## Further Reading
 
 - [Bahdanau, Cho, Bengio (2014). Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473) — the paper.
+- [Vinyals et al. (2015). Pointer Networks](https://arxiv.org/abs/1506.03134) — turns attention over input positions into an output distribution; use the reading-transfer exercise above to check the distinction.
 - [Luong, Pham, Manning (2015). Effective Approaches to Attention-based Neural Machine Translation](https://arxiv.org/abs/1508.04025) — the three score variants and their comparison.
 - [Jain and Wallace (2019). Attention is not Explanation](https://arxiv.org/abs/1902.10186) — the interpretability caveat.
 - [Dive into Deep Learning — Bahdanau Attention](https://d2l.ai/chapter_attention-mechanisms-and-transformers/bahdanau-attention.html) — runnable walkthrough with PyTorch.

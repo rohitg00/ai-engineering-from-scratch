@@ -163,6 +163,7 @@ Save as `outputs/skill-asr-picker.md`. Pick model, decoding strategy, chunking, 
 1. **Easy.** Run `code/main.py`. It greedily decodes a hand-crafted CTC output and computes WER against a reference.
 2. **Medium.** Implement the prefix-tree beam search in Step 2 properly (account for the blank merge rule). Compare with greedy on a 10-example synthetic dataset.
 3. **Hard.** Use `whisper-large-v3-turbo` on [LibriSpeech test-clean](https://www.openslr.org/12). Compute WER on the first 100 utterances. Compare with published numbers.
+4. **Paper check.** Read *Deep Speech 2* and name two parts of its real speech-training system beyond the CTC decoding toy in this lesson. What evidence would you need before claiming the toy reproduced the paper's WER?
 
 ## Key Terms
 
@@ -179,6 +180,7 @@ Save as `outputs/skill-asr-picker.md`. Pick model, decoding strategy, chunking, 
 ## Further Reading
 
 - [Graves et al. (2006). Connectionist Temporal Classification](https://www.cs.toronto.edu/~graves/icml_2006.pdf) — the CTC paper.
+- [Amodei et al. (2016). Deep Speech 2: End-to-End Speech Recognition in English and Mandarin](https://proceedings.mlr.press/v48/amodei16.html) — a large-scale ASR system using CTC; compare its experiments with the small decoding exercise above.
 - [Graves (2012). Sequence Transduction with RNNs](https://arxiv.org/abs/1211.3711) — the RNN-T paper.
 - [Radford et al. / OpenAI (2022). Whisper: Robust Speech Recognition via Large-Scale Weak Supervision](https://arxiv.org/abs/2212.04356) — the 2022 canonical paper; v3-turbo extension in 2024.
 - [NVIDIA NeMo — Parakeet-TDT card](https://huggingface.co/nvidia/parakeet-tdt-1.1b) — 2026 Open ASR Leaderboard leader.
