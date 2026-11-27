@@ -1,0 +1,78 @@
+{
+  "lesson": "21-embodied-vlas-openvla-pi0-groot",
+  "title": "Embodied VLAs: RT-2, OpenVLA, π0, GR00T",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What makes a vision-language-action model different from a VLM that only answers questions?",
+      "options": [
+        "It uses a language model only to summarize the robot's trajectory.",
+        "It converts the robot camera into a text-only classification label.",
+        "It takes action logs and outputs only image captions.",
+        "It takes images and instructions, then outputs robot actions such as joint targets."
+      ],
+      "correct": 3,
+      "explanation": "A VLA conditions on both what the robot sees and the language instruction, then emits a control action such as joint targets or an end-effector pose. The image-classification option stops at a label, so it does not provide the action output that distinguishes a VLA."
+    },
+    {
+      "stage": "check",
+      "question": "RT-2 quantizes each normalized action dimension into 256 bins. For a 10-DOF action at one control step, how many action tokens are emitted?",
+      "options": [
+        "1 token, because all dimensions share one bin.",
+        "256 tokens, one for every possible bin.",
+        "30 tokens, one for each control frequency unit.",
+        "10 tokens, one per action dimension."
+      ],
+      "correct": 3,
+      "explanation": "Each action dimension is independently mapped to one quantized vocabulary ID at a control step. For a 10-dimensional action, that is 10 emitted tokens; the 256 bins are the available values per dimension, not 256 outputs."
+    },
+    {
+      "stage": "check",
+      "question": "What does FAST do to compress a sequence of continuous robot actions?",
+      "options": [
+        "Encode each joint value as one of 256 uniform bins at every step.",
+        "Predict a 50-step action sequence with a diffusion loss.",
+        "Apply a DCT, keep selected frequency coefficients, then quantize them.",
+        "Run a VQ image tokenizer over the robot camera frames."
+      ],
+      "correct": 2,
+      "explanation": "FAST applies a discrete cosine transform to each action trajectory, retains selected frequency coefficients, and quantizes them, reducing the autoregressive sequence. Uniform per-step bins in the first option describe the RT-2/OpenVLA representation rather than FAST."
+    },
+    {
+      "stage": "check",
+      "question": "How does pi0 produce smooth continuous actions according to the lesson?",
+      "options": [
+        "A text decoder predicts captions that a separate controller converts to torque.",
+        "A language model generates one discrete joint token at a time for all 50 steps.",
+        "A VQ codebook selects a single image patch for each robot joint.",
+        "A small action expert uses flow matching to emit a 50-step sequence in a few denoising steps."
+      ],
+      "correct": 3,
+      "explanation": "The π0 action expert reads the VLM's hidden states and uses rectified flow to emit a continuous 50-step action sequence in a few denoising steps. Per-joint discrete tokens are the RT-2-style alternative and retain quantization rather than this continuous action formulation."
+    },
+    {
+      "stage": "post",
+      "question": "A humanoid needs slow scene-level planning and fast full-body control. Which GR00T N1 component split fits?",
+      "options": [
+        "System 1 plans at 1 Hz; System 2 emits 100 Hz joint commands.",
+        "A frozen VLM directly controls every joint without an action head.",
+        "System 2 plans subgoals; System 1 controls joints quickly.",
+        "Both systems generate the same action tokens at the same frequency."
+      ],
+      "correct": 2,
+      "explanation": "GR00T assigns slow scene-level subgoal planning to the large System 2 VLM at about 1 Hz and fast joint control to the smaller System 1 action transformer at 50–100 Hz. The reversed-frequency option would put slow planning in the time-sensitive control path."
+    },
+    {
+      "stage": "post",
+      "question": "A robot must follow a novel phrasing such as 'pick the third largest object from the left.' Why mix web VQA with robot demonstrations during training?",
+      "options": [
+        "Web VQA replaces the need for robot action trajectories.",
+        "Co-fine-tuning preserves general language knowledge while grounding it in robot actions.",
+        "Robot-only data guarantees broad language understanding from action tokens alone.",
+        "The mixture lets the robot ignore image observations during control."
+      ],
+      "correct": 1,
+      "explanation": "Web VQA examples retain broad language and visual knowledge, while robot demonstrations teach how instructions map to actions; mixing them helps transfer to novel phrasing. The robot-only guarantee option contradicts the lesson's warning that robot-only models can fail on out-of-distribution instructions."
+    }
+  ]
+}

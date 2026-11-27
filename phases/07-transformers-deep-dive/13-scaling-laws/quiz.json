@@ -1,0 +1,78 @@
+{
+  "lesson": "13-scaling-laws",
+  "title": "Scaling Laws",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "When planning pretraining compute, which two quantities does the lesson identify as the main allocation knobs?",
+      "options": [
+        "Inference prompts and output temperature",
+        "Model parameters and training tokens",
+        "Batch size and sequence vocabulary",
+        "GPU count and attention head count"
+      ],
+      "correct": 1,
+      "explanation": "The lesson models training compute mainly through parameter count N and token count D, with approximate cost C ≈ 6ND. A larger GPU count is an implementation resource, not one of the two quantities allocated inside that scaling relation."
+    },
+    {
+      "stage": "check",
+      "question": "Under the approximation C ≈ 6ND, what compute budget trains N=1 billion parameters on D=20 billion tokens?",
+      "options": [
+        "1.2 × 10²¹ FLOPs",
+        "2.0 × 10¹⁹ FLOPs",
+        "1.2 × 10¹⁹ FLOPs",
+        "1.2 × 10²⁰ FLOPs"
+      ],
+      "correct": 3,
+      "explanation": "Substitute the values into C ≈ 6ND: 6 × 10⁹ parameters × 20 × 10⁹ tokens = 120 × 10¹⁸ = 1.2 × 10²⁰ FLOPs. Omitting the coefficient six understates the budget sixfold."
+    },
+    {
+      "stage": "check",
+      "question": "At a fixed compute budget C = 6ND, what happens to the allowed token count if parameter count doubles?",
+      "options": [
+        "The token count grows by a factor of four",
+        "The token count stays unchanged",
+        "The token count is cut in half",
+        "The token count doubles as well"
+      ],
+      "correct": 2,
+      "explanation": "With C fixed, solve for tokens: D = C/(6N). Doubling N therefore halves the available D; doubling both N and D would instead quadruple compute and break the fixed-budget condition."
+    },
+    {
+      "stage": "check",
+      "question": "Why might an inference-heavy product train a smaller model on more tokens than the compute-optimal split?",
+      "options": [
+        "A smaller model reduces inference cost paid repeatedly",
+        "A larger model always needs fewer training tokens",
+        "More tokens remove the model’s parameter memory",
+        "The training compute is charged on every inference request"
+      ],
+      "correct": 0,
+      "explanation": "When serving dominates lifetime cost, reducing parameter count lowers the compute paid on every inference request, while training cost is paid once. The product can spend more pretraining compute for a smaller deployable model; training is not charged again per request."
+    },
+    {
+      "stage": "post",
+      "question": "An 8B model sees 15 trillion training tokens. What is its token-to-parameter ratio?",
+      "options": [
+        "1,875 tokens per parameter",
+        "20 tokens per parameter",
+        "187.5 tokens per parameter",
+        "15 tokens per parameter"
+      ],
+      "correct": 0,
+      "explanation": "The ratio is D/N = 15×10¹² ÷ 8×10⁹ = 1,875 tokens per parameter. The 20-token value is the described compute-optimal reference, while this model’s data-to-size ratio is much larger."
+    },
+    {
+      "stage": "post",
+      "question": "A benchmark shows a sudden score jump, while validation cross-entropy improves smoothly. How should the team interpret it?",
+      "options": [
+        "The cross-entropy is unusable for scaling comparisons",
+        "The model necessarily learned a new discrete capability",
+        "The evaluation set must contain no difficult examples",
+        "The benchmark threshold may hide smooth underlying gains"
+      ],
+      "correct": 3,
+      "explanation": "A thresholded benchmark can convert gradually improving logits into a sudden change in accuracy once examples cross the scoring cutoff. Smooth cross-entropy reveals that underlying trend, so the score jump alone does not prove a newly discrete ability."
+    }
+  ]
+}

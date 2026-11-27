@@ -1,0 +1,78 @@
+{
+  "lesson": "22-async-hogwild-inference",
+  "title": "Async and Hogwild! Inference",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How is Hogwild! inference different from speculative decoding's within-sequence parallelism?",
+      "options": [
+        "Several target models vote independently on a final answer.",
+        "Workers share one growing KV cache and see one another's tokens.",
+        "Several draft tokens are verified in one target pass within one sequence.",
+        "Several agents receive separate roles and report to a coordinator."
+      ],
+      "correct": 1,
+      "explanation": "Hogwild! parallelizes across several workers of the same model that append to one shared cache; each worker sees tokens from the others. Speculative decoding instead drafts multiple tokens within one sequence for a target model to verify."
+    },
+    {
+      "stage": "check",
+      "question": "What shared resource lets Hogwild! workers notice work completed by other workers?",
+      "options": [
+        "A replay buffer containing only completed final answers.",
+        "One shared cache reveals workers' newly written tokens.",
+        "A coordinator model that sends a summary after every round.",
+        "A separate private cache that hides each worker's generated tokens."
+      ],
+      "correct": 1,
+      "explanation": "The shared, growing KV cache is the coordination medium: a worker can read tokens another worker just wrote and choose a different sub-goal. Private caches or a coordinator-only summary would delay or hide that immediate shared context."
+    },
+    {
+      "stage": "check",
+      "question": "In the lesson’s abstract timing example, T_serial=10,000 time steps, p=0.7, N=4, and c=200 time steps of coordination per worker. Using T*((1-p)+p/N)+c*N, what parallel time and speedup result?",
+      "options": [
+        "10000 steps and exactly 1.0x speedup.",
+        "5550 steps and about 1.8x speedup.",
+        "5350 steps, about 1.9x if only three workers are charged.",
+        "4750 steps and about 2.1x speedup."
+      ],
+      "correct": 1,
+      "explanation": "The stated model gives serial work 10000×(0.3+0.7/4)=4750 steps, then adds coordination 200×4=800, totaling 5550. Coordination is charged for all four workers, so speedup is 10000/5550≈1.80×; 4750 omits overhead and 5350 charges only three workers."
+    },
+    {
+      "stage": "check",
+      "question": "Why does RoPE help workers read cache entries written at changing shared positions?",
+      "options": [
+        "RoPE removes position information so tokens can be read in any order.",
+        "RoPE lets workers reuse cached entries at shared positions.",
+        "A token's learned absolute-position embedding is copied to every worker cache.",
+        "RoPE recomputes the full shared cache after every worker write."
+      ],
+      "correct": 1,
+      "explanation": "RoPE represents position through rotations in Q/K rather than a learned absolute-position vector. Under the lesson’s shared-cache setup, another worker can use the cached entry at its current shared position without rebuilding prior cache entries."
+    },
+    {
+      "stage": "post",
+      "question": "A 1000-step chat task has p=0.3, N=4 workers, and c=200 overhead steps per worker. Using T*((1-p)+p/N)+c*N, what speedup should the team expect?",
+      "options": [
+        "About 4.00x, because four workers share one cache.",
+        "About 1.29x, so parallel work outweighs all overhead.",
+        "About 2.50x, from dividing the serial time by four.",
+        "About 0.63x, so coordination makes it slower than serial."
+      ],
+      "correct": 3,
+      "explanation": "Parallel work takes 1000×(0.7+0.3/4)=775 steps, but coordination is charged for all four workers: 200×4=800, for 1575 total. Speedup is 1000/1575≈0.63×, below one; the short task cannot amortize that overhead."
+    },
+    {
+      "stage": "post",
+      "question": "A reasoning task is mostly one linear proof, so workers repeatedly produce redundant tokens. Which deployment choice fits the lesson?",
+      "options": [
+        "Use one worker when sub-goals are mostly sequential.",
+        "Use Hogwild! only after assigning every worker a different final answer.",
+        "Increase worker count, because shared-cache visibility removes all redundancy.",
+        "Increase coordination overhead so the workers explore longer."
+      ],
+      "correct": 0,
+      "explanation": "Hogwild! helps when a task has independent sub-goals workers can cover without repeating one another. A mostly sequential proof offers little parallel fraction, so extra workers add cache-reading and coordination overhead without producing independent progress."
+    }
+  ]
+}

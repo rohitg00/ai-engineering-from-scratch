@@ -1,0 +1,78 @@
+{
+  "lesson": "02-star-family-reasoning",
+  "title": "STaR, V-STaR, Quiet-STaR — Self-Taught Reasoning",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A model generates several explanations for a labeled problem. What simple signal can identify a trace for an outcome-based training loop?",
+      "options": [
+        "Whether the prompt contains a numeric example",
+        "Whether the explanation is the longest one",
+        "Whether another model repeats the same phrasing",
+        "Whether its final answer matches the known label"
+      ],
+      "correct": 3,
+      "explanation": "STaR keeps a generated rationale when its final answer matches the known label, then fine-tunes on those retained traces. Length or repeated wording is not evidence of correctness; the outcome filter also does not verify every reasoning step."
+    },
+    {
+      "stage": "check",
+      "question": "The base model repeatedly fails a training problem, so the ordinary STaR filter retains no trace. What does rationalization add?",
+      "options": [
+        "Train only on the incorrect answer and its rationale",
+        "Ask a verifier to replace the generator's full model",
+        "Discard the problem permanently from every future round",
+        "Provide the correct answer as a hint and request a rationale"
+      ],
+      "correct": 3,
+      "explanation": "Rationalization supplies the known answer on a problem the model failed, then asks for a rationale leading to it; this adds examples when first-pass sampling yields none. Discarding that problem would lose the recovery path."
+    },
+    {
+      "stage": "check",
+      "question": "How does V-STaR use incorrect as well as correct reasoning traces?",
+      "options": [
+        "Train a verifier from both classes and rank sampled rationales",
+        "Use only the first rationale and skip inference selection",
+        "Treat every incorrect trace as a positive generator target",
+        "Replace the final-answer label with a random reward"
+      ],
+      "correct": 0,
+      "explanation": "V-STaR trains a verifier on both correct and incorrect traces and uses it to rank sampled rationales at inference. Treating every wrong trace as a positive target reverses the preference signal."
+    },
+    {
+      "stage": "check",
+      "question": "What makes Quiet-STaR different from a rationale generated only between a problem and its answer?",
+      "options": [
+        "It adds the correct label to every failed training prompt",
+        "It keeps only the first correct answer in each bootstrap round",
+        "It ranks full solutions with a separate verifier at inference",
+        "It trains hidden rationales at token positions and mixes predictions"
+      ],
+      "correct": 3,
+      "explanation": "Quiet-STaR trains hidden rationales before token predictions and mixes thought-aware predictions with a baseline. Ranking whole candidate solutions at inference is V-STaR’s verifier step, not per-token reasoning."
+    },
+    {
+      "stage": "post",
+      "question": "A shortcut rationale gets the right answer on the training distribution but fails on new cases. Why can STaR reinforce it?",
+      "options": [
+        "The filter rejects every rationale that reaches the label quickly",
+        "The keep rule observes answer correctness rather than rationale soundness",
+        "The verifier checks each reasoning step against a process model",
+        "The held-out set is automatically mixed into every prompt"
+      ],
+      "correct": 1,
+      "explanation": "Ordinary STaR observes final-answer correctness, so it retains a shortcut that hits the label even if the derivation is unsound. A process verifier could inspect intermediate steps, but that safeguard is absent from the basic keep rule."
+    },
+    {
+      "stage": "post",
+      "question": "A verifier ranks polished but flawed reasoning highly because it learned from the same labels as the generator. What safeguard does the lesson recommend?",
+      "options": [
+        "Add process-level checks and held-out out-of-distribution evaluation",
+        "Select only the most confident rationale in each group",
+        "Increase the number of training rounds on the same labels",
+        "Remove incorrect traces so the verifier sees cleaner data"
+      ],
+      "correct": 0,
+      "explanation": "The verifier can inherit the generator’s label shortcuts, so process-level checks and held-out OOD tests examine different evidence. More rounds on the same labels may deepen that bias instead of exposing it."
+    }
+  ]
+}

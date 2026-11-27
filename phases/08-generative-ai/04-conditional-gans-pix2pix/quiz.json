@@ -1,0 +1,78 @@
+{
+  "lesson": "04-conditional-gans-pix2pix",
+  "title": "Conditional GANs & Pix2Pix",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A paired dataset maps sketches to matching photos. Which model family is built to generate an output conditioned on an input?",
+      "options": [
+        "A flow that evaluates exact image likelihood",
+        "A VAE trained only on image reconstruction",
+        "An unconditional GAN with no input condition",
+        "A conditional GAN such as Pix2Pix"
+      ],
+      "correct": 3,
+      "explanation": "Pix2Pix is a conditional GAN trained on paired examples: the input sketch conditions G’s output, and the paired discriminator evaluates whether that output matches the source. An unconditional GAN has no mechanism to preserve the sketch correspondence."
+    },
+    {
+      "stage": "check",
+      "question": "What does the Pix2Pix discriminator receive as input?",
+      "options": [
+        "The condition image paired with the proposed output",
+        "Text prompt and noise vector without source image",
+        "The condition image by itself, without its output",
+        "Only the proposed output image, with no condition"
+      ],
+      "correct": 0,
+      "explanation": "The conditional discriminator receives (x,y), so it can judge both realism and whether the output is consistent with its condition. Seeing y alone would let it score realism but not input-output correspondence."
+    },
+    {
+      "stage": "check",
+      "question": "Why are U-Net skip connections useful for sketch-to-photo translation?",
+      "options": [
+        "They make the discriminator score each 70×70 patch",
+        "They replace the adversarial objective with exact likelihood",
+        "They preserve low-level structure and high-frequency detail",
+        "They remove the need for paired training examples"
+      ],
+      "correct": 2,
+      "explanation": "U-Net skip connections carry low-level edges and silhouettes around the bottleneck, preserving structure shared by sketch and photo. PatchGAN’s local score grid is a discriminator design and does not provide the generator’s skip information."
+    },
+    {
+      "stage": "check",
+      "question": "How does PatchGAN differ from a discriminator that emits one score for the entire image?",
+      "options": [
+        "It predicts a separate class label for every pixel",
+        "It scores local receptive-field patches and averages them",
+        "It generates one output patch from each noise vector",
+        "It compares image and text embeddings by cosine similarity"
+      ],
+      "correct": 1,
+      "explanation": "PatchGAN outputs a grid of real/fake scores for local receptive fields, then averages them; it judges local realism rather than assigning a class to each pixel or producing patches."
+    },
+    {
+      "stage": "post",
+      "question": "A team has unpaired horse and zebra photos and no matching examples. Which method fits the lesson?",
+      "options": [
+        "CycleGAN with cycle-consistency losses",
+        "A class-conditional GAN with one-hot labels",
+        "Pix2Pix with paired L1 targets",
+        "A PatchGAN discriminator trained on output alone"
+      ],
+      "correct": 0,
+      "explanation": "CycleGAN learns mappings in both directions and applies cycle-consistency losses so an image can be translated back without aligned pairs. Pix2Pix’s supervised L1 target requires matching source-output examples."
+    },
+    {
+      "stage": "post",
+      "question": "A Pix2Pix output looks realistic but wanders away from its paired target. Which loss adjustment follows the lesson’s guidance?",
+      "options": [
+        "Increase the L1 term toward the paired target",
+        "Use only an L2 reconstruction loss",
+        "Remove the condition from the discriminator",
+        "Replace the U-Net with a text encoder"
+      ],
+      "correct": 0,
+      "explanation": "When outputs look realistic but drift from paired targets, increasing the L1 term strengthens the direct correspondence penalty. Using only L2 tends to average plausible targets and blur them; too much L1 can also blur, so adjust rather than replace the objective."
+    }
+  ]
+}

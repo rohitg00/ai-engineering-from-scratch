@@ -1,0 +1,78 @@
+{
+  "lesson": "14-evaluation-fid-clip-score",
+  "title": "Evaluation — FID, CLIP Score, Human Preference",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A generative benchmark needs to measure both output realism and prompt matching. Why use more than one metric?",
+      "options": [
+        "Human preference and embeddings always disagree",
+        "FID and CLIP use the same feature distribution",
+        "Quality and conditioning adherence are different axes",
+        "A single metric cannot be computed on images"
+      ],
+      "correct": 2,
+      "explanation": "FID compares real and generated feature distributions as a sample-quality measure, while CLIP score compares image and prompt embeddings for adherence. These are different axes, so one cannot stand in for both."
+    },
+    {
+      "stage": "check",
+      "question": "How should FID change when generated and real feature distributions become more similar?",
+      "options": [
+        "FID should decrease",
+        "FID should equal CLIP score",
+        "FID should increase",
+        "FID should become a percentage"
+      ],
+      "correct": 0,
+      "explanation": "FID is a Fréchet distance between Gaussian fits to real and generated Inception features; more similar distributions have smaller distance. Thus a better match lowers FID rather than raising it."
+    },
+    {
+      "stage": "check",
+      "question": "What does CLIP score compute for one generated image and prompt?",
+      "options": [
+        "Pixelwise MSE between image and prompt tokens",
+        "A human pairwise preference and Elo rating",
+        "Cosine similarity of image and text embeddings",
+        "Fréchet distance between two Inception Gaussians"
+      ],
+      "correct": 2,
+      "explanation": "CLIP score is the cosine similarity between the generated image’s CLIP embedding and the prompt’s CLIP text embedding. FID uses distribution-level Inception features, and Elo aggregates pairwise preference outcomes."
+    },
+    {
+      "stage": "check",
+      "question": "A team reports FID from 1,000 generated samples. Which concern follows the lesson’s evaluation guidance?",
+      "options": [
+        "The score directly reflects human preferences",
+        "It no longer depends on Inception features",
+        "Small-sample covariance estimates make it unreliable",
+        "It now measures prompt adherence instead of quality"
+      ],
+      "correct": 2,
+      "explanation": "With only 1,000 samples, estimated feature covariances can be biased; the lesson recommends at least 10,000 for FID. The issue is reliability of the distribution estimate, not a change to what FID measures."
+    },
+    {
+      "stage": "post",
+      "question": "A CLIP score rises after adding “masterpiece, 4k, high quality” to every prompt, but visual binding is unchanged. What likely happened?",
+      "options": [
+        "The Inception feature extractor changed domains",
+        "FID was converted into a human Elo score",
+        "The model necessarily improved compositional reasoning",
+        "The score was gamed by prompt wording"
+      ],
+      "correct": 3,
+      "explanation": "CLIP can reward prompt phrases such as “masterpiece” or “4k” even when the actual image-text binding is unchanged, inflating the metric through wording. Keep prompts consistent and inspect outputs to detect this gaming."
+    },
+    {
+      "stage": "post",
+      "question": "A release report must support a claim that the new model improved overall. What evaluation bundle does the lesson recommend?",
+      "options": [
+        "FID alone on one convenient prompt set, without human review",
+        "One human rating on the best generated sample from each model",
+        "FID, CLIP adherence, blinded preference, and failure review",
+        "CLIP score alone with hand-picked prompts and no visual audit"
+      ],
+      "correct": 2,
+      "explanation": "A defensible overall comparison combines distribution quality (FID), prompt adherence (CLIP or related scores), blinded preference, and qualitative failure analysis. One metric or one cherry-picked sample can hide a distinct failure mode."
+    }
+  ]
+}

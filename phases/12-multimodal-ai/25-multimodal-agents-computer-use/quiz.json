@@ -1,0 +1,78 @@
+{
+  "lesson": "25-multimodal-agents-computer-use",
+  "title": "Multimodal Agents and Computer-Use (Capstone)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What loop does a multimodal computer-use agent repeat while completing a browser workflow?",
+      "options": [
+        "Retrieve text chunks, summarize them, and discard the screenshot.",
+        "Click repeatedly until the URL changes, without revising the plan.",
+        "Perceive the state, reason about the goal, act, then observe the result.",
+        "Generate a final answer, then stop before checking the browser state."
+      ],
+      "correct": 2,
+      "explanation": "The agent reads the current screenshot and goal, reasons about a next step, emits an action, then observes the browser's changed state before repeating. Observation reveals whether the action worked and supplies evidence for recovery; clicking blindly until the URL changes skips that feedback."
+    },
+    {
+      "stage": "check",
+      "question": "Which JSON action shape matches the lesson's GUI grounding example for clicking a screen location?",
+      "options": [
+        "{\"action\":\"navigate\",\"x\":384,\"y\":220,\"element_desc\":\"Search button\"}",
+        "{\"action\":\"type\",\"x\":384,\"y\":220,\"element_desc\":\"Search button\"}",
+        "{\"action\":\"click\",\"x\":384,\"y\":220,\"element_desc\":\"Search button\"}",
+        "{\"action\":\"click\",\"text\":\"Search button\",\"time_ms\":220}"
+      ],
+      "correct": 2,
+      "explanation": "The lesson's click object names the action and supplies screen coordinates plus an element description: action=click, x=384, y=220. That description helps re-ground the target if coordinates drift; the type action instead carries text, while navigate expects a URL."
+    },
+    {
+      "stage": "check",
+      "question": "When a browser exposes an accessibility tree, what does a hybrid computer-use agent gain?",
+      "options": [
+        "The screenshot becomes unnecessary because coordinates are always stable.",
+        "The agent can skip observing page changes after actions.",
+        "The tree replaces the screenshot for all visual interpretation.",
+        "The tree grounds atomic actions while screenshots provide semantic visual context."
+      ],
+      "correct": 3,
+      "explanation": "A hybrid agent uses the accessibility tree to locate or ground atomic controls and the screenshot to interpret visual meaning and context. The option claiming the tree replaces all visual interpretation overstates its role; structured UI data may not express the full page appearance."
+    },
+    {
+      "stage": "check",
+      "question": "A 20-step workflow fills the VLM context with screenshots. Which memory strategy matches the lesson's example?",
+      "options": [
+        "After every five steps, summarize progress and drop older screenshots.",
+        "Keep every screenshot forever and remove the action log.",
+        "Re-run the full workflow whenever the context window fills.",
+        "Discard all screenshots after the first action and never summarize."
+      ],
+      "correct": 0,
+      "explanation": "A summary-chain compresses a long workflow by summarizing progress after a chosen interval, such as five steps, then dropping older screenshots. Keeping every screenshot forever defeats the context reduction, while the summary preserves a compact record of prior actions and state."
+    },
+    {
+      "stage": "post",
+      "question": "A click fails because a button moved between screenshots. What recovery step best follows the agent-loop design?",
+      "options": [
+        "Observe the new state, re-ground the target, and revise the next action.",
+        "Repeat the same coordinates without checking whether the page changed.",
+        "Delete the action history and submit the form immediately.",
+        "Mark the task complete because the click command was emitted."
+      ],
+      "correct": 0,
+      "explanation": "After a failed click, the loop should inspect the resulting screenshot, locate the intended control again, and revise its next action. Repeating stale coordinates assumes the screen stayed fixed, even though the scenario says the button moved."
+    },
+    {
+      "stage": "post",
+      "question": "How should the capstone evaluate whether a computer-use agent completed a booking workflow?",
+      "options": [
+        "Measure end-to-end task success on a fixed task slice, including final state.",
+        "Score only the first click coordinate and ignore later steps.",
+        "Compare screenshot resolution without checking the expected outcome.",
+        "Count how many JSON actions were emitted, even if the booking failed."
+      ],
+      "correct": 0,
+      "explanation": "The meaningful outcome is whether the workflow reaches its expected final state, such as a booking confirmation, across the fixed evaluation tasks. Counting emitted JSON actions only checks activity; a syntactically valid sequence can still leave the task incomplete."
+    }
+  ]
+}

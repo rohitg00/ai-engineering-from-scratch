@@ -1,0 +1,78 @@
+{
+  "lesson": "02-autoencoders-vae",
+  "title": "Autoencoders & Variational Autoencoders (VAE)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A plain autoencoder reconstructs inputs well, but decoding random points produces noise. What is missing?",
+      "options": [
+        "A discriminator that labels real and fake examples",
+        "A tokenizer that maps each pixel into a discrete class",
+        "A larger MSE term for reconstruction accuracy",
+        "A structured latent distribution that supports sampling"
+      ],
+      "correct": 3,
+      "explanation": "A plain autoencoder only learns to reconstruct encoded training examples; its latent codes are not forced to follow a sampleable distribution. Increasing reconstruction weight improves that objective but does not organize random points."
+    },
+    {
+      "stage": "check",
+      "question": "How does the reparameterization trick sample from q(z|x) while keeping gradients usable?",
+      "options": [
+        "Draw z directly from q(z|x) inside the encoder",
+        "Set z = μ + ε while ignoring posterior variance",
+        "Set z = μ + σ·ε with ε drawn from N(0,I)",
+        "Replace the posterior with a deterministic code"
+      ],
+      "correct": 2,
+      "explanation": "The trick draws ε from a fixed standard normal and computes z = μ + σ·ε, so gradients flow through μ and σ while randomness stays outside the learned parameters. Directly sampling inside q hides that differentiable path."
+    },
+    {
+      "stage": "check",
+      "question": "What two terms are combined in the VAE loss described here?",
+      "options": [
+        "Pixel accuracy plus a contrastive embedding loss",
+        "Adversarial loss plus a classification error",
+        "Reconstruction error plus β times KL divergence",
+        "Cross-entropy plus a noise-prediction error"
+      ],
+      "correct": 2,
+      "explanation": "The VAE objective combines reconstruction error with β times KL divergence to the N(0,I) prior. Reconstruction preserves the input; KL shapes the latent distribution, and β controls their trade-off."
+    },
+    {
+      "stage": "check",
+      "question": "If log σ² = log 4 for one latent dimension, what standard deviation does the encoder predict?",
+      "options": [
+        "σ = 4",
+        "σ = 2",
+        "σ = 1",
+        "σ = log 4"
+      ],
+      "correct": 1,
+      "explanation": "Because the encoder predicts log variance, variance = exp(log σ²) = 4, while standard deviation is its square root: σ = exp(½ log 4) = 2. The σ=4 choice labels variance as standard deviation."
+    },
+    {
+      "stage": "post",
+      "question": "A trained VAE is asked to generate a new sample without conditioning on a specific input. What should happen at inference?",
+      "options": [
+        "Sample z from the prior and decode it",
+        "Sample an input image and pass it to the discriminator",
+        "Encode a training input and reuse its posterior mean",
+        "Draw a decoder target and reconstruct the prior"
+      ],
+      "correct": 0,
+      "explanation": "Unconditional generation draws z from the prior N(0,I) and passes it through the decoder. Encoding a training input uses its posterior and conditions reconstruction on that input rather than sampling freely."
+    },
+    {
+      "stage": "post",
+      "question": "Training uses a very large β from the beginning and the latent stops carrying input information. What diagnosis and fix fit?",
+      "options": [
+        "Vanishing attention; add more latent dimensions",
+        "Posterior collapse; anneal β upward gradually",
+        "Overfitting; remove the reconstruction term",
+        "Mode collapse; increase discriminator learning rate"
+      ],
+      "correct": 1,
+      "explanation": "A large β from the start can make the KL penalty push q(z|x) toward N(0,I) so strongly that z stops carrying information about x: posterior collapse. Annealing β gradually lets reconstruction first establish useful latent information."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "14-build-a-transformer-capstone",
+  "title": "Build a Transformer from Scratch — The Capstone",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A small language model is trained on Shakespeare text and predicts one character at a time. What task is it solving?",
+      "options": [
+        "Masked-word reconstruction from both sides",
+        "Character-level next-token language modeling",
+        "Sentence-level sentiment classification",
+        "Audio-to-text sequence recognition"
+      ],
+      "correct": 1,
+      "explanation": "The capstone trains a causal decoder on character windows, predicting the next character and sampling continuations from Shakespeare text. Masked reconstruction predicts missing tokens from both sides, which is a different objective and not this generator."
+    },
+    {
+      "stage": "check",
+      "question": "For a character sequence x₀…xₙ, how should the training targets align with the inputs?",
+      "options": [
+        "Each input position predicts the same character",
+        "Each input position predicts the previous character",
+        "Each input position predicts the next character",
+        "The final position predicts every character at once"
+      ],
+      "correct": 2,
+      "explanation": "The targets are shifted one step forward: each input character xᵢ is paired with xᵢ₊₁. This teaches the model to predict the next character; using the previous character would reverse the prediction direction."
+    },
+    {
+      "stage": "check",
+      "question": "Which block pattern is used in the capstone’s decoder layers?",
+      "options": [
+        "Cross-attention, mel projection, and a vocoder",
+        "Post-norm LayerNorm, bidirectional attention, ReLU",
+        "Unmasked attention, average pooling, and softmax",
+        "Pre-norm RMSNorm, causal attention, SwiGLU, residuals"
+      ],
+      "correct": 3,
+      "explanation": "Each capstone block normalizes before its sublayer, applies causal multi-head attention, and adds residual paths around attention and the SwiGLU FFN. Cross-attention and mel projection belong to other architectures, not this decoder-only language model."
+    },
+    {
+      "stage": "check",
+      "question": "What does tying the LM head to the token embedding matrix mean?",
+      "options": [
+        "The output head reuses the token embedding weights",
+        "The output head shares its bias with RMSNorm",
+        "The position embedding predicts the next character",
+        "The attention projection becomes the vocabulary matrix"
+      ],
+      "correct": 0,
+      "explanation": "Tying assigns the LM head’s weight to the token embedding parameter, so the same matrix maps token IDs to vectors and hidden states back to vocabulary scores. Sharing the matrix avoids a separate output weight set."
+    },
+    {
+      "stage": "post",
+      "question": "Training loss falls but held-out validation loss rises. What should the capstone learner infer?",
+      "options": [
+        "The character vocabulary must be expanded immediately",
+        "The model may be overfitting the training text",
+        "The tokenizer should reverse the input sequence",
+        "The causal mask should be removed from attention"
+      ],
+      "correct": 1,
+      "explanation": "Validation loss measures prediction error on held-out text, so training loss falling while validation rises is evidence of overfitting. Removing the causal mask would expose future characters and introduce leakage rather than improve generalization."
+    },
+    {
+      "stage": "post",
+      "question": "Generation recomputes attention for every prefix token at each new character. Which extension targets that repeated work?",
+      "options": [
+        "Tie the LM head to the positional embedding",
+        "Train with a longer validation sequence",
+        "Add a KV cache during generation",
+        "Replace the tokenizer with a larger vocabulary"
+      ],
+      "correct": 2,
+      "explanation": "The capstone recomputes the full prefix during generation; a KV cache retains previous layers’ keys and values so each new character can reuse them. A longer validation sequence does not eliminate repeated prefix projections."
+    }
+  ]
+}

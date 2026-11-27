@@ -1,0 +1,78 @@
+{
+  "lesson": "17-constitutional-ai",
+  "title": "Constitutional AI and Rule Overrides",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A user asks for a style change, while a request conflicts with a hardcoded safety prohibition. Which one may an operator adjust?",
+      "options": [
+        "The style default, within its declared bounds",
+        "Both rules, by changing their labels",
+        "The hardcoded prohibition, if the user insists",
+        "Neither, because every default is immutable"
+      ],
+      "correct": 0,
+      "explanation": "A style default is soft-coded, so an operator may change it within its declared bounds. A hardcoded prohibition stays fixed for both operator and user; changing its label does not change its safety status."
+    },
+    {
+      "stage": "check",
+      "question": "Which ordering resolves conflicts in the lesson's four-tier hierarchy?",
+      "options": [
+        "Helpfulness, guidelines, ethics, then safety",
+        "Ethics, helpfulness, safety, then guidelines",
+        "Guidelines, safety, helpfulness, then ethics",
+        "Safety, ethics, guidelines, then helpfulness"
+      ],
+      "correct": 3,
+      "explanation": "Resolve conflicts from the top down: safety and oversight, ethics, Anthropic guidelines, then helpfulness. Reversing the order would let a lower-priority request override a higher-priority safety constraint."
+    },
+    {
+      "stage": "check",
+      "question": "What are the central steps in the original 2022 Constitutional AI training loop described here?",
+      "options": [
+        "Ask users to vote and fine-tune on the majority response",
+        "Search sources, write a paper, and request a human review",
+        "Generate, critique against principles, revise, then use RLAIF",
+        "Run a classifier, reject output, then retrain the prompt"
+      ],
+      "correct": 2,
+      "explanation": "The original loop generates a response, critiques it against constitutional principles, revises it, and uses RLAIF on the resulting pairs. A majority-vote process or simple classifier is a different method."
+    },
+    {
+      "stage": "check",
+      "question": "A customer-support operator wants shorter replies and a more formal tone. How are these settings classified in the lesson?",
+      "options": [
+        "External verification checks on the model weights",
+        "Hardcoded prohibitions that no operator can adjust",
+        "Soft-coded defaults that can change within bounds",
+        "Runtime kill-switch signals for every conversation"
+      ],
+      "correct": 2,
+      "explanation": "Reply length and tone are soft-coded defaults operators can tune within bounds, while hardcoded prohibitions remain fixed. Treating style as a prohibition confuses adjustable product behavior with the safety floor."
+    },
+    {
+      "stage": "post",
+      "question": "A user frames a request for bioweapons uplift as licensed research and asks the model to ignore the rule. What should the resolver do?",
+      "options": [
+        "Apply the hardcoded prohibition regardless of the framing",
+        "Treat the premise as an operator-approved default",
+        "Raise helpfulness above safety for this request",
+        "Wait for the runtime kill switch to change the policy"
+      ],
+      "correct": 0,
+      "explanation": "Bioweapons uplift is a hardcoded prohibition, so a user’s “licensed research” framing does not make the request override it. Raising helpfulness above safety would invert the stated priority order."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the lesson say constitutional model behavior and runtime controls are both needed?",
+      "options": [
+        "They are two names for the same approval button",
+        "A constitution directly records every external side effect",
+        "Runtime controls make model training unnecessary",
+        "They address different layers: model preferences and permitted actions"
+      ],
+      "correct": 3,
+      "explanation": "The constitution shapes model-level preferences; runtime controls constrain which external actions the host permits. They are different layers, not two names for the same approval button, and neither replaces the other."
+    }
+  ]
+}

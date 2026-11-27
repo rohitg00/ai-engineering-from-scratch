@@ -1,0 +1,78 @@
+{
+  "lesson": "23-colpali-vision-native-rag",
+  "title": "ColPali and Vision-Native Document RAG",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why does ColPali embed a PDF page image directly instead of extracting text before retrieval?",
+      "options": [
+        "Keep page layout and visual evidence that OCR can lose.",
+        "It reduces every document to one class label before indexing.",
+        "It removes the need to encode user queries at retrieval time.",
+        "It guarantees that every page uses fewer vectors than text-RAG."
+      ],
+      "correct": 0,
+      "explanation": "Embedding the page image preserves chart marks, table structure, annotations, and spatial relationships that OCR extraction or chunking can flatten or omit. The option that reduces each document to one class label would discard the fine-grained evidence retrieval needs, rather than retaining it."
+    },
+    {
+      "stage": "check",
+      "question": "Given a query-to-patch cosine matrix [[0.9,0.1],[0.2,0.8]], what is the ColBERT MaxSim score?",
+      "options": [
+        "1.7",
+        "0.9",
+        "1.0",
+        "2.0"
+      ],
+      "correct": 0,
+      "explanation": "Treat each row as one query token's similarities to two page patches: its maximum is 0.9 for the first row and 0.8 for the second, so MaxSim sums to 1.7. The 0.9 option is only the largest single matrix entry, not the sum of per-query-token matches."
+    },
+    {
+      "stage": "check",
+      "question": "How does ColPali represent each indexed document page for late-interaction retrieval?",
+      "options": [
+        "A text-only OCR chunk with one embedding per paragraph.",
+        "One pooled vector that is compared once with the query vector.",
+        "Store patch vectors per page and use MaxSim.",
+        "A generated answer stored as the page's retrieval key."
+      ],
+      "correct": 2,
+      "explanation": "ColPali encodes a page as many image-patch vectors and scores them against query-token vectors with late interaction, allowing each query token to select a matching patch. A single pooled vector is the coarser bi-encoder/VisRAG pattern and loses that patch-level matching."
+    },
+    {
+      "stage": "check",
+      "question": "A 200-page report has 729 patches per page, 128 dimensions, and 4-byte floats. Using decimal MB (1 MB = 1,000,000 bytes), what raw storage is required?",
+      "options": [
+        "About 18.7 MB, from 50 pages at the same patch count.",
+        "About 9.3 MB, after applying 8x product quantization.",
+        "About 0.6 MB, from 200 pooled 768-dimensional vectors.",
+        "About 74.6 MB, from 200*729*128*4 bytes."
+      ],
+      "correct": 3,
+      "explanation": "The raw float count is 200 pages × 729 patches/page × 128 values/patch × 4 bytes/value = 74,649,600 bytes, or 74.6496 decimal MB. The 9.3 MB distractor already divides by eight for product quantization, so it is compressed rather than raw storage."
+    },
+    {
+      "stage": "post",
+      "question": "A knowledge base is mostly plain text with no figures or layout signal, and storage is the main constraint. Which retrieval path fits the lesson?",
+      "options": [
+        "AnyRes tiling, because all text needs high-resolution image crops.",
+        "VideoAgent retrieval, because text pages require frame timestamps.",
+        "Use text-RAG for plain text and tight storage.",
+        "ColPali with every page patch vector, because multi-vector storage is smallest."
+      ],
+      "correct": 2,
+      "explanation": "For pure text with no layout or visual evidence, text-RAG keeps one compact embedding per chunk and avoids storing every image patch vector. ColPali's multi-vector page index is valuable for visual documents, but the option claiming it uses the least storage reverses its documented trade-off."
+    },
+    {
+      "stage": "post",
+      "question": "A financial report answer depends on a value shown in a chart and its nearby layout. What pipeline retains that evidence for generation?",
+      "options": [
+        "Retrieve one pooled page vector and generate without the source image.",
+        "Run a chart classifier and return its label without retrieval context.",
+        "Retrieve top pages, then let a VLM answer.",
+        "OCR text, split into chunks, and discard the original page after embedding."
+      ],
+      "correct": 2,
+      "explanation": "The pipeline retrieves relevant page images using patch-level MaxSim, then passes those pages with the query to a VLM, so the chart and its nearby layout remain available during answer generation. OCR chunking that discards the page image removes precisely that visual evidence."
+    }
+  ]
+}

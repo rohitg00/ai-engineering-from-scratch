@@ -1,0 +1,78 @@
+{
+  "lesson": "19-a2a-protocol",
+  "title": "A2A — Agent-to-Agent Protocol",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A research agent needs another agent to draft a report while keeping its internals opaque. Which protocol roles fit?",
+      "options": [
+        "A2A invokes a specific tool; MCP delegates an opaque peer task.",
+        "A2A delegates a task to an opaque agent peer; MCP invokes a specific tool.",
+        "A2A exposes the peer’s reasoning; MCP keeps every tool call opaque.",
+        "A2A and MCP are both peer-task lifecycles with different names."
+      ],
+      "correct": 1,
+      "explanation": "Use A2A when one agent delegates a task to another opaque peer; use MCP when an agent invokes a specific tool. The reversed mapping in the first option describes MCP as delegation and A2A as a tool call, so it swaps their roles."
+    },
+    {
+      "stage": "check",
+      "question": "A client discovers an A2A peer. What should it inspect in the Agent Card?",
+      "options": [
+        "Skills and supported interfaces, including protocol bindings and versions.",
+        "The caller’s credential store and private reasoning history.",
+        "The peer’s complete executable implementation and internal tool trace.",
+        "Runtime task states, messages, and artifacts after a request begins."
+      ],
+      "correct": 0,
+      "explanation": "The Agent Card is discovery metadata: it lists skills and supported interfaces, including protocol bindings and versions. A peer does not publish its executable internals there, and task states or artifacts are returned only after a request begins."
+    },
+    {
+      "stage": "check",
+      "question": "A task needs clarification before it can finish. Which lifecycle transition supports that pause?",
+      "options": [
+        "WORKING to INPUT_REQUIRED, then back to WORKING",
+        "FAILED to INPUT_REQUIRED, then CANCELED",
+        "COMPLETED to WORKING after the artifact is read",
+        "SUBMITTED directly to COMPLETED without a message"
+      ],
+      "correct": 0,
+      "explanation": "`TASK_STATE_INPUT_REQUIRED` is a nonterminal pause: the caller sends more information using the same task id, then the agent returns to WORKING. FAILED and COMPLETED are terminal states, so they cannot serve as a clarification transition."
+    },
+    {
+      "stage": "check",
+      "question": "A client must embed a PDF file’s base64 bytes in a Message, rather than describe the file or link to it. Which Part field fits?",
+      "options": [
+        "raw for base64 file bytes with filename and mediaType metadata.",
+        "url for a remote link whose target serves the PDF bytes.",
+        "text for a readable description of the PDF contents.",
+        "data for a structured JSON instruction accompanying the PDF."
+      ],
+      "correct": 0,
+      "explanation": "A Part has one content field: raw carries the bytes (commonly base64) with filename and mediaType, url carries a link, text carries prose, and data carries structured JSON. A text description does not transmit the requested PDF bytes."
+    },
+    {
+      "stage": "post",
+      "question": "A called agent completes report writing. How should it return the report to its caller?",
+      "options": [
+        "An updated Agent Card listing the finished report as a skill.",
+        "A history Message whose parts are not wrapped in an Artifact.",
+        "A named Artifact containing typed Parts, such as text/markdown.",
+        "A status message that names the terminal state but omits the report."
+      ],
+      "correct": 2,
+      "explanation": "The completed report belongs in a named Artifact whose Parts carry a type such as `text/markdown`, while status records the lifecycle state. A terminal status or history message alone does not carry the report as the protocol’s output object."
+    },
+    {
+      "stage": "post",
+      "question": "A client uses JSON-RPC over HTTP and needs version 1.0 semantics. What should it send on every request?",
+      "options": [
+        "Content-Type: text/plain",
+        "protocolBinding: GRPC",
+        "A2A-Version: 1.0",
+        "A2A-Version: 0.3"
+      ],
+      "correct": 2,
+      "explanation": "Send `A2A-Version: 1.0` on every request so the server selects the intended protocol semantics; without it the lesson says the request is interpreted as version 0.3. `protocolBinding` is Agent Card metadata, not the per-request version header."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "20-omni-models-thinker-talker",
+  "title": "Omni Models: Qwen2.5-Omni and the Thinker-Talker Split",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What role split enables Qwen2.5-Omni to reason over text while generating speech in parallel?",
+      "options": [
+        "A large Thinker emits text; a smaller Talker turns it into speech tokens.",
+        "One diffusion model handles text reasoning and speech synthesis sequentially.",
+        "A large Talker reasons over audio; a small Thinker decodes waveforms.",
+        "The speech decoder generates text while the LLM listens to its waveform."
+      ],
+      "correct": 0,
+      "explanation": "The large Thinker produces the response text, while the smaller Talker consumes committed text tokens and generates discrete speech tokens; a streaming decoder then turns those tokens into waveform samples. This separation lets speech begin during continued text generation. The sequential diffusion option would wait instead of exploiting that overlap."
+    },
+    {
+      "stage": "check",
+      "question": "How does TMRoPE align a camera frame, audio frame, and text token in an omni-model?",
+      "options": [
+        "Use only the token index and ignore when each signal arrived.",
+        "Assign absolute timestamps to tokens from each modality and rotate attention by time.",
+        "Give each modality an independent position table with no shared timeline.",
+        "Order all image tokens first, all audio tokens second, then all text tokens."
+      ],
+      "correct": 1,
+      "explanation": "TMRoPE assigns tokens from each modality absolute timestamps and uses those times in rotary attention, so nearby image, audio, and text events can be related as concurrent. The option that groups every image before every audio discards that shared temporal alignment."
+    },
+    {
+      "stage": "check",
+      "question": "Using the code's defaults, what TTFAB results for a 7B Thinker, 300M Talker, 16kHz mic, and no vision?",
+      "options": [
+        "400 ms: 80+100+40+30+70+80.",
+        "250 ms: 40+80+20+20+30+60.",
+        "500 ms: 100+150+50+50+70+80.",
+        "310 ms: 50+100+40+20+30+70."
+      ],
+      "correct": 3,
+      "explanation": "With 16 kHz input, the code computes mic latency as 40 + (16000 // 8000)×5 = 50 ms; the other defaults contribute 100+40+20+30+70 ms, totaling 310 ms. The 400 ms option uses 80 ms for the mic path, which is not the default formula's result."
+    },
+    {
+      "stage": "check",
+      "question": "At 50 base speech tokens per second, how fast must the Talker emit tokens to keep the output stream supplied?",
+      "options": [
+        "At least one token for every microphone sample.",
+        "At least 16,000 speech tokens per second.",
+        "At least 50 speech tokens per second.",
+        "At least 30 speech tokens total per utterance."
+      ],
+      "correct": 2,
+      "explanation": "The stated base-layer stream runs at 50 tokens per second, so the Talker must produce at least that many base speech tokens each second to avoid falling behind. The 16,000-sample-per-second option confuses waveform samples with codec tokens; they are different rates."
+    },
+    {
+      "stage": "post",
+      "question": "A voice assistant lets the user and model speak at the same time, including backchannels or interruptions. Which mode is required?",
+      "options": [
+        "Text-only mode, which disables all speech tokenization.",
+        "Turn-taking, which waits for a silence threshold before replying.",
+        "Full-duplex, which supports simultaneous speaking and listening.",
+        "Half-duplex, which alternates user and model turns."
+      ],
+      "correct": 2,
+      "explanation": "Full-duplex means the user and model may listen and speak simultaneously, enabling interruptions or backchannels. Turn-taking and half-duplex both impose an alternating handoff; in this lesson, VAD silence detection supports that handoff rather than simultaneous exchange."
+    },
+    {
+      "stage": "post",
+      "question": "A product accepts voice input and needs to start speaking before the Thinker finishes its entire response. What pipeline behavior enables this?",
+      "options": [
+        "Run the waveform decoder before any speech tokens exist.",
+        "Require a separate model to regenerate the Thinker's text output.",
+        "Wait for the full text response, then send it to a batch speech decoder.",
+        "Stream Thinker text tokens to the Talker as they are committed."
+      ],
+      "correct": 3,
+      "explanation": "Streaming passes each committed Thinker text token to the Talker, which can begin emitting speech while the Thinker generates later text. Waiting for the complete response before batch decoding, as the tempting option proposes, removes this overlap and delays the first audio."
+    }
+  ]
+}

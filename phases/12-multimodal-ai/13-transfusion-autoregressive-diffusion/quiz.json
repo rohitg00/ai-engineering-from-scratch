@@ -1,0 +1,78 @@
+{
+  "lesson": "13-transfusion-autoregressive-diffusion",
+  "title": "Transfusion: Autoregressive Text + Diffusion Image in One Transformer",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How does Transfusion train text and continuous image patches in one shared transformer?",
+      "options": [
+        "Quantize image patches to VQ IDs and apply only next-token loss everywhere.",
+        "Use next-token loss on text and a diffusion or flow-matching loss on image patches.",
+        "Train separate text and image models, then average their final embeddings.",
+        "Use contrastive image-text loss for both modalities and no generation loss."
+      ],
+      "correct": 1,
+      "explanation": "Transfusion shares a transformer body but applies next-token cross-entropy to text tokens and diffusion/flow loss to continuous image patches. VQ-only next-token training is Chameleon’s discrete-image route and retains its tokenizer reconstruction ceiling."
+    },
+    {
+      "stage": "check",
+      "question": "Which attention behavior does Transfusion use for a sequence containing text and one image block?",
+      "options": [
+        "Text and image tokens use separate transformers with no cross-attention.",
+        "Text is causal; image patches attend bidirectionally within their image block.",
+        "All tokens attend bidirectionally across text and image regardless of order.",
+        "Text is bidirectional; image patches attend only to earlier patches."
+      ],
+      "correct": 1,
+      "explanation": "Causal masking on text prevents a token from seeing future text during teacher forcing. Patches within the same image block can attend bidirectionally because they form one snapshot; making all text bidirectional would leak future targets."
+    },
+    {
+      "stage": "check",
+      "question": "A patch has clean value x0=2, sampled noise epsilon=6, and flow time t=0.25. Using xt=(1-t)x0+t*epsilon, what noisy value and target velocity result?",
+      "options": [
+        "xt=4 and velocity=4.",
+        "xt=3 and velocity=-4.",
+        "xt=3 and velocity=4.",
+        "xt=2 and velocity=4."
+      ],
+      "correct": 2,
+      "explanation": "The noisy patch is xt=(1−0.25)×2+0.25×6=1.5+1.5=3, and the target velocity is ε−x0=6−2=4. Because noise exceeds the clean value, velocity is positive. The negative option reverses subtraction; xt=2 skips interpolation. For this linear path, velocity is epsilon minus clean, independent of t."
+    },
+    {
+      "stage": "check",
+      "question": "What is the defining MMDiT change compared with Transfusion's fully shared transformer blocks?",
+      "options": [
+        "A VQ codebook that replaces all continuous image patches.",
+        "One shared QKV projection but no image-to-text attention.",
+        "Separate modality-specific QKV and MLP weights with joint cross-modality attention.",
+        "Separate text and image models with no shared attention or hidden state."
+      ],
+      "correct": 2,
+      "explanation": "MMDiT gives text and image separate QKV/MLP weights while allowing joint cross-modality attention. This preserves interactions between modalities while letting each use different transformations; fully separate models have no shared attention stream."
+    },
+    {
+      "stage": "post",
+      "question": "Assume 50 text tokens are generated autoregressively, then 256 image patches are denoised together for 20 steps. How many model forward passes are needed, excluding any guidance branch?",
+      "options": [
+        "20 passes total, because text generation shares the diffusion schedule.",
+        "306 passes: one text pass and one image pass per token.",
+        "50 passes total, because all image patches use a single denoising step.",
+        "70 passes: 50 text-token steps plus 20 image-denoising steps."
+      ],
+      "correct": 3,
+      "explanation": "Text generation takes 50 autoregressive forward passes, one per token; image denoising processes the 256 patches together each step, for 20 passes. Under the stated no-guidance assumption, total is 50+20=70."
+    },
+    {
+      "stage": "post",
+      "question": "A team needs high-fidelity continuous image generation and can manage two loss heads. Which design tradeoff supports choosing Transfusion over Chameleon?",
+      "options": [
+        "Discrete image IDs avoid any image-generation loop and guarantee higher fidelity.",
+        "A shared text vocabulary makes all image reconstruction losses unnecessary.",
+        "Continuous patches avoid a VQ quantization ceiling while text and images share one transformer.",
+        "Separate diffusion weights remove the need to train a shared backbone."
+      ],
+      "correct": 2,
+      "explanation": "Transfusion keeps image patches continuous, avoiding the VQ quantization ceiling, while one transformer also predicts text with NTP. It requires balancing two losses; Chameleon’s discrete-token route is simpler but may lose image detail."
+    }
+  ]
+}

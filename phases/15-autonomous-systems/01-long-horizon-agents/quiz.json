@@ -1,0 +1,78 @@
+{
+  "lesson": "01-long-horizon-agents",
+  "title": "The Shift from Chatbots to Long-Horizon Agents",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A workflow has many sequential steps that each succeed with probability 0.99, independently. What happens to its chance of full completion as steps accumulate?",
+      "options": [
+        "It equals the average of the step probabilities",
+        "It falls because every step must succeed",
+        "It stays fixed because each step is reliable",
+        "It rises because later steps correct earlier ones"
+      ],
+      "correct": 1,
+      "explanation": "For independent sequential steps, full success requires every step to succeed, so probabilities multiply: 0.99^n. Averaging ignores each added failure opportunity; a highly reliable step does not make the whole trajectory equally reliable."
+    },
+    {
+      "stage": "check",
+      "question": "METR defines a model's time horizon using what point on the task-success curve?",
+      "options": [
+        "The expert task duration where fitted success reaches 50 percent",
+        "The average length of all prompts in the benchmark",
+        "The duration where every model has identical accuracy",
+        "The longest task that the model completed once"
+      ],
+      "correct": 0,
+      "explanation": "METR fits task success against log expert-completion time and defines the horizon where that fitted curve crosses 50%. One unusually long successful task is a single observation, not the reliability crossing."
+    },
+    {
+      "stage": "check",
+      "question": "Assume independent per-step success of 0.99 for 70 required steps. About what is the end-to-end success probability?",
+      "options": [
+        "About 99 percent, because each step has that success rate",
+        "About 49.5 percent, using 0.99 raised to the 70th power",
+        "About 70 percent, using the number of required steps",
+        "About 0.7 percent, using 0.99 divided by the step count"
+      ],
+      "correct": 1,
+      "explanation": "Independent success compounds as 0.99^70≈0.495, about 49.5%, because all 70 steps must work. The 99% option mistakes per-step reliability for full-run reliability; dividing by 70 is not the probability rule."
+    },
+    {
+      "stage": "check",
+      "question": "A model behaves more safely in a visible benchmark than during deployment. What does the lesson say about the benchmark horizon?",
+      "options": [
+        "Treat it as an upper bound and evaluate the deployment distribution",
+        "Treat it as a guarantee for every production workload",
+        "Ignore it because task duration has no bearing on reliability",
+        "Treat it as a lower bound because benchmarks are harder"
+      ],
+      "correct": 0,
+      "explanation": "Treat the measured horizon as an idealized ceiling and test your deployment distribution: tools, consequences, and user inputs differ from the benchmark. A guarantee for every workload overreads a 50%-success statistic."
+    },
+    {
+      "stage": "post",
+      "question": "A proposed agent task emits hundreds of thousands of observations over a long run. What design change addresses the context problem described in the lesson?",
+      "options": [
+        "Keep every raw event in the active prompt forever",
+        "Compress history and use checkpoints plus memory tiers",
+        "Review only the final answer after the agent finishes",
+        "Remove all observation logs to save tokens"
+      ],
+      "correct": 1,
+      "explanation": "Raw observations and tool outputs accumulate beyond one context, so compress older history and preserve durable checkpoints and memory tiers. Keeping every event active recreates overflow; deleting all logs also erases the audit trail."
+    },
+    {
+      "stage": "post",
+      "question": "A benchmark reports a long task horizon, but the task has irreversible customer-facing actions. What is the sound deployment decision?",
+      "options": [
+        "Run task-specific evaluations and add budgets, checkpoints, and review gates",
+        "Remove safeguards so deployment conditions match the benchmark",
+        "Deploy directly because the benchmark already measured a long horizon",
+        "Replace the benchmark with a single successful demo run"
+      ],
+      "correct": 0,
+      "explanation": "A benchmark measures capability under its test setup, not safe reliability for irreversible customer actions. Evaluate representative deployment tasks and bound exposure with budgets, checkpoints, and review gates; a demo success cannot establish those controls."
+    }
+  ]
+}

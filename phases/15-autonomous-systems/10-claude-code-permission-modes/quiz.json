@@ -1,0 +1,78 @@
+{
+  "lesson": "10-claude-code-permission-modes",
+  "title": "Permission Modes for Autonomous Agents",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A developer is unfamiliar with a repository and wants to review the proposed plan and actions closely. Which permission mode fits?",
+      "options": [
+        "bypassPermissions, with every action approved",
+        "plan, with approval before execution",
+        "acceptEdits, with file writes automatically approved",
+        "dontAsk, with unapproved actions denied"
+      ],
+      "correct": 1,
+      "explanation": "Plan mode presents a plan and asks for review before execution, fitting an unfamiliar repository where close oversight matters. `bypassPermissions` approves everything and removes the review requested here."
+    },
+    {
+      "stage": "check",
+      "question": "Which actions does acceptEdits auto-approve within the project workspace, subject to applicable permission rules?",
+      "options": [
+        "Read-only inspections without any workspace file modifications",
+        "Every shell command and network request in the workspace",
+        "Workspace file edits and selected filesystem shell commands",
+        "All requested actions plus edits to the permission policy"
+      ],
+      "correct": 2,
+      "explanation": "`acceptEdits` auto-approves file edits and certain workspace filesystem commands, including eligible `rm` and `mv` operations. Deny rules, ask rules, and safety restrictions still apply. Other shell commands and network requests follow normal permission checks; choosing this mode does not automatically approve every operation."
+    },
+    {
+      "stage": "check",
+      "question": "What is distinctive about auto mode in the lesson?",
+      "options": [
+        "A separate classifier reviews each proposed action against the request",
+        "The current agent approves its own calls after execution",
+        "A fixed graph selects tools without looking at the task",
+        "All actions are automatically allowed with no budget limits"
+      ],
+      "correct": 0,
+      "explanation": "Auto mode uses a separate classifier to review each proposed action against the request before execution. Self-approval after an action has run cannot prevent it, and the classifier remains only one control layer."
+    },
+    {
+      "stage": "check",
+      "question": "A long unattended run needs cost and iteration limits in addition to action review. Which pair does the lesson name?",
+      "options": [
+        "max_budget_usd and workspace allowlists",
+        "max_turns and per-tool action caps",
+        "Per-tool action caps and trajectory audits",
+        "max_turns and max_budget_usd"
+      ],
+      "correct": 3,
+      "explanation": "The named session limits are `max_turns` for iterations and `max_budget_usd` for aggregate spend. Per-tool caps and trajectory audits are useful additions, but they are not the specific turn-and-dollar pair."
+    },
+    {
+      "stage": "post",
+      "question": "An agent reads a credential, writes it to a temporary file, then pushes the file publicly. Why might an action classifier miss the risk?",
+      "options": [
+        "A temporary file is automatically outside the agent's permissions",
+        "The sequence has too few actions to form a trajectory",
+        "The classifier only sees the model's final text after all actions",
+        "Each allowed action can look safe while the sequence exfiltrates data"
+      ],
+      "correct": 3,
+      "explanation": "A sequence of locally ordinary reads and writes can compose into exfiltration, even if no single action is flagged. The too-few-actions option misses that the risk arises from the combined trajectory."
+    },
+    {
+      "stage": "post",
+      "question": "An organization enables auto mode for a long run. Which additional posture matches the lesson's research-preview framing?",
+      "options": [
+        "Use budgets, allowlists, isolated workspaces, and trajectory audits",
+        "Grant production credentials so the agent can recover from errors",
+        "Remove all action logs to avoid slowing the session",
+        "Rely on the classifier alone because it reviews each action"
+      ],
+      "correct": 0,
+      "explanation": "The classifier is a research-preview layer, so pair it with budgets, allowlists, isolated workspaces, and trajectory audits. Relying on it alone ignores documented limits on context and composed behavior."
+    }
+  ]
+}

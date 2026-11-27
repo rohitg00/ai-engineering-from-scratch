@@ -1,0 +1,78 @@
+{
+  "lesson": "15-attention-variants",
+  "title": "Attention Variants — Sliding Window, Sparse, Differential",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A long-context model’s full attention matrix is too expensive. What cost does full attention have in sequence length N?",
+      "options": [
+        "Quadratic memory and compute",
+        "Constant memory and quadratic compute",
+        "Logarithmic memory and linear compute",
+        "Linear memory and constant compute"
+      ],
+      "correct": 0,
+      "explanation": "Full self-attention scores every query-key pair, yielding an N×N score matrix and quadratic work in sequence length. Flash Attention avoids storing that whole matrix in high-bandwidth memory, but it does not remove the pairwise arithmetic."
+    },
+    {
+      "stage": "check",
+      "question": "In code/main.py, window counts the total allowed positions. With causal SWA and window=1, which positions can a token attend to?",
+      "options": [
+        "Every token within one position on either side",
+        "The previous position and its own",
+        "Its own position only",
+        "Every earlier position in the sequence"
+      ],
+      "correct": 2,
+      "explanation": "The code sets each row’s lower bound to i−window+1. With window=1, that bound equals i, so only the current position remains unmasked; the prior position is excluded."
+    },
+    {
+      "stage": "check",
+      "question": "How does sliding-window attention change memory and compute relative to full attention?",
+      "options": [
+        "It scales with sequence length times window width",
+        "It scales quadratically with sequence length",
+        "It stays constant regardless of sequence length",
+        "It scales with window width squared only"
+      ],
+      "correct": 0,
+      "explanation": "Each query in sliding-window attention scores at most W positions, so across N queries cost scales as N×W rather than comparing every pair. If W is fixed, this is linear in N; full attention is quadratic."
+    },
+    {
+      "stage": "check",
+      "question": "What operation defines differential attention in this lesson?",
+      "options": [
+        "Subtract λ times a second attention map from the first",
+        "Mask the first map and retain the second",
+        "Concatenate both maps before the value projection",
+        "Average two attention maps with equal weights"
+      ],
+      "correct": 0,
+      "explanation": "Differential attention computes two normalized maps and combines them as A1−λA2 before applying values. Averaging maps equally cannot subtract a sink component, which is the purpose of the learned scaled subtraction."
+    },
+    {
+      "stage": "post",
+      "question": "A long-context retrieval model loses useful distant information under pure SWA. What layer pattern does the lesson suggest?",
+      "options": [
+        "Remove position information from the residual stream",
+        "Interleave local SWA layers with global layers",
+        "Use a smaller window in every attention layer",
+        "Replace all attention with a single local token"
+      ],
+      "correct": 1,
+      "explanation": "Pure SWA restricts each layer to nearby tokens and can lose long-range retrieval. Interleaving occasional global-attention layers lets distant information be accessed while local layers retain lower-cost windows."
+    },
+    {
+      "stage": "post",
+      "question": "A custom sparse layer should keep nearby context and some periodic distant tokens. Which mask pattern fits?",
+      "options": [
+        "A fixed window that removes all distant context",
+        "Two independent softmax maps with subtraction",
+        "Local window plus every stride-th earlier token",
+        "A full global score matrix for every query"
+      ],
+      "correct": 2,
+      "explanation": "The local-plus-strided pattern combines a dense nearby window with periodic links to earlier positions, preserving both local and distant context. A fixed window alone removes every distant position, so it cannot meet the requirement."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "06-diffusion-ddpm-from-scratch",
+  "title": "Diffusion Models — DDPM from Scratch",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does the forward process do to training data in a DDPM?",
+      "options": [
+        "Maps each image to an exact class label",
+        "Gradually adds noise over many steps",
+        "Gradually removes noise from random samples",
+        "Compresses images into a discrete codebook"
+      ],
+      "correct": 1,
+      "explanation": "The forward Markov chain gradually adds Gaussian noise until data approaches a simple prior; the learned reverse chain removes noise to generate samples. Repeatedly denoising random samples describes the reverse, not forward, process."
+    },
+    {
+      "stage": "check",
+      "question": "What allows DDPM to construct x_t from x_0 in one training step without simulating every earlier step?",
+      "options": [
+        "The closed-form cumulative Gaussian q(x_t|x_0)",
+        "A discriminator that estimates the clean image",
+        "A separate decoder for each timestep",
+        "An autoregressive cache of prior noise values"
+      ],
+      "correct": 0,
+      "explanation": "The cumulative transition q(x_t|x_0) is Gaussian with a closed-form mean and variance determined by ᾱ_t, so training can sample x_t directly without simulating steps 1 through t. A discriminator is not required for this construction."
+    },
+    {
+      "stage": "check",
+      "question": "What target does the simple DDPM training loss ask the network to predict?",
+      "options": [
+        "The clean image’s class label",
+        "The Gaussian noise added to x₀",
+        "The reverse-chain timestep itself",
+        "The discriminator’s realness probability"
+      ],
+      "correct": 1,
+      "explanation": "DDPM’s simple loss corrupts x₀ with sampled Gaussian noise ε and trains ε_θ(x_t,t) to predict that same ε. The target is a noise vector, not a class or timestep label."
+    },
+    {
+      "stage": "check",
+      "question": "How does ancestral DDPM sampling proceed from a noise sample?",
+      "options": [
+        "Sample a latent code and decode it without denoising",
+        "Predict all timesteps in one classifier pass",
+        "Start at x₀ and repeatedly add noise toward x_T",
+        "Start at x_T and repeatedly apply reverse steps toward x₀"
+      ],
+      "correct": 3,
+      "explanation": "Ancestral generation draws x_T from noise and applies the learned reverse transition for t=T,…,1 until reaching x₀. Starting at x₀ and adding noise would follow the forward corruption chain away from data."
+    },
+    {
+      "stage": "post",
+      "question": "A denoiser receives a noisy sample but no information about its noise level. What issue should you expect?",
+      "options": [
+        "It will automatically infer the exact timestep",
+        "It will treat every sample as the same clean image",
+        "It cannot compute the VAE reconstruction loss",
+        "It cannot tell which denoising task to perform"
+      ],
+      "correct": 3,
+      "explanation": "The denoising target depends on timestep: a heavily corrupted sample requires a different correction than a lightly corrupted one. A timestep embedding tells the network which noise level it must handle instead of assuming it can infer an exact t from x_t alone."
+    },
+    {
+      "stage": "post",
+      "question": "A production image pipeline still uses 1,000 reverse steps and is too slow. Which sampler change follows the lesson?",
+      "options": [
+        "Replace the noise target with a class label",
+        "Use DDIM or DPM-Solver with fewer steps",
+        "Increase the number of U-Net layers per step",
+        "Sample a new independent x_T at every timestep"
+      ],
+      "correct": 1,
+      "explanation": "To reduce a 1,000-step inference schedule, use a sampler such as DDIM with 20–50 steps or DPM-Solver with 10–20, reusing the trained noise predictor. Adding layers raises per-step cost rather than reducing the number of steps."
+    }
+  ]
+}

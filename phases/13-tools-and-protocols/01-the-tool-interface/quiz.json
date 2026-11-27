@@ -1,0 +1,78 @@
+{
+  "lesson": "01-the-tool-interface",
+  "title": "The Tool Interface — Why Agents Need Structured I/O",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A user asks the model to fetch current weather from an external service, but the model can only emit text. What gives the host a way to obtain that live result?",
+      "options": [
+        "The host registers a callable tool and executes its structured request",
+        "The host asks for longer prose until the answer sounds current",
+        "The user supplies the weather value inside the original question",
+        "The model adds a confident sentence based on its training examples"
+      ],
+      "correct": 0,
+      "explanation": "An LLM emits tokens; it cannot contact a weather service unless the host provides an executor. A registered tool turns the model’s structured request into a real API call and returns the result. More confident prose is still only text, not a live lookup."
+    },
+    {
+      "stage": "check",
+      "question": "A host has received a structured call with valid arguments. Which action belongs to the execute step?",
+      "options": [
+        "Validate the arguments and run the registered executor",
+        "Append the returned result and call the model again",
+        "Choose whether the model should answer or call a tool",
+        "Describe the tool name and accepted input fields"
+      ],
+      "correct": 0,
+      "explanation": "Execution is the host-owned step: validate the call against its schema, then invoke the registered function with those arguments. Appending a result and calling the model again is observe; choosing whether to call is decide, so neither is execution."
+    },
+    {
+      "stage": "check",
+      "question": "Two parallel calls finish in reverse order. What lets the host attach each result to the correct request?",
+      "options": [
+        "Repeat the user's original question before each result",
+        "Return results in alphabetical order by tool name",
+        "Echo each original call id in its matching tool result",
+        "Put both results into one unlabelled text response"
+      ],
+      "correct": 2,
+      "explanation": "The call id is a correlation key: the host keeps it with each pending request and echoes it in that request’s result. Alphabetical ordering cannot distinguish two calls to the same tool when they finish out of order."
+    },
+    {
+      "stage": "check",
+      "question": "Which tool is consequential under the lesson's safety distinction?",
+      "options": [
+        "A tool that reads a public weather value for a city",
+        "A tool that searches a local read-only document index",
+        "A tool that sends an email to an external recipient",
+        "A tool that returns the current time without changing state"
+      ],
+      "correct": 2,
+      "explanation": "Consequential tools change external state, so sending an email needs a gate or confirmation. A public weather lookup only reads information and can be repeated without side effects; that is why it is classified as pure."
+    },
+    {
+      "stage": "post",
+      "question": "A model call omits a schema-required city field. What should the host do before running the weather executor?",
+      "options": [
+        "Treat the missing field as a successful tool result",
+        "Reject or repair the invalid arguments before execution",
+        "Skip validation because the model emitted structured data",
+        "Run the executor with an empty city and trust its default"
+      ],
+      "correct": 1,
+      "explanation": "Validate before invoking the executor: the schema requires a city, so a missing field is an invalid call, not a weather result. Defaulting an empty city can return a plausible but unrelated temperature instead of exposing the missing input."
+    },
+    {
+      "stage": "post",
+      "question": "A tool-using model keeps requesting calls without reaching a final answer. Which control bounds the loop?",
+      "options": [
+        "Keep calling until the model changes its tool name",
+        "Return the last tool result without checking the call id",
+        "Stop after a configured maximum number of turns",
+        "Increase the tool schema size for more context"
+      ],
+      "correct": 2,
+      "explanation": "A maximum turn count makes the host stop if repeated calls never lead to a final answer. Waiting for the model to change tool names is not a bound; a loop can keep spending while using different tools."
+    }
+  ]
+}

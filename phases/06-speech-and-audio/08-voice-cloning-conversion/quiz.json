@@ -1,0 +1,78 @@
+{
+  "lesson": "08-voice-cloning-conversion",
+  "title": "Voice Cloning & Voice Conversion",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A system speaks new text in a reference person’s voice. Which task is this?",
+      "options": [
+        "Speaker diarization over a meeting",
+        "Voice cloning on the TTS side",
+        "Speaker verification against an enrollment",
+        "Voice conversion on source speech"
+      ],
+      "correct": 1,
+      "explanation": "Voice cloning combines new text with a reference speaker representation to synthesize new speech in that voice. Conversion changes the identity of an existing utterance while preserving its source content; cloning generates from text."
+    },
+    {
+      "stage": "check",
+      "question": "A conversion system must preserve the source words while changing the speaker identity. What decomposition enables this?",
+      "options": [
+        "Average source and target speakers into one embedding",
+        "Keep one waveform and alter its recording rate",
+        "Replace the source transcript with a target transcript",
+        "Separate content from speaker identity and recombine"
+      ],
+      "correct": 3,
+      "explanation": "Conversion factors the signal into content, speaker identity, and prosody, then recombines the source content with the target speaker representation. Averaging blends identities instead of preserving the source words while substituting the target identity."
+    },
+    {
+      "stage": "check",
+      "question": "Which voice-conversion family extracts phonetic content representations before resynthesis?",
+      "options": [
+        "Disentanglement using a latent bottleneck only",
+        "Direct waveform equalization with speaker labels",
+        "Neural codec generation from text tokens alone",
+        "Recognition-synthesis using PPG-like content features"
+      ],
+      "correct": 3,
+      "explanation": "Recognition-synthesis extracts content features such as phoneme posteriors or PPGs with an ASR-like model, then resynthesizes with the target speaker embedding. The “disentanglement using a latent bottleneck” option instead swaps factors inside an autoencoder representation."
+    },
+    {
+      "stage": "check",
+      "question": "What reference condition does the lesson give for reliable F5-TTS cloning?",
+      "options": [
+        "The reference transcript must match its audio exactly",
+        "A transcript is unnecessary when the clip is five seconds",
+        "The reference text should paraphrase the audio naturally",
+        "The transcript should describe the target generated sentence"
+      ],
+      "correct": 0,
+      "explanation": "The F5 example conditions on a reference clip and its matching reference text; the new utterance is supplied separately as generation text. A mismatch breaks alignment between the reference transcript and speech, weakening the conditioning example."
+    },
+    {
+      "stage": "post",
+      "question": "A cloning service accepts a signed consent record. Which pair of controls matches the documented inference path?",
+      "options": [
+        "Check transcript length, then disable provenance logging",
+        "Verify consent, then embed a watermark in output",
+        "Verify speaker cosine, then remove generated metadata",
+        "Compare source noise, then store the raw waveform publicly"
+      ],
+      "correct": 1,
+      "explanation": "The safe path verifies consent before synthesis and embeds a watermark in the generated waveform so provenance can be checked later. Speaker similarity shows voice match, not permission; removing the signed metadata also discards provenance instead of satisfying the documented controls."
+    },
+    {
+      "stage": "post",
+      "question": "The toy demo’s watermark survives its direct detect step. What should you conclude about production robustness?",
+      "options": [
+        "That it survives MP3 conversion and light noise",
+        "That it proves the reference speaker consented",
+        "That it resists every common audio manipulation",
+        "Only that the toy encode-detect contract worked"
+      ],
+      "correct": 3,
+      "explanation": "The toy detector compares watermarked samples directly with the original waveform and recovers the injected bit pattern. No compression or noise attack occurs in the demo; its direct encode-detect check proves only the toy interface contract."
+    }
+  ]
+}

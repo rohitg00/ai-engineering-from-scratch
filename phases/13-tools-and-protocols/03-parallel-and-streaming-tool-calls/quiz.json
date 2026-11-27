@@ -1,0 +1,78 @@
+{
+  "lesson": "03-parallel-and-streaming-tool-calls",
+  "title": "Parallel Tool Calls and Streaming with Tools",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Three independent weather lookups take 400, 600, and 800 ms. Ignoring overhead, how long should concurrent execution take?",
+      "options": [
+        "About 600 ms, because the middle call sets the wall time",
+        "About 800 ms, because the slowest call sets the wall time",
+        "About 2,400 ms, because concurrency multiplies each delay",
+        "About 1,800 ms, because every call must finish in sequence"
+      ],
+      "correct": 1,
+      "explanation": "Independent calls overlap, so ideal concurrent wall time is max(400, 600, 800)=800 ms, ignoring setup overhead. The 1,800 ms alternative sums the delays and describes sequential execution; the middle call does not determine when the slowest call finishes."
+    },
+    {
+      "stage": "check",
+      "question": "A workflow must create a file and then write its contents. What is the safest parallel-call choice?",
+      "options": [
+        "Run both calls together and sort results by completion time",
+        "Disable parallelism because the second action depends on the first",
+        "Enable parallelism because both actions use the same host",
+        "Stream both argument objects and execute each partial prefix"
+      ],
+      "correct": 1,
+      "explanation": "Writing depends on the file-creation result, so concurrent launch can reach write_file before the file exists. Disable parallelism or model the dependency explicitly; sorting results afterward cannot undo an action that ran too early."
+    },
+    {
+      "stage": "check",
+      "question": "Calls complete in unpredictable order. What must the host preserve when returning results?",
+      "options": [
+        "The same completion order as the model's request list",
+        "The matching call id on each individual tool result",
+        "A shared result string that merges all call outputs",
+        "The original tool-list position without any identifier"
+      ],
+      "correct": 1,
+      "explanation": "Each result must echo its call id so the host and model can match it to the request regardless of completion order. Request-list order is not a reliable identifier when a call is delayed, dropped, duplicated, or two calls share a name."
+    },
+    {
+      "stage": "check",
+      "question": "A streamed tool call has only supplied part of its JSON arguments. When should the host parse the accumulated string?",
+      "options": [
+        "After the provider signals that the call is complete",
+        "As soon as the first opening brace arrives",
+        "Before storing the first delta chunk by call index",
+        "After counting matching braces in the partial buffer"
+      ],
+      "correct": 0,
+      "explanation": "Accumulate argument fragments for that call and parse only after the provider signals completion. A matching-brace count can be fooled by braces inside quoted or escaped strings, so the partial buffer is not yet trustworthy JSON."
+    },
+    {
+      "stage": "post",
+      "question": "Three argument streams interleave for calls A, B, and C. How should the accumulator organize fragments?",
+      "options": [
+        "Store fragments by tool name and overwrite earlier calls",
+        "Create a buffer only after the final call stops",
+        "Append every fragment to one shared JSON string",
+        "Keep a separate buffer for each call id or call index"
+      ],
+      "correct": 3,
+      "explanation": "Maintain one argument buffer per call id or provider index, appending each arriving chunk to its own call. A shared string or a buffer keyed only by tool name mixes the three get_weather payloads together."
+    },
+    {
+      "stage": "post",
+      "question": "A downstream API cannot handle a wide fan-out without rate-limit failures. Which design response matches the lesson?",
+      "options": [
+        "Increase the worker pool until every call starts immediately",
+        "Retry all failed calls concurrently without a per-call cap",
+        "Parse streaming arguments earlier to reduce executor latency",
+        "Disable or limit parallel fan-out to fit downstream capacity"
+      ],
+      "correct": 3,
+      "explanation": "Cap concurrency or disable fan-out when the downstream service is rate-limited; a wide burst can exceed its capacity even if the client supports parallel calls. Increasing workers or retrying everything at once compounds the same load."
+    }
+  ]
+}
