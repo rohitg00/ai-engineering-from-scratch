@@ -1,35 +1,35 @@
 [
   {
     "question": "What is the difference between prompt engineering and context engineering?",
-    "options": ["Context engineering is about database design", "A prompt is the user's query; context is everything in the model's window: system prompt, tools, retrieved docs, history, and the prompt itself", "They are the same thing", "Prompt engineering is more advanced"],
+    "options": ["Context engineering is about database schema design and index tuning for the model's backing store", "A prompt is the user's query; context is everything in the model's window: system prompt, tools, retrieved docs, history, and the prompt itself", "They are the same discipline with new branding; context engineering just renames prompt engineering for marketing purposes", "Prompt engineering is more advanced because it updates the model's weights at inference time, while context engineering merely rearranges the input text"],
     "correct": 1,
     "explanation": "Prompt engineering focuses on crafting the user instruction. Context engineering manages the entire input to the model: what goes in, what stays out, in what order, and how to allocate the limited context window.",
     "stage": "pre"
   },
   {
     "question": "Why does context window order matter for LLM performance?",
-    "options": ["Order only matters for code", "LLMs have recency and primacy biases, paying more attention to the beginning and end of the context window", "Alphabetical order helps the model search faster", "It doesn't -- LLMs process all tokens equally"],
+    "options": ["Order only matters for code and other structured formats, because natural-language text is processed order-independently", "LLMs have recency and primacy biases, paying more attention to the beginning and end of the context window", "Alphabetical order helps the model search faster because attention works like a sorted index lookup over tokens", "It doesn't -- LLMs process every token equally through a single position-invariant pass over the window"],
     "correct": 1,
     "explanation": "Research shows LLMs attend more to the start and end of the context window ('lost in the middle' phenomenon). Placing the most important information at the beginning or end of context improves utilization.",
     "stage": "pre"
   },
   {
     "question": "A coding assistant uses 22,700 tokens of a 128K context window. Why is budget management still important?",
-    "options": ["Only the prompt matters", "Token counting is inaccurate", "128K should be enough for any use case", "Long conversations, large code files, and retrieved documentation can quickly fill the window; without budget management, critical context gets truncated"],
+    "options": ["Only the prompt matters because cached system tokens are excluded from the window limit at inference time", "Token counting is inaccurate because the tokenizer re-segments the text on every call, so a stated token budget can never predict actual window usage during a long session", "128K should be enough for any use case since real prompts stay under two thousand tokens and earlier turns are never re-sent", "Long conversations, large code files, and retrieved documentation can quickly fill the window; without budget management, critical context gets truncated"],
     "correct": 3,
     "explanation": "22,700 tokens is the baseline. A 50-turn conversation adds 30K+ tokens. Retrieving a large codebase adds 50K+. Tool call results add more. Without active management, the window fills and oldest context is lost.",
     "stage": "post"
   },
   {
     "question": "What is the sliding window strategy for conversation history?",
-    "options": ["Keeping only the N most recent turns in context and dropping older turns, optionally summarizing them first", "Expanding the context window dynamically", "Moving the model to a different server", "Processing the conversation in fixed-size chunks"],
+    "options": ["Keeping only the N most recent turns in context and dropping older turns, optionally summarizing them first", "Expanding the context window dynamically whenever the conversation grows past the model's advertised limit", "Moving the model to a different server with more accelerator memory once the conversation approaches the window limit", "Processing the conversation in fixed-size chunks and averaging the per-chunk hidden states into one summary vector"],
     "correct": 0,
     "explanation": "Sliding window keeps the K most recent conversation turns in full context. Older turns are either dropped or replaced with a summary. This bounds memory usage while preserving the most relevant recent context.",
     "stage": "post"
   },
   {
     "question": "How should a context assembler allocate tokens across components?",
-    "options": ["Maximize retrieval context always", "Equal allocation to each component", "Minimize system prompt tokens", "Dynamically based on query type: a simple question needs less retrieval context; a complex question needs more, with generation headroom always reserved"],
+    "options": ["Maximize retrieval context always, filling the entire window with retrieved chunks before setting aside any room for the model's response or the system prompt", "Equal allocation to each component, splitting the window into fixed proportional slots no matter what the query asks", "Minimize system prompt tokens and give every freed token to retrieval context, since system instructions add nothing at runtime", "Dynamically based on query type: a simple question needs less retrieval context; a complex question needs more, with generation headroom always reserved"],
     "correct": 3,
     "explanation": "A simple factual question might need 500 tokens of retrieved context. A complex analysis might need 10,000. A good context assembler adjusts allocation dynamically while always reserving headroom for the model's response.",
     "stage": "post"
