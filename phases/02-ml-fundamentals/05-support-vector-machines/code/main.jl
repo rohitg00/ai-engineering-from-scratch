@@ -377,9 +377,9 @@ function demo_support_vectors()
     for (idx, m) in margins[(end - 2):end]
         @printf("  %6d  %4d  %8.4f  safely classified\n", idx, ys_train[idx], m)
     end
-    n_sv = sum(1 for (_, m) in margins if 0.7 < m < 1.3)
-    n_safe = sum(1 for (_, m) in margins if m >= 1.3)
-    n_inside = sum(1 for (_, m) in margins if 0 < m < 0.7)
+    n_sv = count(pair -> 0.7 < pair[2] < 1.3, margins)
+    n_safe = count(pair -> pair[2] >= 1.3, margins)
+    n_inside = count(pair -> 0 < pair[2] < 0.7, margins)
     println()
     @printf("  Support vectors (margin ~ 1.0): %d\n", n_sv)
     @printf("  Safely classified (margin >> 1): %d\n", n_safe)
