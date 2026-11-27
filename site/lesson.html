@@ -1383,7 +1383,9 @@
       font-family: var(--font-mono);
       font-size: 13px;
       line-height: 1.4;
-      letter-spacing: 0.02em;
+      /* Mermaid measures label width without letter-spacing, so any value
+         other than normal makes long labels overflow and clip. */
+      letter-spacing: normal;
       text-align: center;
       text-transform: none;
       margin: 0;
@@ -4654,6 +4656,31 @@
         rerenderMermaidModal();
       }
 
+      // Mermaid sizes HTML labels from its own text measurement, which comes
+      // out a few pixels narrow for monospace labels: the last character gets
+      // clipped by the foreignObject. Widen each label to its real content
+      // width and shift it left by half the growth so it stays centered.
+      function fitMermaidLabels(root) {
+        if (!root) return;
+        Array.prototype.forEach.call(root.querySelectorAll('svg'), function (svg) {
+          Array.prototype.forEach.call(svg.querySelectorAll('foreignObject'), function (fo) {
+            var inner = fo.firstElementChild;
+            if (!inner) return;
+            var needed = Math.ceil(inner.scrollWidth || 0);
+            var current = parseFloat(fo.getAttribute('width')) || 0;
+            if (!needed || !current || needed <= current) return;
+            var grow = needed - current;
+            fo.setAttribute('width', needed);
+            var group = fo.parentNode;
+            var transform = (group && group.getAttribute('transform')) || '';
+            var shift = transform.match(/translate\(\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*\)/);
+            if (shift) {
+              group.setAttribute('transform', 'translate(' + (parseFloat(shift[1]) - grow / 2) + ', ' + shift[2] + ')');
+            }
+          });
+        });
+      }
+
       function rerenderMermaidBlocks() {
         if (!window._mermaidReady) return;
         var sources = document.querySelectorAll('pre.mermaid.mermaid-source');
@@ -4672,6 +4699,7 @@
           window._mermaidReady.render('mermaid-' + idx + '-svg', def).then(function (result) {
             if (target._mermaidRenderToken !== token) return;
             target.innerHTML = result.svg;
+            fitMermaidLabels(target);
           }).catch(function () {
             if (target._mermaidRenderToken !== token) return;
             target.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Diagram could not be rendered.</p>';
@@ -4782,6 +4810,7 @@
         window._mermaidReady.render('mermaid-modal-svg', def).then(function (result) {
           if (center._mermaidRenderToken !== token) return;
           center.innerHTML = result.svg;
+          fitMermaidLabels(center);
         }).catch(function () {
           if (center._mermaidRenderToken !== token) return;
           center.innerHTML = '<p style="color:var(--text-muted);font-style:italic;">Diagram could not be rendered.</p>';
