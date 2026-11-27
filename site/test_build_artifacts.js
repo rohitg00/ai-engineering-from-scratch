@@ -2536,3 +2536,16 @@ test('every page links a crawlable favicon that matches the generator', () => {
     assert.doesNotMatch(source, /rel="icon" href="data:/, `${path.relative(root, filename)} must not inline its favicon`);
   }
 });
+
+test('lesson run commands compile Rust as edition 2021, run Go with go run, and never offer a command for a folder', () => {
+  const html = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
+  const match = html.match(/function repoRootCommand\(filename, path\) \{[\s\S]*?\n      \}\n/);
+  assert.ok(match);
+  const context = {};
+  vm.runInNewContext(match[0] + 'this.repoRootCommand = repoRootCommand;', context);
+  const rs = 'phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/code/main.rs';
+  assert.equal(context.repoRootCommand('main.rs', rs), 'rustc --edition 2021 ' + rs + ' -o /tmp/aiefs-lesson-main && /tmp/aiefs-lesson-main');
+  const go = 'phases/13-tools-and-protocols/07-building-an-mcp-server/code/main.go';
+  assert.equal(context.repoRootCommand('main.go', go), 'go run ' + go);
+  assert.match(html, /if \(file\.type === 'dir'\) \{[\s\S]*?Browse folder[\s\S]*?return;/);
+});
