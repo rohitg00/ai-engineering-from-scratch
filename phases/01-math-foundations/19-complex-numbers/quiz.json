@@ -41,7 +41,7 @@
       "question": "Why are complex numbers used in Rotary Position Embedding (RoPE) for transformers?",
       "options": [
         "RoPE uses imaginary numbers to handle negative positions",
-        "Complex numbers compress the position encoding to use less memory",
+        "Complex numbers compress the position encoding to use less memory than storing a separate vector per position",
         "Complex numbers are required by the attention softmax function",
         "Multiplying query/key vectors by complex rotations encodes relative position as a rotation angle"
       ],
