@@ -30,7 +30,7 @@ Numerical stability is not a theoretical concern. It is the difference between a
 
 Computers store real numbers as floating point values following the IEEE 754 standard. A float has three parts: a sign bit, an exponent, and a mantissa (significand).
 
-```
+```text
 Float32 layout (32 bits total):
 [1 sign] [8 exponent] [23 mantissa]
 
@@ -39,7 +39,7 @@ Value = (-1)^sign * 2^(exponent - 127) * 1.mantissa
 
 The mantissa determines precision (how many significant digits). The exponent determines range (how large or small a number can be).
 
-```
+```text
 Format     Bits   Exponent  Mantissa  Decimal digits  Range (approx)
 float64    64     11        52        ~15-16          +/- 1.8e308
 float32    32     8         23        ~7-8            +/- 3.4e38
@@ -57,13 +57,13 @@ bfloat16 is Google's answer to float16's range problem. It has the same 8-bit ex
 
 The number 0.1 cannot be represented exactly in binary floating point. In base 2, it is a repeating fraction:
 
-```
+```text
 0.1 in binary = 0.0001100110011001100110011... (repeating forever)
 ```
 
 Float32 truncates this to 23 bits of mantissa. The stored value is approximately 0.100000001490116. Similarly, 0.2 is stored as approximately 0.200000002980232. Their sum is 0.300000004470348, not 0.3.
 
-```
+```text
 In Python:
 >>> 0.1 + 0.2
 0.30000000000000004
@@ -84,7 +84,7 @@ The fix: never compare floats with `==`. Use `abs(a - b) < epsilon` or `math.isc
 
 When you subtract two nearly equal floating point numbers, the significant digits cancel and you are left with rounding noise promoted to leading digits.
 
-```
+```text
 a = 1.0000001    (stored as 1.00000011920929 in float32)
 b = 1.0000000    (stored as 1.00000000000000 in float32)
 
@@ -106,7 +106,7 @@ The fix: rearrange formulas to avoid subtracting large, nearly equal numbers. Fo
 
 Overflow happens when a result is too large to represent. Underflow happens when it is too small (closer to zero than the smallest representable positive number).
 
-```
+```text
 Float32 boundaries:
   Maximum:  3.4028235e+38
   Minimum positive (normal): 1.175e-38
@@ -117,7 +117,7 @@ Float32 boundaries:
 
 The `exp()` function is the primary source of overflow in ML:
 
-```
+```text
 exp(88.7)  = 3.40e+38   (barely fits in float32)
 exp(89.0)  = inf         (overflow)
 exp(-87.3) = 1.18e-38   (barely above underflow)
@@ -126,7 +126,7 @@ exp(-104)  = 0.0         (underflow to zero)
 
 The `log()` function hits the other direction:
 
-```
+```text
 log(0.0)   = -inf
 log(-1.0)  = nan
 log(1e-45) = -103.3      (fine)
@@ -162,6 +162,7 @@ Proof:
 Set `c = max(x)` and overflow is eliminated.
 
 This trick appears everywhere in ML:
+
 - Softmax normalization
 - Cross-entropy loss computation
 - Log-probability summation in sequence models
@@ -178,7 +179,7 @@ Softmax converts logits to probabilities:
 
 Without the trick, logits of [100, 101, 102] cause overflow:
 
-```
+```text
 exp(100) = 2.69e43
 exp(101) = 7.31e43
 exp(102) = 1.99e44
@@ -191,7 +192,7 @@ exp(100) = inf in float32.
 
 With the trick, subtract max(x) = 102:
 
-```
+```text
 exp(100 - 102) = exp(-2) = 0.135
 exp(101 - 102) = exp(-1) = 0.368
 exp(102 - 102) = exp(0)  = 1.000
@@ -207,11 +208,13 @@ The probabilities are identical. The computation is safe. This is not an optimiz
 `nan` (Not a Number) and `inf` (infinity) propagate virally through computation. One `nan` in a gradient update makes the weight `nan`, which makes every subsequent output `nan`. Training is dead within one step.
 
 How `inf` appears:
+
 - `exp()` of a large positive number
 - Division by zero: `1.0 / 0.0`
 - `float32` overflow in accumulations
 
 How `nan` appears:
+
 - `0.0 / 0.0`
 - `inf - inf`
 - `inf * 0`
@@ -259,6 +262,7 @@ The check: compute the relative difference between analytical and numerical grad
 ```
 
 Rules of thumb:
+
 - relative_error < 1e-7: perfect, gradient is correct
 - relative_error < 1e-5: acceptable, probably correct
 - relative_error > 1e-3: something is wrong
@@ -270,7 +274,7 @@ Always check gradients when implementing a new layer or loss function. PyTorch p
 
 Modern GPUs have specialized hardware (Tensor Cores) that compute float16 matrix multiplications 2-8x faster than float32. Mixed precision training exploits this:
 
-```
+```text
 1. Maintain float32 master copy of weights
 2. Forward pass in float16 (fast)
 3. Compute loss in float32 (prevents overflow)
@@ -283,7 +287,7 @@ The problem with pure float16 training: gradients are often very small (1e-8 or 
 
 The fix is loss scaling:
 
-```
+```text
 1. Multiply loss by a large scale factor (e.g., 1024)
 2. Backward pass computes gradients of (loss * 1024)
 3. All gradients are 1024x larger (pushed above float16 underflow)
@@ -295,7 +299,7 @@ Dynamic loss scaling adjusts the scale factor automatically. Start with a large 
 
 ### bfloat16 vs float16: Why bfloat16 Wins for Training
 
-```
+```text
 float16:   [1 sign] [5 exponent]  [10 mantissa]
 bfloat16:  [1 sign] [8 exponent]  [7 mantissa]
 ```
@@ -318,7 +322,7 @@ Two types of clipping:
 
 **Clip by value:** clamp each gradient element independently.
 
-```
+```text
 grad = clamp(grad, -max_val, max_val)
 ```
 
@@ -326,7 +330,7 @@ Simple but can change the direction of the gradient vector.
 
 **Clip by norm:** scale the entire gradient vector so its norm does not exceed a threshold.
 
-```
+```text
 if ||grad|| > max_norm:
     grad = grad * (max_norm / ||grad||)
 ```
@@ -343,7 +347,7 @@ Batch normalization, layer normalization, and RMS normalization are usually pres
 
 Without normalization, activations can grow or shrink exponentially through layers:
 
-```
+```text
 Layer 1: values in [0, 1]
 Layer 5: values in [0, 100]
 Layer 10: values in [0, 10,000]
@@ -563,6 +567,7 @@ See `code/numerical.py` for complete implementations with all edge cases demonst
 ## Ship It
 
 This lesson produces:
+
 - `code/numerical.py` with stable softmax, log-sum-exp, cross-entropy, gradient checking, and mixed precision simulation
 - `outputs/prompt-numerical-debugger.md` for diagnosing NaN/Inf and numerical issues in training
 

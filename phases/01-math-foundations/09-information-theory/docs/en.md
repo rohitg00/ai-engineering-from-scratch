@@ -36,7 +36,7 @@ I(x) = -\log(p(x))
 
 Using log base 2 gives you bits. Using natural log gives you nats. Same idea, different units.
 
-```
+```text
 Event              Probability    Surprise (bits)
 Fair coin heads    0.5            1.0
 Rolling a 6        0.167          2.58
@@ -122,6 +122,7 @@ H(Y \mid X) = H(X,Y) - H(X)
 ```
 
 Two extremes:
+
 - If $X$ completely determines $Y$, then $H(Y \mid X) = 0$. Knowing $X$ eliminates all uncertainty about $Y$. Example: $X$ = temperature in Celsius, $Y$ = temperature in Fahrenheit.
 - If $X$ tells you nothing about $Y$, then $H(Y \mid X) = H(Y)$. Knowing $X$ does not reduce your uncertainty at all. Example: $X$ = coin flip, $Y$ = tomorrow's weather.
 
@@ -173,6 +174,7 @@ graph TD
 ```
 
 The relationships:
+
 - $H(X,Y) = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y)$
 - $I(X;Y) = H(X) - H(X \mid Y) = H(Y) - H(Y \mid X)$
 - $H(X,Y) = H(X) + H(Y) - I(X;Y)$
@@ -191,6 +193,7 @@ I(X;Y) &= H(X) - H(X \mid Y) \\
 ```
 
 Properties:
+
 - $I(X;Y) \ge 0$ always. You never lose information by observing something.
 - $I(X;Y) = 0$ if and only if $X$ and $Y$ are independent.
 - $I(X;Y) = I(Y;X)$. It is symmetric, unlike KL divergence.
@@ -219,12 +222,14 @@ Standard classification uses hard targets: [0, 0, 1, 0]. The true class gets pro
 ```
 
 With $\epsilon = 0.1$ and 4 classes:
+
 - Hard target:  [0, 0, 1, 0]
 - Soft target:  [0.025, 0.025, 0.925, 0.025]
 
 From an information theory perspective, label smoothing increases the entropy of the target distribution. Hard one-hot targets have entropy 0 -- there is no uncertainty. Soft targets have positive entropy.
 
 Why this helps:
+
 - Prevents the model from driving logits to extreme values (infinite logits would be needed to perfectly match a one-hot target under cross-entropy)
 - Acts as regularization: the model cannot be 100% confident
 - Improves calibration: predicted probabilities better reflect true uncertainty
@@ -262,7 +267,7 @@ That last line is cross-entropy loss. Minimizing cross-entropy = maximizing the 
 
 The only difference is the log base.
 
-```
+```text
 log base 2   -> bits      (information theory tradition)
 log base e   -> nats      (machine learning convention)
 log base 10  -> hartleys  (rarely used)

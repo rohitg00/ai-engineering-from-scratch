@@ -44,7 +44,7 @@ The core challenge: you can only sample directly from simple distributions (unif
 
 Every sampling method starts here. A uniform random number generator produces values in $[0, 1)$ where every sub-interval of equal length has equal probability.
 
-```
+```text
 U ~ Uniform(0, 1)
 
 P(a <= U <= b) = b - a    for 0 <= a <= b <= 1
@@ -62,7 +62,7 @@ The key insight: a single uniform random number contains exactly the right amoun
 
 The cumulative distribution function (CDF) maps values to probabilities:
 
-```
+```text
 F(x) = P(X <= x)
 
 Properties:
@@ -74,7 +74,7 @@ Properties:
 
 The inverse CDF maps probabilities back to values. If $U \sim \text{Uniform}(0, 1)$, then $X = F^{-1}(U)$ follows the target distribution.
 
-```
+```text
 Algorithm:
   1. Generate u ~ Uniform(0, 1)
   2. Return F_inverse(u)
@@ -85,7 +85,7 @@ Why it works:
 
 **Exponential distribution example:**
 
-```
+```text
 PDF: f(x) = lambda * exp(-lambda * x),   x >= 0
 CDF: F(x) = 1 - exp(-lambda * x)
 
@@ -106,7 +106,7 @@ This works perfectly when you can write down $F^{-1}$ in closed form. For the no
 
 When you cannot invert the CDF but can evaluate the target PDF up to a constant, rejection sampling works.
 
-```
+```text
 Target distribution: p(x)  (can evaluate, possibly unnormalized)
 Proposal distribution: q(x)  (can sample from)
 Bound: M such that p(x) <= M * q(x) for all x
@@ -131,7 +131,7 @@ The tighter the bound $M$, the higher the acceptance rate. In low dimensions (1-
 
 Sometimes you do not need samples from the target distribution $p(x)$. You need to estimate an expectation under $p(x)$, and you have samples from a different distribution $q(x)$.
 
-```
+```text
 Goal: estimate E_p[f(x)] = integral of f(x) * p(x) dx
 
 Rewrite:
@@ -156,7 +156,7 @@ The variance of the importance sampling estimator depends on how similar $q$ is 
 
 Monte Carlo estimation approximates integrals by averaging random samples. The law of large numbers guarantees convergence.
 
-```
+```text
 Goal: estimate I = integral of g(x) dx over domain D
 
 Method:
@@ -170,7 +170,7 @@ The error rate is dimension-independent. This is why Monte Carlo methods dominat
 
 **Estimating pi:**
 
-```
+```text
 Sample (x, y) uniformly from [-1, 1] x [-1, 1]
 Count how many fall inside the unit circle: x^2 + y^2 <= 1
 pi ~ 4 * (count inside) / (total count)
@@ -178,7 +178,7 @@ pi ~ 4 * (count inside) / (total count)
 
 **Estimating expectations:**
 
-```
+```text
 E[f(X)] ~ (1/N) * sum(f(x_i))    where x_i ~ p(x)
 
 The sample mean converges to the true expectation.
@@ -189,7 +189,7 @@ Variance of the estimator = Var(f(X)) / N
 
 MCMC constructs a Markov chain whose stationary distribution is the target distribution $p(x)$. After enough steps, samples from the chain are (approximately) samples from $p(x)$.
 
-```
+```text
 Target: p(x)  (known up to a normalizing constant)
 Proposal: q(x'|x)  (how to propose the next state given the current state)
 
@@ -211,6 +211,7 @@ For symmetric proposals $(q(x' \mid x) = q(x \mid x'))$, the ratio simplifies to
 **Why it works.** The acceptance rule ensures detailed balance: the probability of being at $x$ and moving to $x'$ equals the probability of being at $x'$ and moving to $x$. Detailed balance implies that $p(x)$ is the stationary distribution of the chain.
 
 **Practical considerations:**
+
 - Burn-in: discard early samples before the chain reaches equilibrium
 - Thinning: keep every $k$-th sample to reduce autocorrelation
 - Proposal scale: too small and the chain moves slowly (high acceptance, slow exploration); too large and most proposals are rejected (low acceptance, stuck in place)
@@ -220,7 +221,7 @@ For symmetric proposals $(q(x' \mid x) = q(x \mid x'))$, the ratio simplifies to
 
 Gibbs sampling is a special case of MCMC for multivariate distributions. Instead of proposing a move in all dimensions at once, it updates one variable at a time from its conditional distribution.
 
-```
+```text
 Target: p(x_1, x_2, ..., x_d)
 
 Algorithm:
@@ -232,6 +233,7 @@ Algorithm:
 ```
 
 Gibbs sampling requires that you can sample from each conditional distribution $p(x_i \mid x_{-i})$. This is straightforward for many models:
+
 - Bayesian networks: conditionals follow from the graph structure
 - Gaussian mixtures: conditionals are Gaussian
 - Ising models: each spin's conditional depends only on its neighbors
@@ -244,7 +246,7 @@ The acceptance rate is always 1 (every proposal is accepted) because sampling fr
 
 Language models output logits $z_1, \ldots, z_V$ for each token in the vocabulary. Softmax converts these to probabilities. Temperature rescales the logits before softmax:
 
-```
+```text
 p_i = exp(z_i / T) / sum(exp(z_j / T))
 
 T = 1.0: standard softmax (original distribution)
@@ -257,6 +259,7 @@ T > 1.0: flattens the distribution (less confident, more diverse)
 **Why it works.** Dividing logits by $T < 1$ amplifies differences between logits. If $z_1 = 2$ and $z_2 = 1$, dividing by $T = 0.5$ gives $z_1/T = 4$ and $z_2/T = 2$, making the gap larger. After softmax, the highest-logit token gets a much larger share.
 
 **In practice:**
+
 - $T = 0.0$: greedy decoding, best for factual Q&A
 - $T = 0.3\text{-}0.7$: slightly creative, good for code generation
 - $T = 0.7\text{-}1.0$: balanced, good for general conversation
@@ -269,7 +272,7 @@ Temperature does not change which tokens are possible. It changes the probabilit
 
 Top-k sampling restricts the candidate set to the $k$ tokens with the highest probabilities, then renormalizes and samples from that restricted set.
 
-```
+```text
 Algorithm:
   1. Compute softmax probabilities for all V tokens
   2. Sort tokens by probability (descending)
@@ -288,7 +291,7 @@ Top-k prevents the model from selecting extremely unlikely tokens (typos, nonsen
 
 Top-p sampling dynamically adjusts the candidate set size. Instead of keeping a fixed number of tokens, it keeps the smallest set of tokens whose cumulative probability exceeds $p$.
 
-```
+```text
 Algorithm:
   1. Compute softmax probabilities for all V tokens
   2. Sort tokens by probability (descending)
@@ -304,6 +307,7 @@ p = 0.1:  very restrictive, nearly greedy
 When the model is confident, nucleus sampling keeps few tokens (maybe 2-3). When the model is uncertain, it keeps many (maybe 200). This adaptive behavior is why nucleus sampling generally produces better text than top-k.
 
 **Common combinations:**
+
 - Temperature 0.7 + top-p 0.9: good general-purpose setting
 - Temperature 0.0 (greedy): best for deterministic tasks
 - Temperature 1.0 + top-k 50: Fan et al. (2018) original paper setting
@@ -314,7 +318,7 @@ Top-k and top-p can be combined. Apply top-k first, then top-p on the remaining 
 
 Variational autoencoders (VAEs) learn by encoding inputs into a distribution in latent space, sampling from that distribution, and decoding the sample back. The problem: you cannot backpropagate through a sampling operation.
 
-```
+```text
 Standard sampling (not differentiable):
   z ~ N(mu, sigma^2)
 
@@ -324,7 +328,7 @@ Standard sampling (not differentiable):
 
 The reparameterization trick separates the randomness from the parameters:
 
-```
+```text
 Reparameterized sampling:
   epsilon ~ N(0, 1)          (fixed random noise, no parameters)
   z = mu + sigma * epsilon   (deterministic function of parameters)
@@ -339,6 +343,7 @@ Reparameterized sampling:
 This works because $\mathcal{N}(\mu, \sigma^2)$ has the same distribution as $\mu + \sigma \cdot \mathcal{N}(0, 1)$. The key insight: move the randomness to a parameter-free source ($\epsilon$), then express the sample as a differentiable transformation of the parameters.
 
 **In the VAE training loop:**
+
 1. Encoder outputs $\mu$ and $\log(\sigma^2)$ for each input
 2. Sample $\epsilon \sim \mathcal{N}(0, 1)$
 3. Compute $z = \mu + \sigma \epsilon$
@@ -353,7 +358,7 @@ The reparameterization trick works for continuous distributions (Gaussian). For 
 
 **The Gumbel-Max trick (non-differentiable):**
 
-```
+```text
 To sample from a categorical distribution with log-probabilities log(p_1), ..., log(p_k):
   1. Sample g_i ~ Gumbel(0, 1) for each category
      (g = -log(-log(u)), where u ~ Uniform(0, 1))
@@ -364,7 +369,7 @@ This produces exact categorical samples.
 
 **Gumbel-Softmax (differentiable approximation):**
 
-```
+```text
 Replace the hard argmax with a soft softmax:
   y_i = exp((log(p_i) + g_i) / tau) / sum(exp((log(p_j) + g_j) / tau))
 
@@ -377,6 +382,7 @@ tau (temperature) controls the approximation:
 Gumbel-Softmax produces a continuous relaxation of a discrete sample. The output is a probability vector (soft one-hot) instead of a hard one-hot. Gradients flow through the softmax. During the forward pass in training, you can use the "straight-through" estimator: use the hard argmax for the forward pass but the soft Gumbel-Softmax gradients for the backward pass.
 
 **Applications:**
+
 - Discrete latent variables in VAEs
 - Neural architecture search (choosing discrete operations)
 - Hard attention mechanisms
@@ -386,7 +392,7 @@ Gumbel-Softmax produces a continuous relaxation of a discrete sample. The output
 
 Standard Monte Carlo sampling can leave gaps in the sample space by chance. Stratified sampling forces even coverage by dividing the space into strata and sampling from each.
 
-```
+```text
 Standard Monte Carlo:
   Sample N points uniformly from [0, 1]
   Some regions may have clusters, others gaps
@@ -399,7 +405,7 @@ Stratified sampling:
 
 Stratified sampling always has lower or equal variance compared to standard Monte Carlo:
 
-```
+```text
 Var(stratified) <= Var(standard Monte Carlo)
 
 The improvement is largest when f(x) varies smoothly.
@@ -407,6 +413,7 @@ For piecewise-constant functions, stratified sampling is exact.
 ```
 
 **Applications:**
+
 - Numerical integration (quasi-Monte Carlo)
 - Training data splits (ensuring class balance in each fold)
 - Importance sampling with stratification (combining both techniques)
@@ -416,7 +423,7 @@ For piecewise-constant functions, stratified sampling is exact.
 
 Diffusion models generate images through a sampling process. The forward process adds Gaussian noise to an image over $T$ steps until it becomes pure noise. The reverse process learns to denoise, recovering the original image step by step.
 
-```
+```text
 Forward process (known):
   x_t = sqrt(alpha_t) * x_{t-1} + sqrt(1 - alpha_t) * epsilon
   where epsilon ~ N(0, I)
@@ -431,6 +438,7 @@ Reverse process (learned):
 ```
 
 The connection to the methods in this lesson:
+
 - Each denoising step uses the reparameterization trick (sample noise, apply deterministic transform)
 - The noise schedule $\lbrace \alpha_t \rbrace$ controls a form of temperature annealing
 - Training uses Monte Carlo estimation to approximate the ELBO (evidence lower bound)
@@ -635,6 +643,7 @@ print(f"Sampled token index: {token}")
 ```
 
 For MCMC at scale, use dedicated libraries:
+
 - PyMC: full Bayesian modeling with NUTS (adaptive HMC)
 - emcee: ensemble MCMC sampler
 - NumPyro/JAX: GPU-accelerated MCMC

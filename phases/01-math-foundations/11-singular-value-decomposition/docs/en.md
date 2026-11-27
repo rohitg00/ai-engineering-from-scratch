@@ -31,6 +31,7 @@ Every matrix, regardless of shape, performs three operations in sequence: rotate
 ```
 
 Given any matrix $A$, SVD factors it into:
+
 - $V^T$ rotates vectors in the input space ($n$-dimensional)
 - $\Sigma$ scales along each axis (stretches or compresses)
 - $U$ rotates the result into the output space ($m$-dimensional)
@@ -73,7 +74,7 @@ Each component of the SVD has a distinct geometric meaning.
 
 The relationship between them:
 
-```
+```text
 A * v_i = sigma_i * u_i
 
 The matrix A takes the i-th right singular vector v_i,
@@ -86,7 +87,7 @@ This gives you a coordinate-by-coordinate picture of what any matrix does.
 
 The SVD can be written as a sum of rank-1 matrices:
 
-```
+```text
 A = sigma_1 * u_1 * v_1^T + sigma_2 * u_2 * v_2^T + ... + sigma_r * u_r * v_r^T
 
 Each term sigma_i * u_i * v_i^T is a rank-1 matrix (an outer product).
@@ -110,7 +111,7 @@ This form is the foundation of low-rank approximation. Each term adds one layer 
 
 SVD and eigendecomposition are deeply connected. The singular values and vectors of $A$ come directly from the eigenvalues and eigenvectors of $A^T A$ and $A A^T$.
 
-```
+```text
 A^T A = V * Sigma^T * U^T * U * Sigma * V^T
       = V * Sigma^T * Sigma * V^T
       = V * D * V^T
@@ -131,6 +132,7 @@ So:
 ```
 
 This connection tells you three things:
+
 1. Singular values are always real and non-negative (they are square roots of eigenvalues of a positive semi-definite matrix).
 2. You could compute SVD via eigendecomposition of $A^T A$, but this squares the condition number and loses numerical precision. Dedicated SVD algorithms avoid this.
 3. When $A$ is square and symmetric positive semi-definite, SVD and eigendecomposition are the same thing.
@@ -172,7 +174,7 @@ If singular values decay fast, a small $k$ captures most of the matrix. If they 
 
 A grayscale image is a matrix of pixel intensities. An 800x600 image has 480,000 values. SVD lets you approximate it with far fewer.
 
-```
+```text
 Original image: 800 x 600 = 480,000 values
 
 SVD with rank k:
@@ -195,7 +197,7 @@ The key insight: natural images have rapidly decaying singular values. The first
 
 The Netflix Prize made this famous. You have a user-movie ratings matrix where most entries are missing.
 
-```
+```text
              Movie1  Movie2  Movie3  Movie4  Movie5
   User1      [  5      ?       3       ?       1  ]
   User2      [  ?      4       ?       2       ?  ]
@@ -208,6 +210,7 @@ The Netflix Prize made this famous. You have a user-movie ratings matrix where m
 The idea: this ratings matrix has low rank. Users do not have completely independent tastes. There are a handful of latent factors (action vs. drama, old vs. new, cerebral vs. visceral) that explain most preferences.
 
 SVD on the (filled-in) ratings matrix decomposes it into:
+
 - $U$: user profiles in latent factor space
 - $\Sigma$: importance of each latent factor
 - $V^T$: movie profiles in latent factor space
@@ -220,7 +223,7 @@ In practice, you use variants like Simon Funk's incremental SVD or ALS (alternat
 
 Latent Semantic Analysis (LSA), also called Latent Semantic Indexing (LSI), applies SVD to a term-document matrix.
 
-```
+```text
              Doc1   Doc2   Doc3   Doc4
   "cat"      [  3      0      1      0  ]
   "dog"      [  2      0      0      1  ]
@@ -282,7 +285,7 @@ This is used in signal processing, scientific measurement, and data cleaning. An
 
 The Moore-Penrose pseudoinverse $A^+$ generalizes matrix inversion to non-square and singular matrices. SVD makes computing it trivial.
 
-```
+```text
 If A = U * Sigma * V^T, then:
 
 A+ = V * Sigma+ * U^T
@@ -298,7 +301,7 @@ For Sigma (m x n):  Sigma+ is (n x m)
 
 The pseudoinverse solves least-squares problems. If $Ax = b$ has no exact solution (overdetermined system), then $x = A^+ b$ is the least-squares solution (minimizes $\lVert Ax - b \rVert$).
 
-```
+```text
 Overdetermined system (more equations than unknowns):
 
   [1  1]         [3]
@@ -316,7 +319,7 @@ Overdetermined system (more equations than unknowns):
 
 Computing eigendecomposition of $A^T A$ squares the singular values (eigenvalues of $A^T A$ are $\sigma_i^2$). This squares the condition number, amplifying numerical errors.
 
-```
+```text
 Example:
   A has singular values [1000, 1, 0.001]
   Condition number of A: 1000 / 0.001 = 10^6
@@ -335,7 +338,7 @@ Modern SVD algorithms (Golub-Kahan bidiagonalization) work directly on $A$, neve
 
 PCA IS SVD on centered data. This is not an analogy. It is literally the same computation.
 
-```
+```text
 Given data matrix X (n_samples x n_features), centered (mean subtracted):
 
 Covariance matrix: C = (1/(n-1)) * X^T X
@@ -506,6 +509,7 @@ julia svd.jl
 ## Ship It
 
 This lesson produces:
+
 - `outputs/skill-svd.md` - a skill for knowing when and how to apply SVD in real projects
 
 ## Exercises

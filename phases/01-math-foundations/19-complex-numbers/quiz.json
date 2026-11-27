@@ -13,7 +13,7 @@
       "explanation": "The imaginary unit i is defined by the property i^2 = -1. It extends the real number line into a 2D plane. Geometrically, multiplying by i is a 90-degree rotation — two multiplications (i^2) give a 180-degree rotation, which is -1."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "What does Euler's formula e^(i*theta) equal?",
       "options": [
         "cos(theta) + i*sin(theta)",
@@ -25,7 +25,7 @@
       "explanation": "Euler's formula states e^(i*theta) = cos(theta) + i*sin(theta). This connects complex exponentials to trigonometry and shows that e^(i*theta) traces the unit circle as theta varies."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "What is the result of (3 + 2i)(1 + 4i)?",
       "options": [
         "-5 + 14i",
@@ -37,7 +37,7 @@
       "explanation": "Using FOIL: (3)(1) + (3)(4i) + (2i)(1) + (2i)(4i) = 3 + 12i + 2i + 8i^2 = 3 + 14i + 8(-1) = 3 + 14i - 8 = -5 + 14i."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "Why are complex numbers used in Rotary Position Embedding (RoPE) for transformers?",
       "options": [
         "RoPE uses imaginary numbers to handle negative positions",
@@ -59,6 +59,18 @@
       ],
       "correct": 3,
       "explanation": "The N roots of unity are e^(2*pi*i*k/N) for k = 0, ..., N-1. They are symmetrically distributed around the unit circle, so their vector sum cancels out to zero. This symmetry property is what makes the DFT invertible."
+    },
+    {
+      "stage": "post",
+      "question": "What is the magnitude of e^(i*theta) for any real theta?",
+      "options": [
+        "It equals theta itself",
+        "It grows without bound as theta grows",
+        "It is exactly one",
+        "It is exactly zero"
+      ],
+      "correct": 2,
+      "explanation": "Euler's formula gives cos(theta) + i*sin(theta), which traces the unit circle. Its magnitude is always 1, so multiplying by it rotates without changing length."
     }
   ]
 }

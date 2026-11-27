@@ -20,6 +20,14 @@ Open any ML paper. Within the first page, you'll see vectors, matrices, dot prod
 
 You don't need to be a mathematician. You need to see what these operations mean geometrically, then code them yourself.
 
+**If the symbols feel heavy, read them as sentences.**
+
+Every formula in this lesson says one thing. $a \cdot b$ means "multiply matching entries, then add". $\lvert a\rvert$ means "the length of the arrow". When a line of math looks dense, name each symbol out loud before you try to understand the whole line.
+
+**Check yourself.** What does $a \cdot b = 0$ tell you about two vectors?
+
+Answer: they are perpendicular. Neither points along the other, so they share no direction.
+
 ## The Concept
 
 ### Vectors Are Points (and Directions)
@@ -34,7 +42,22 @@ A vector is just a list of numbers. But those numbers mean something -- they're 
 
 The vector has magnitude $\sqrt{3^2 + 2^2} = \sqrt{13}$ and points up and to the right.
 
+**Worked example: read a vector as a point.**
+
+Take `a = [3, 2]`.
+
+1. The first number is the x-coordinate: move 3 to the right.
+2. The second number is the y-coordinate: move 2 up.
+3. The length is $\sqrt{3^2 + 2^2} = \sqrt{9 + 4} = \sqrt{13} \approx 3.61$.
+
+So `[3, 2]` is not just two numbers. It is one arrow that ends 3.61 units from the origin.
+
+**Check yourself.** Which is longer, `[3, 2]` or `[0, 4]`?
+
+Answer: `[0, 4]` has length 4, and $4 > 3.61$. Longer vector, larger number of steps.
+
 In AI, vectors represent everything:
+
 - A word → a vector of 768 numbers (its "meaning" in embedding space)
 - An image → a vector of millions of pixel values
 - A user → a vector of preferences
@@ -63,6 +86,7 @@ graph LR
 ```
 
 In AI, matrices ARE the model:
+
 - Neural network weights → matrices that transform input into output
 - Attention scores → matrices that decide what to focus on
 - Embeddings → matrices that map words to vectors
@@ -82,6 +106,29 @@ a \cdot b &= a_1 \times b_1 + a_2 \times b_2 + \cdots + a_n \times b_n \\[4pt]
 
 This is literally how search engines, recommendation systems, and RAG work -- find vectors with high dot products.
 
+**Worked example: the dot product, one multiplication at a time.**
+
+Take `a = [1, 2, 3]` and `b = [4, 5, 6]`.
+
+1. Multiply matching positions: $1 \times 4 = 4$, $2 \times 5 = 10$, $3 \times 6 = 18$.
+2. Add the results: $4 + 10 + 18 = 32$.
+
+So $a \cdot b = 32$. The value is positive, so the two vectors point in roughly the same direction.
+
+Now the same numbers as a similarity score. The lengths are $|a| = \sqrt{14} \approx 3.74$ and $|b| = \sqrt{77} \approx 8.77$.
+
+```text
+cos(theta) = 32 / (3.74 * 8.77)
+           = 32 / 32.8
+           = 0.976
+```
+
+A cosine of 0.976 means the vectors are almost parallel. That is the number a search engine compares against a threshold.
+
+**Check yourself.** Without computing, is `[1, 0] · [0, 1]` positive, zero, or negative?
+
+Answer: zero. The two vectors are perpendicular, so they share no direction.
+
 ### Linear Independence
 
 Vectors are linearly independent if no vector in the set can be written as a combination of the others. If $v_1, v_2, v_3$ are independent, they span a 3D space. If one is a combination of the others, they only span a plane.
@@ -90,7 +137,7 @@ Why it matters for AI: your feature matrix should have linearly independent colu
 
 **Concrete example:**
 
-```
+```text
 v1 = [1, 0, 0]
 v2 = [0, 1, 0]
 v3 = [2, 1, 0]   # v3 = 2*v1 + v2
@@ -100,6 +147,18 @@ $v_1$ and $v_2$ are independent -- neither is a scalar multiple or combination o
 
 In a dataset: if feature_3 = 2*feature_1 + feature_2, adding feature_3 gives the model zero new information. Worse, it makes the normal equations singular -- there is no unique solution for the weights.
 
+**How to test independence in three steps.**
+
+1. Write the vectors as rows of a matrix.
+2. Row-reduce it until each row starts with a different leading 1.
+3. Count the nonzero rows. If that count equals the number of vectors, they are independent.
+
+For the example above, row reduction leaves two nonzero rows for three vectors, so the set is dependent.
+
+**Check yourself.** Are `[1, 0]` and `[2, 0]` independent?
+
+Answer: no. The second is exactly twice the first, so it adds no new direction.
+
 ### Basis and Rank
 
 A basis is a minimal set of linearly independent vectors that span the entire space. The number of basis vectors is the dimension of the space.
@@ -107,6 +166,7 @@ A basis is a minimal set of linearly independent vectors that span the entire sp
 The standard basis for 3D space is {[1,0,0], [0,1,0], [0,0,1]}. But any three independent vectors in 3D form a valid basis. The choice of basis is a choice of coordinate system.
 
 Rank of a matrix = number of linearly independent columns = number of linearly independent rows. If $\text{rank} < \min(\text{rows}, \text{cols})$, the matrix is rank-deficient. This means:
+
 - The system has infinitely many solutions (or none)
 - Information is lost in the transformation
 - The matrix cannot be inverted
@@ -129,6 +189,7 @@ Projecting vector **a** onto vector **b** gives the component of **a** in the di
 The residual $(a - \mathop{\mathrm{proj}}_b(a))$ is perpendicular to $b$. This orthogonal decomposition is the foundation of least-squares fitting.
 
 Projection is everywhere in ML:
+
 - Linear regression minimizes the distance from observations to the column space -- the solution IS a projection
 - PCA projects data onto the directions of maximum variance
 - Attention in transformers computes projections of queries onto keys
@@ -150,17 +211,36 @@ $\mathop{\mathrm{proj}}_b(a) = (3 \cdot 1 + 4 \cdot 0) / (1 \cdot 1 + 0 \cdot 0)
 
 The projection drops the y-component. This is dimensionality reduction in its simplest form -- throw away the directions you don't care about.
 
+**Worked example: project onto a direction that is not an axis.**
+
+Project `a = [3, 4]` onto `b = [1, 1]`.
+
+1. Dot product: $a \cdot b = 3 \times 1 + 4 \times 1 = 7$.
+2. Length squared of b: $b \cdot b = 1 \times 1 + 1 \times 1 = 2$.
+3. Scale factor: $7 / 2 = 3.5$.
+4. Projection: $3.5 \times [1, 1] = [3.5, 3.5]$.
+5. Residual: $[3, 4] - [3.5, 3.5] = [-0.5, 0.5]$.
+
+Check the residual is perpendicular to b: $(-0.5 \times 1) + (0.5 \times 1) = 0$. It is.
+
+So `[3, 4]` splits into a part along the diagonal, `[3.5, 3.5]`, and a part across it, `[-0.5, 0.5]`. Nothing is lost; the two pieces add back to the original.
+
+**Check yourself.** What is `[2, 0]` projected onto `[1, 1]`?
+
+Answer: the scale is $(2 \times 1 + 0 \times 1) / 2 = 1$, so the projection is `[1, 1]` and the residual is `[1, -1]`.
+
 ### Gram-Schmidt Process
 
 Converting any set of independent vectors into an orthonormal basis. Orthonormal means every vector has length 1 and every pair is perpendicular.
 
 The algorithm:
+
 1. Take the first vector, normalize it
 2. Take the second vector, subtract its projection onto the first, normalize
 3. Take the third vector, subtract its projections onto all previous vectors, normalize
 4. Repeat for remaining vectors
 
-```
+```text
 Input:  v1, v2, v3, ... (linearly independent)
 
 u1 = v1 / |v1|
@@ -174,7 +254,19 @@ u3 = w3 / |w3|
 Output: u1, u2, u3, ... (orthonormal basis)
 ```
 
+**Worked example: Gram-Schmidt on two vectors.**
+
+Start with `v1 = [3, 0]` and `v2 = [1, 2]`.
+
+1. Normalize the first: $u_1 = [3, 0] / 3 = [1, 0]$.
+2. Project v2 onto u1: $[1, 2] \cdot [1, 0] = 1$, so the projection is $1 \times [1, 0] = [1, 0]$.
+3. Subtract it: $w_2 = [1, 2] - [1, 0] = [0, 2]$.
+4. Normalize: $u_2 = [0, 2] / 2 = [0, 1]$.
+
+The output is `[1, 0]` and `[0, 1]`. Each has length 1, and their dot product is 0, so the basis is orthonormal.
+
 This is how QR decomposition works internally. Q is the orthonormal basis, R captures the projection coefficients. QR decomposition is used in:
+
 - Solving linear systems (more stable than Gaussian elimination)
 - Computing eigenvalues (QR algorithm)
 - Least-squares regression (the standard numerical method)
@@ -422,6 +514,7 @@ You just built from scratch what NumPy does in one line. Now you know what's hap
 ## Ship It
 
 This lesson produces:
+
 - `outputs/prompt-linear-algebra-tutor.md` -- a prompt for AI assistants to teach linear algebra through geometric intuition
 
 ## Connections

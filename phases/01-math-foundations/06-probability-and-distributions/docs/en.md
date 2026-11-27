@@ -18,7 +18,13 @@
 
 A classifier outputs `[0.03, 0.91, 0.06]`. A language model picks the next word from 50,000 candidates. A diffusion model generates images by sampling from learned distributions. All of these are probability in action.
 
-Every prediction a model makes is a probability distribution. Every loss function measures how far the predicted distribution is from the true one. Every training step adjusts parameters to make one distribution look more like another. Without probability, you cannot read a single ML paper, debug a single model, or understand why your training loss is NaN.
+Every prediction a model makes is a probability distribution. Every loss function measures how far the predicted distribution is from the true one. Every training step adjusts parameters to make one distribution look more like another.
+
+Without probability, you cannot read a single ML paper, debug a single model, or understand why your training loss is NaN.
+
+**Check yourself.** A model outputs `[0.7, 0.2, 0.1]`. Is that a valid probability distribution?
+
+Answer: yes. Every value sits between 0 and 1, and $0.7 + 0.2 + 0.1 = 1.0$.
 
 ## The Concept
 
@@ -26,7 +32,7 @@ Every prediction a model makes is a probability distribution. Every loss functio
 
 The sample space $S$ is the set of all possible outcomes. An event is a subset of the sample space. Probability maps events to numbers between 0 and 1.
 
-```
+```text
 Coin flip:
   S = {H, T}
   P(H) = 0.5,  P(T) = 0.5
@@ -37,17 +43,22 @@ Single die roll:
 ```
 
 Three axioms define all of probability:
+
 1. $P(A) \ge 0$ for any event $A$
 2. $P(S) = 1$ (something always happens)
 3. $P(A \text{ or } B) = P(A) + P(B)$ when $A$ and $B$ cannot both occur
 
 Everything else (Bayes' theorem, expectations, distributions) follows from these three rules.
 
+**Check yourself.** On a fair six-sided die, what is $P(\text{odd})$?
+
+Answer: the event is $\lbrace 1, 3, 5 \rbrace$, so three outcomes out of six. $P(\text{odd}) = 3/6 = 0.5$.
+
 ### Conditional Probability and Independence
 
 $P(A \mid B)$ is the probability of $A$ given that $B$ happened.
 
-```
+```text
 P(A|B) = P(A and B) / P(B)
 
 Example: deck of cards
@@ -67,11 +78,21 @@ Two events are independent when knowing one tells you nothing about the other:
 
 Coin flips are independent. Drawing cards without replacement is not.
 
+**Worked example: two aces from one deck.**
+
+You draw two cards. What is the probability that both are aces?
+
+1. The first card is an ace with probability $4/52 = 1/13 \approx 0.0769$.
+2. Given that, 3 aces remain among 51 cards, so the second card is an ace with probability $3/51 \approx 0.0588$.
+3. Multiply the two: $\frac{4}{52} \times \frac{3}{51} = \frac{12}{2652} \approx 0.00452$.
+
+If you put the first card back, the answer is $\frac{4}{52} \times \frac{4}{52} \approx 0.00592$. Removing the first ace lowers the chance of the second, and that is exactly what dependence means.
+
 ### Probability Mass Functions vs Probability Density Functions
 
 Discrete random variables have a probability mass function (PMF). Each outcome has a specific probability that you can read off directly.
 
-```
+```text
 PMF: P(X = k)
 
 Fair die:
@@ -85,7 +106,7 @@ Fair die:
 
 Continuous random variables have a probability density function (PDF). The density at a single point is not a probability. Probability comes from integrating the density over an interval.
 
-```
+```text
 PDF: f(x)
 
 P(a <= X <= b) = integral of f(x) from a to b
@@ -95,6 +116,10 @@ integral from -inf to +inf of f(x) dx = 1
 ```
 
 This distinction matters in ML. Classification outputs are PMFs (discrete choices). VAE latent spaces use PDFs (continuous).
+
+**Check yourself.** A uniform PDF on $[0, 0.5]$ has density $f(x) = 2$. Is that allowed, when a probability cannot exceed 1?
+
+Answer: yes. A density is not a probability. The area under $f$ over the interval is $2 \times 0.5 = 1$, and probability always comes from area.
 
 ### Common Distributions
 
@@ -128,7 +153,7 @@ P(X = 0) &= 1 - p \\
 
 **Normal (Gaussian):** the bell curve. Parameterized by mean ($\mu$) and variance ($\sigma^2$).
 
-```
+```text
 f(x) = (1 / sqrt(2*pi*sigma^2)) * exp(-(x - mu)^2 / (2*sigma^2))
 
 Standard normal: mu = 0, sigma = 1
@@ -192,7 +217,7 @@ The row and column totals in the table above are the marginals.
 
 The Central Limit Theorem: the average of many independent random variables from the same distribution, once centered and scaled by $\sqrt{n}$, approaches a normal distribution, whatever the shape of the original distribution, as long as its variance is finite. The same holds for the centered and scaled sum.
 
-```
+```text
 Roll 1 die:  uniform distribution (flat)
 Average of 2 dice:  triangular (peaked)
 Average of 30 dice: nearly perfect bell curve
@@ -201,6 +226,7 @@ This works for ANY starting distribution with finite variance.
 ```
 
 This is why:
+
 - Measurement errors are approximately normal (many small independent sources)
 - Weight initializations in neural networks use normal distributions
 - Gradient noise in SGD is approximately normal (sum of many sample gradients)
@@ -229,6 +255,7 @@ Log probabilities fix this. Multiplications become additions.
 ```
 
 Rules:
+
 - $\log(a \cdot b) = \log(a) + \log(b)$
 - log probabilities are always $\le 0$ (since $0 < P \le 1$)
 - More negative = less likely
@@ -238,7 +265,7 @@ Rules:
 
 Neural networks output raw scores (logits). Softmax converts them into a valid probability distribution.
 
-```
+```text
 softmax(z_i) = exp(z_i) / sum(exp(z_j) for all j)
 
 Properties:
@@ -250,7 +277,7 @@ Properties:
 
 The softmax trick: subtract the max logit before exponentiating to prevent overflow.
 
-```
+```text
 z = [100, 101, 102]
 exp(102) = overflow
 
@@ -265,6 +292,7 @@ Log-softmax combines softmax and log for numerical stability. PyTorch uses this 
 ### Sampling
 
 Sampling means drawing random values from a distribution. In ML:
+
 - Dropout randomly samples which neurons to zero out
 - Data augmentation samples random transformations
 - Language models sample the next token from the predicted distribution

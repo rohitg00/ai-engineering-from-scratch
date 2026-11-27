@@ -13,7 +13,7 @@
       "explanation": "The adjacency matrix is the core representation of a graph. A[i][j] = 1 means there is an edge connecting node i to node j. For undirected graphs, the matrix is symmetric (A[i][j] = A[j][i])."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "What data structure does BFS use and what does it find?",
       "options": [
         "Stack; finds connected components",
@@ -25,7 +25,7 @@
       "explanation": "BFS uses a queue (FIFO) to explore all neighbors at distance k before moving to distance k+1. This guarantees that the first time a node is discovered, it is via a shortest path from the source."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "The graph Laplacian L = D - A of a connected graph has how many zero eigenvalues?",
       "options": [
         "Zero",
@@ -37,7 +37,7 @@
       "explanation": "The number of zero eigenvalues of the Laplacian equals the number of connected components. A connected graph has exactly one connected component, so exactly one zero eigenvalue. A graph with k disconnected pieces has k zero eigenvalues."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "In GNN message passing, what does h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)})) compute?",
       "options": [
         "The PageRank score of node v",
@@ -59,6 +59,18 @@
       ],
       "correct": 2,
       "explanation": "The Fiedler vector encodes the smoothest non-trivial function on the graph. Nodes in the same tightly-connected cluster get similar values, while nodes separated by a bottleneck get values with opposite signs. The sign split partitions the graph into two clusters."
+    },
+    {
+      "stage": "post",
+      "question": "In a graph, what does the degree of a node count?",
+      "options": [
+        "The paths that lead from the node back to itself",
+        "The connected components in the graph",
+        "The total number of edges in the graph",
+        "The edges attached to that node"
+      ],
+      "correct": 3,
+      "explanation": "Degree counts incident edges. The degree matrix D on the diagonal of the Laplacian holds these counts, and D - A is what spectral clustering and GNN normalization build on."
     }
   ]
 }

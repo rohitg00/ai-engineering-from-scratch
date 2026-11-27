@@ -13,7 +13,7 @@
       "explanation": "A function is convex if for any two points x, y and any t in [0,1]: f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y). Geometrically, the chord between any two points on the graph never dips below the graph itself."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "Which of these ML problems has a convex loss landscape?",
       "options": [
         "Training a 3-layer neural network with ReLU activations",
@@ -25,7 +25,7 @@
       "explanation": "Logistic regression has a convex loss (log-loss is convex in the weights). Neural networks, k-means, and matrix factorization are all non-convex. For convex problems, any local minimum is the global minimum."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "Newton's method converges to the minimum of f(x) = 5x^2 + 3x + 1 in how many steps?",
       "options": [
         "About 100 steps",
@@ -37,7 +37,7 @@
       "explanation": "Newton's method fits a local quadratic approximation and jumps to its minimum. For an actual quadratic function, the approximation is exact, so Newton's method converges in a single step regardless of the starting point."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "In the KKT conditions, what does 'complementary slackness' (lambda_i * g_i(x) = 0) mean?",
       "options": [
         "All constraints must be active at the optimum",
@@ -59,6 +59,18 @@
       ],
       "correct": 2,
       "explanation": "In high-dimensional parameter spaces, random critical points are overwhelmingly saddle points. The few local minima that exist tend to have loss values close to the global minimum. SGD's stochastic noise helps escape saddle points, and overparameterization smooths the landscape."
+    },
+    {
+      "stage": "post",
+      "question": "For a convex function, what is true of every local minimum?",
+      "options": [
+        "It is also a global minimum",
+        "It is always located at the origin",
+        "It lies on the boundary of the domain",
+        "It has a nonzero gradient"
+      ],
+      "correct": 0,
+      "explanation": "Convexity means the graph lies below its chords, so a point lower than its neighbours is lower than everything. That is why convex problems have no bad local minima."
     }
   ]
 }

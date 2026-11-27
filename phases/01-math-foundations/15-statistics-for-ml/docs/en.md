@@ -32,7 +32,7 @@ Before you model anything, you need to know what your data looks like. Descripti
 
 **Measures of central tendency** answer "where is the middle?"
 
-```
+```text
 Mean:   sum of all values / count
         mu = (1/n) * sum(x_i)
 
@@ -48,7 +48,7 @@ The mean is the balance point. The median is the halfway mark. When they diverge
 
 **Measures of spread** answer "how dispersed is the data?"
 
-```
+```text
 Variance:   average squared deviation from the mean
             sigma^2 = (1/n) * sum((x_i - mu)^2)
 
@@ -66,7 +66,7 @@ IQR:        Q3 - Q1 (interquartile range)
 
 **Percentiles** divide sorted data into 100 equal parts. The 25th percentile (Q1) means 25% of values fall below this point. The 50th percentile is the median. The 75th percentile is Q3.
 
-```
+```text
 For latency monitoring:
   P50 = median latency        (typical user experience)
   P95 = 95th percentile       (bad but not worst case)
@@ -92,7 +92,7 @@ Correlation measures the strength and direction of a linear relationship between
 
 **Pearson correlation coefficient** measures linear association:
 
-```
+```text
 r = sum((x_i - x_bar)(y_i - y_bar)) / (n * s_x * s_y)
 
 r = +1:  perfect positive linear relationship
@@ -106,7 +106,7 @@ Pearson assumes the relationship is linear and both variables are roughly normal
 
 **Spearman rank correlation** measures monotonic association:
 
-```
+```text
 1. Replace each value with its rank (1, 2, 3, ...)
 2. Compute Pearson correlation on the ranks
 
@@ -116,7 +116,7 @@ If y = x^3, Pearson gives r < 1 but Spearman gives rho = 1.
 
 **When to use each:**
 
-```
+```text
 Pearson:    Both variables are continuous and roughly normal.
             You care about the linear relationship specifically.
             No extreme outliers.
@@ -133,7 +133,7 @@ Spearman:   Ordinal data (rankings, ratings).
 
 The covariance between two variables measures how they vary together:
 
-```
+```text
 Cov(X, Y) = (1/n) * sum((x_i - x_bar)(y_i - y_bar))
 
 Cov(X, Y) > 0:  X and Y tend to increase together
@@ -143,7 +143,7 @@ Cov(X, Y) = 0:  no linear co-movement
 
 For $d$ features, the covariance matrix $C$ is a $d \times d$ matrix where $C[i][j] = \mathop{\mathrm{Cov}}(\text{feature}_i, \text{feature}_j)$. The diagonal entries $C[i][i]$ are the variances of each feature.
 
-```
+```text
 C = | Var(x1)      Cov(x1,x2)  Cov(x1,x3) |
     | Cov(x2,x1)  Var(x2)      Cov(x2,x3) |
     | Cov(x3,x1)  Cov(x3,x2)  Var(x3)     |
@@ -165,7 +165,7 @@ Hypothesis testing is a framework for making decisions under uncertainty. You st
 
 **The setup:**
 
-```
+```text
 Null hypothesis (H0):        the default assumption, usually "no effect"
 Alternative hypothesis (H1): what you are trying to show
 
@@ -176,7 +176,7 @@ Example:
 
 **The p-value** is the probability of seeing data as extreme as what you observed, assuming H0 is true. It is NOT the probability that H0 is true. This is the single most common misunderstanding in statistics.
 
-```
+```text
 p-value = P(data this extreme | H0 is true)
 
 If p-value < alpha (typically 0.05):
@@ -188,7 +188,7 @@ If p-value >= alpha:
 
 **Confidence intervals** give a range of plausible values for a parameter:
 
-```
+```text
 95% confidence interval for the mean:
     x_bar +/- z * (s / sqrt(n))
 
@@ -216,7 +216,7 @@ t &= \frac{\bar{x} - \mu_0}{s / \sqrt{n}} \\[4pt]
 
 **Two-sample t-test (independent):** are two group means different?
 
-```
+```text
 t = (x_bar_1 - x_bar_2) / sqrt(s1^2/n1 + s2^2/n2)
 
 This is Welch's t-test, which does not assume equal variances.
@@ -225,7 +225,7 @@ Always use Welch's unless you have a specific reason for equal variances.
 
 **Paired t-test:** when measurements come in pairs (same model evaluated on same data splits):
 
-```
+```text
 Compute d_i = x_i - y_i for each pair
 Then run a one-sample t-test on the d_i values against mu_0 = 0
 ```
@@ -236,7 +236,7 @@ In ML, the paired t-test is common: you run both models on the same 10 cross-val
 
 The chi-squared test checks if observed frequencies match expected frequencies. Useful for categorical data.
 
-```
+```text
 chi^2 = sum((observed - expected)^2 / expected)
 
 Example: does a language model's output distribution match the
@@ -255,7 +255,7 @@ The difference is significant.
 
 A/B testing in ML is not the same as web A/B testing. Model comparison has specific challenges:
 
-```
+```text
 1. Same test set:    Both models must be evaluated on identical data.
                      Different test sets make comparison meaningless.
 
@@ -271,7 +271,7 @@ A/B testing in ML is not the same as web A/B testing. Model comparison has speci
 
 **The procedure:**
 
-```
+```text
 1. Define your metric and significance level (alpha = 0.05)
 2. Run both models on the same k-fold cross-validation splits
 3. Collect paired scores: [(a1, b1), (a2, b2), ..., (ak, bk)]
@@ -286,7 +286,7 @@ A/B testing in ML is not the same as web A/B testing. Model comparison has speci
 
 A result can be statistically significant but practically meaningless. With enough data, even a trivial difference becomes statistically significant.
 
-```
+```text
 Example:
   Model A accuracy: 0.9234
   Model B accuracy: 0.9237
@@ -315,7 +315,7 @@ Always report both the p-value and the effect size. The p-value tells you if the
 
 When you test many hypotheses, some will be "significant" by chance. If you test 20 things at $\alpha = 0.05$, you expect 1 false positive even when nothing is real.
 
-```
+```text
 P(at least one false positive) = 1 - (1 - alpha)^m
 
 m = 20 tests, alpha = 0.05:
@@ -326,7 +326,7 @@ You have a 64% chance of at least one false positive.
 
 **Bonferroni correction:** divide $\alpha$ by the number of tests.
 
-```
+```text
 Adjusted alpha = alpha / m = 0.05 / 20 = 0.0025
 
 Only reject H0 if p-value < 0.0025.
@@ -341,7 +341,7 @@ Bootstrapping estimates the sampling distribution of a statistic by resampling y
 
 **The algorithm:**
 
-```
+```text
 1. You have n data points
 2. Draw n samples WITH replacement (some points appear multiple times,
    some not at all)
@@ -353,14 +353,14 @@ Bootstrapping estimates the sampling distribution of a statistic by resampling y
 
 **Bootstrap confidence interval (percentile method):**
 
-```
+```text
 Sort the B bootstrap statistics
 95% CI = [2.5th percentile, 97.5th percentile]
 ```
 
 **Why bootstrap matters for ML:**
 
-```
+```text
 - Test set accuracy is a point estimate. Bootstrap gives you
   confidence intervals.
 - You cannot assume metric distributions are normal (especially
@@ -372,7 +372,7 @@ Sort the B bootstrap statistics
 
 **Bootstrap for model comparison:**
 
-```
+```text
 1. You have predictions from Model A and Model B on the same test set
 2. For each bootstrap iteration:
    a. Resample test indices with replacement
@@ -389,7 +389,7 @@ This is more robust than the paired t-test because it makes no distributional as
 
 **Parametric tests** assume a specific distribution (usually normal):
 
-```
+```text
 t-test:         assumes normally distributed data (or large n by CLT)
 ANOVA:          assumes normality and equal variances
 Pearson r:      assumes bivariate normality
@@ -397,7 +397,7 @@ Pearson r:      assumes bivariate normality
 
 **Non-parametric tests** make no distributional assumptions:
 
-```
+```text
 Mann-Whitney U:     compares two groups (replaces independent t-test)
 Wilcoxon signed-rank: compares paired data (replaces paired t-test)
 Spearman rho:       correlation on ranks (replaces Pearson)
@@ -406,7 +406,7 @@ Kruskal-Wallis:     compares multiple groups (replaces ANOVA)
 
 **When to use non-parametric:**
 
-```
+```text
 - Small sample size (n < 30) and data is clearly non-normal
 - Ordinal data (ratings, rankings)
 - Heavy outliers you cannot remove
@@ -415,7 +415,7 @@ Kruskal-Wallis:     compares multiple groups (replaces ANOVA)
 
 **When to use parametric:**
 
-```
+```text
 - Large sample size (CLT makes the test statistic approximately normal)
 - Data is roughly symmetric without extreme outliers
 - More statistical power (better at detecting real differences)
@@ -427,7 +427,7 @@ In ML experiments, you typically have small $n$ (5 or 10 cross-validation folds)
 
 The CLT says the distribution of sample means approaches a normal distribution as $n$ grows, regardless of the underlying population distribution.
 
-```
+```text
 If X_1, X_2, ..., X_n are iid with mean mu and variance sigma^2:
 
     X_bar ~ Normal(mu, sigma^2 / n)    as n -> infinity
@@ -438,7 +438,7 @@ For highly skewed distributions, you might need n >= 100.
 
 **Why this matters for ML:**
 
-```
+```text
 1. Justifies confidence intervals and t-tests on aggregated metrics
 2. Explains why averaging over cross-validation folds gives stable
    estimates even when individual folds vary wildly
@@ -450,7 +450,7 @@ For highly skewed distributions, you might need n >= 100.
 
 **What CLT does NOT do:**
 
-```
+```text
 - Does NOT make your data normal. It makes the MEAN of samples normal.
 - Does NOT work for heavy-tailed distributions with infinite variance
   (Cauchy distribution).

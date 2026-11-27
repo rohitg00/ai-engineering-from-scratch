@@ -18,13 +18,17 @@
 
 You want to build a neural network. You read the code and see this:
 
-```
+```text
 output = activation(weights @ input + bias)
 ```
 
-That `@` is matrix multiplication. The `weights` are a matrix. The `input` is a vector. If you do not know what those operations do, this line is magic. If you do know, it is the entire forward pass of a layer in three operations.
+That `@` is matrix multiplication. The `weights` are a matrix. The `input` is a vector.
 
-Every image your model processes is a matrix of pixel values. Every word embedding is a vector. Every layer of every neural network is a matrix transformation. You cannot build AI systems without being fluent in matrix operations the same way you cannot write code without understanding variables.
+If you do not know what those operations do, this line is magic. If you do know, it is the entire forward pass of a layer in three operations.
+
+Every image your model processes is a matrix of pixel values. Every word embedding is a vector. Every layer of every neural network is a matrix transformation.
+
+You cannot build AI systems without being fluent in matrix operations, the same way you cannot write code without understanding variables.
 
 This lesson builds that fluency from scratch.
 
@@ -34,12 +38,26 @@ This lesson builds that fluency from scratch.
 
 A vector is a list of numbers with a direction and magnitude. In AI, vectors represent data points, features, or parameters.
 
-```
+```text
 v = [3, 4]        -- a 2D vector
 w = [1, 0, -2]    -- a 3D vector
 ```
 
 A 2D vector `[3, 4]` points to coordinates (3, 4) on a plane. Its length (magnitude) is 5 (the 3-4-5 triangle).
+
+**Worked example: add two vectors and scale one.**
+
+Take `u = [3, 4]` and `v = [1, -2]`.
+
+1. Add matching positions: `[3 + 1, 4 + (-2)] = [4, 2]`.
+2. Scale `u` by 2: `[2 * 3, 2 * 4] = [6, 8]`.
+3. Length of `u`: $\sqrt{3^2 + 4^2} = 5$. So `u + v = [4, 2]`, `2u = [6, 8]`, and `|u| = 5`.
+
+Addition and scaling both work position by position. Nothing is mixed between positions.
+
+**Check yourself.** What is the length of `[6, 8]`?
+
+Answer: 10. It is the 6-8-10 triangle, so the length is $\sqrt{36 + 64} = \sqrt{100} = 10$.
 
 ### Matrices: grids of numbers
 
@@ -55,7 +73,7 @@ In neural networks, weight matrices transform input vectors into output vectors.
 
 Matrix multiplication has a strict rule: `(m x n) @ (n x p) = (m x p)`. The inner dimensions must match.
 
-```
+```text
 (128 x 784) @ (784 x 1) = (128 x 1)
   weights       input       output
 
@@ -98,7 +116,7 @@ Different operations, different results, different rules.
 
 When you add a bias vector to a matrix of outputs, the shapes do not match. Broadcasting stretches the smaller array to fit.
 
-```
+```text
 | 1  2  3 |   +   [10, 20, 30]
 | 4  5  6 |
 

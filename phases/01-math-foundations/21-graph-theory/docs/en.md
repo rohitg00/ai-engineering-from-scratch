@@ -25,6 +25,7 @@ Or consider a molecule. You want to predict if it binds to a protein. The atoms 
 Graph Neural Networks (GNNs) are the fastest-growing area in deep learning. They power drug discovery, social recommendation, fraud detection, and knowledge graph reasoning. Every GNN builds on the same foundation: basic graph theory.
 
 You need four things:
+
 1. A way to represent graphs as matrices (so you can multiply them)
 2. Traversal algorithms to explore graph structure
 3. The Laplacian -- the single most important matrix in spectral graph theory
@@ -59,7 +60,7 @@ For undirected graphs, $A$ is symmetric: $A[i][j] = A[j][i]$. For weighted graph
 
 **Example -- a triangle:**
 
-```
+```text
 Nodes: 0, 1, 2
 Edges: (0,1), (1,2), (0,2)
 
@@ -93,7 +94,7 @@ The two fundamental graph traversal algorithms. You need both.
 
 **Breadth-First Search (BFS):** Explore all neighbors first, then neighbors' neighbors. Uses a queue (FIFO).
 
-```
+```text
 BFS from node 0:
   Visit 0
   Queue: [1, 2]        (neighbors of 0)
@@ -109,7 +110,7 @@ BFS finds shortest paths in unweighted graphs. The distance from the start to an
 
 **Depth-First Search (DFS):** Go as deep as possible before backtracking. Uses a stack (LIFO) or recursion.
 
-```
+```text
 DFS from node 0:
   Visit 0
   Stack: [1, 2]        (neighbors of 0)
@@ -122,6 +123,7 @@ DFS from node 0:
 ```
 
 DFS is useful for:
+
 - Finding connected components (run DFS from unvisited nodes)
 - Cycle detection (back edges in DFS tree)
 - Topological sorting (reverse DFS finish order)
@@ -173,6 +175,7 @@ graph TD
 The eigenvalues of the adjacency matrix and Laplacian reveal structural properties without any traversal.
 
 **Spectral clustering** works like this:
+
 1. Compute the Laplacian $L$
 2. Find the $k$ smallest eigenvectors of $L$ (skip the first, which is all-ones for connected graphs)
 3. Use those eigenvectors as new coordinates for each node
@@ -449,6 +452,7 @@ The Fiedler vector does the heavy lifting. Positive entries in one cluster, nega
 ## Ship It
 
 This lesson produces:
+
 - `outputs/skill-graph-analysis.md` -- a skill reference for analyzing graph-structured data
 
 ## Connections

@@ -37,12 +37,14 @@ A set $S$ is convex if for any two points in $S$, the line segment between them 
 Formal test: for any points $x, y$ in $S$ and any $t \in [0, 1]$, the point $tx + (1-t)y$ is also in $S$.
 
 Examples of convex sets:
+
 - A line, a plane, all of $\mathbb{R}^n$
 - A ball (circle, sphere, hypersphere)
 - A halfspace: $\lbrace x : a^T x \le b \rbrace$
 - The intersection of any number of convex sets
 
 Examples of non-convex sets:
+
 - A donut (annulus)
 - The union of two disjoint circles
 - Any set with a "dent" or "hole"
@@ -64,6 +66,7 @@ Geometrically: the line segment between any two points on the graph lies above o
 | **Local minima** | Every local minimum is the global minimum | Multiple local minima may exist at different heights |
 
 Common convex functions:
+
 - $f(x) = x^2$ (parabola)
 - $f(x) = \lvert x \rvert$ (absolute value)
 - $f(x) = e^x$ (exponential)
@@ -107,6 +110,7 @@ graph LR
 ```
 
 Consequences:
+
 - No need for random restarts
 - No need for sophisticated learning rate schedules
 - Convergence proofs are possible (rate depends on function properties)
@@ -148,6 +152,7 @@ H = \begin{bmatrix} 2 & 3 \\ 3 & 2 \end{bmatrix}
 ```
 
 The Hessian tells you about curvature:
+
 - Eigenvalues all positive: the function curves upward in every direction (convex at that point)
 - Eigenvalues all negative: curves downward in every direction (concave, a local max)
 - Mixed signs: saddle point (curves up in some directions, down in others)
@@ -186,11 +191,13 @@ graph TD
 ```
 
 Advantages:
+
 - Quadratic convergence near the minimum (error squares each step)
 - No learning rate to tune
 - Scale-invariant (works regardless of how you parameterize the problem)
 
 Disadvantages:
+
 - Computing the Hessian costs $O(n^2)$ memory and $O(n^3)$ to invert
 - For a neural network with 1 million weights, that is $10^{12}$ entries and $10^{18}$ operations
 - Not practical for deep learning
@@ -332,13 +339,14 @@ The Lagrangian dual function:
 ```
 
 Why duality matters:
+
 - The dual problem is sometimes easier to solve than the primal
 - SVMs are solved in their dual form, where the problem depends on dot products between data points (enabling the kernel trick)
 - The dual provides a lower bound on the primal optimum, useful for checking solution quality
 
 For SVMs specifically:
 
-```
+```text
 Primal: find w, b that maximize the margin 2/||w|| subject to
         y_i(w^T x_i + b) >= 1 for all i
 
@@ -492,11 +500,13 @@ Newton's method will converge in 1 step (it is exact for quadratics). Gradient d
 Convexity analysis applies directly when choosing ML models and solvers.
 
 For convex problems (logistic regression, SVMs, LASSO):
+
 - Use dedicated solvers (liblinear, CVXPY, scipy.optimize.minimize with method='L-BFGS-B')
 - Expect a unique global solution
 - Second-order methods are practical and fast
 
 For non-convex problems (neural networks):
+
 - Use first-order methods (SGD, Adam)
 - Accept that the solution depends on initialization and randomness
 - Use overparameterization, noise, and learning rate schedules as implicit regularization

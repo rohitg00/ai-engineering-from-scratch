@@ -353,6 +353,7 @@ Why this matters: without conjugate priors, you need Monte Carlo sampling or var
 The Beta distribution is the most common conjugate prior in practice. $\text{Beta}(a, b)$ represents your belief about a probability parameter. The mean is $a/(a+b)$. The larger $a+b$, the more concentrated (confident) the distribution.
 
 Special cases of the Beta prior:
+
 - $\text{Beta}(1, 1)$ = uniform. You have no opinion about the parameter.
 - $\text{Beta}(10, 10)$ = peaked at 0.5. You strongly believe the parameter is near 0.5.
 - $\text{Beta}(1, 10)$ = skewed toward 0. You believe the parameter is small.
@@ -377,17 +378,20 @@ Concrete example: estimating whether a coin is fair.
 
 **Day 1: No data yet.**
 Start with $\text{Beta}(1, 1)$ -- a uniform prior. You have no opinion.
+
 - Prior mean: 0.5
 - Prior is flat across [0, 1]
 
 **Day 2: Observe 7 heads, 3 tails.**
 $\text{Posterior} = \text{Beta}(1 + 7, 1 + 3) = \text{Beta}(8, 4)$
+
 - Posterior mean: $8/12 = 0.667$
 - Evidence suggests the coin is biased toward heads
 
 **Day 3: Observe 5 more heads, 5 more tails.**
 Use yesterday's posterior as today's prior.
 $\text{Posterior} = \text{Beta}(8 + 5, 4 + 5) = \text{Beta}(13, 9)$
+
 - Posterior mean: $13/22 = 0.591$
 - The balanced new data pulled the estimate back toward 0.5
 
@@ -419,7 +423,7 @@ The Bayesian A/B test:
 
 Computing $P(B > A)$ analytically is hard. But Monte Carlo makes it trivial:
 
-```
+```text
 1. Draw 100,000 samples from Beta(51, 951)  -> samples_A
 2. Draw 100,000 samples from Beta(66, 936)  -> samples_B
 3. P(B > A) = fraction of samples where B > A
@@ -428,6 +432,7 @@ Computing $P(B > A)$ analytically is hard. But Monte Carlo makes it trivial:
 If $P(B > A) > 0.95$, you ship variant B. If it is between 0.05 and 0.95, you keep collecting data. If $P(B > A) < 0.05$, you ship variant A.
 
 Advantages over frequentist A/B testing:
+
 - You get a direct probability statement: "there is a 97% chance B is better"
 - No p-value confusion. No "fail to reject the null hypothesis" hedging.
 - You can check results at any time without inflating false positive rates (no "peeking problem")

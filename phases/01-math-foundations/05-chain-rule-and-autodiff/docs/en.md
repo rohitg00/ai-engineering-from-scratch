@@ -92,7 +92,7 @@ There are two ways to apply the chain rule through a graph.
 
 **Forward mode** starts at the inputs and pushes derivatives forward. It computes $dx/dx = 1$ and propagates through each operation. Good when you have few inputs and many outputs.
 
-```
+```text
 Forward mode: seed dx/dx = 1, propagate forward
 
   x = 2       (dx/dx = 1)
@@ -102,7 +102,7 @@ Forward mode: seed dx/dx = 1, propagate forward
 
 **Reverse mode** starts at the output and pulls gradients backward. It computes $dy/dy = 1$ and propagates through each operation in reverse. Good when you have many inputs and few outputs.
 
-```
+```text
 Reverse mode: seed dy/dy = 1, propagate backward
 
   y = sin(a)  (dy/dy = 1)
@@ -121,7 +121,7 @@ Neural networks have millions of inputs (weights) and one output (loss). Reverse
 
 Forward mode can be implemented elegantly with dual numbers. A dual number has the form $a + b\epsilon$ where $\epsilon^2 = 0$.
 
-```
+```text
 Dual number: (value, derivative)
 
 (2, 1) means: value is 2, derivative w.r.t. x is 1
@@ -484,6 +484,7 @@ print(f"df/dc = {c.grad}")  #  1.0
 ## Ship It
 
 This lesson produces:
+
 - `outputs/skill-autodiff.md` -- a skill for building and debugging autograd systems
 - `code/autodiff.py` -- a minimal autograd engine you can extend
 

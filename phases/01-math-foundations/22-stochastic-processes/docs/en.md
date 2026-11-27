@@ -27,6 +27,7 @@ Reinforcement learning agents take actions in an environment. Each action leads 
 MCMC sampling -- the backbone of Bayesian inference -- constructs a Markov chain whose stationary distribution is the posterior you want to sample from.
 
 All of these build on four foundational ideas:
+
 1. Random walks -- the simplest stochastic process
 2. Markov chains -- structured randomness with a transition matrix
 3. Langevin dynamics -- gradient descent with noise
@@ -42,7 +43,7 @@ After $n$ steps, your position is the sum of $n$ random $\pm 1$ values. The expe
 
 This is counterintuitive. The walk is fair -- no drift in either direction. But over time, it wanders further and further from where it started. The standard deviation after $n$ steps is $\sqrt{n}$.
 
-```
+```text
 Step 0:  Position = 0
 Step 1:  Position = +1 or -1
 Step 2:  Position = +2, 0, or -2
@@ -81,7 +82,7 @@ Each row of $P$ sums to 1 (you must go somewhere).
 
 **Example -- Weather:**
 
-```
+```text
 States: Sunny (0), Rainy (1), Cloudy (2)
 
 P = [[0.7, 0.1, 0.2],    (if sunny: 70% sunny, 10% rainy, 20% cloudy)
@@ -114,6 +115,7 @@ graph LR
 Both approaches require the chain to satisfy convergence conditions.
 
 **Convergence conditions.** A Markov chain converges to a unique stationary distribution if it is:
+
 - **Irreducible**: every state is reachable from every other state
 - **Aperiodic**: the chain does not cycle with a fixed period
 
@@ -141,6 +143,7 @@ Top-k sampling truncates to the $k$ highest-probability tokens. Top-p (nucleus) 
 ### Brownian Motion
 
 The continuous-time limit of the random walk. Position $B(t)$ has three properties:
+
 1. $B(0) = 0$
 2. $B(t) - B(s)$ is normally distributed with mean 0 and variance $t - s$ (for $t > s$)
 3. Increments on non-overlapping intervals are independent
@@ -164,6 +167,7 @@ x_{t+1} = x_t - dt \, \nabla U(x_t) + \sqrt{2 T \, dt} \, z_t
 ```
 
 Two forces act on the particle:
+
 1. **Gradient force** ($-dt \cdot \nabla U$): pushes toward low energy (like gradient descent)
 2. **Random force** ($\sqrt{2T dt} \cdot z$): pushes in random directions (exploration)
 
@@ -212,6 +216,7 @@ The chain is guaranteed to converge to $p(x)$ under mild conditions. But converg
 **Why it works.** The acceptance ratio ensures detailed balance: the probability of being at $x$ and moving to $x'$ equals the probability of being at $x'$ and moving to $x$. Detailed balance implies that $p(x)$ is the stationary distribution of the chain. So after enough steps, the samples come from $p(x)$.
 
 **Practical considerations:**
+
 - **Burn-in**: discard the first $N$ samples. The chain needs time to reach the stationary distribution from its starting point.
 - **Thinning**: keep every $k$-th sample to reduce autocorrelation.
 - **Multiple chains**: run several chains from different starting points. If they converge to the same distribution, you have evidence of convergence.
@@ -390,6 +395,7 @@ The spectral gap tells you how fast the chain forgets its initial state. A gap o
 ## Ship It
 
 This lesson produces:
+
 - `outputs/prompt-stochastic-process-advisor.md` -- a prompt that helps identify which stochastic process framework applies to a given problem
 
 ## Connections

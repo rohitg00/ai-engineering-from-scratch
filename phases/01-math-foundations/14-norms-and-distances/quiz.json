@@ -13,7 +13,7 @@
       "explanation": "Cosine similarity measures the cosine of the angle between two vectors, normalized by their magnitudes. It ranges from -1 (opposite) to +1 (same direction) and ignores vector length, which is why it dominates in NLP where document length is noise."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "Why is L1 distance called 'Manhattan distance'?",
       "options": [
         "It only works in exactly two dimensions",
@@ -25,7 +25,7 @@
       "explanation": "L1 distance sums the absolute differences along each axis, which corresponds to the shortest path on a grid where you can only move along axes (no diagonals) — like walking on a city street grid."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "Why does L1 regularization (Lasso) produce sparse weights while L2 regularization (Ridge) does not?",
       "options": [
         "L1 uses a larger penalty constant than L2",
@@ -37,7 +37,7 @@
       "explanation": "The L1 constraint region is a diamond shape with corners aligned with the axes. The loss function's contour ellipses are most likely to first touch the diamond at a corner, where one or more weights are exactly zero. The L2 constraint is a circle with no corners, so the touch point has all weights nonzero."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "What advantage does Wasserstein distance have over KL divergence when comparing probability distributions?",
       "options": [
         "Wasserstein is always smaller than KL divergence",
@@ -59,6 +59,18 @@
       ],
       "correct": 0,
       "explanation": "Mahalanobis distance accounts for the covariance structure of the data, decorrelating and normalizing features before computing L2 distance. It correctly handles features at different scales and with correlations, whereas Euclidean distance treats all dimensions equally."
+    },
+    {
+      "stage": "post",
+      "question": "What is the Frobenius norm of a matrix?",
+      "options": [
+        "The largest singular value of the matrix",
+        "The sum of the absolute values of its entries",
+        "The number of nonzero entries in the matrix",
+        "The square root of the sum of its squared entries"
+      ],
+      "correct": 3,
+      "explanation": "The Frobenius norm treats the matrix as one long vector and takes its L2 norm. It equals the square root of the sum of squared singular values."
     }
   ]
 }

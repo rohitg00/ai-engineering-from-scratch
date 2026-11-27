@@ -13,7 +13,7 @@
       "explanation": "The shape is a tuple listing the size along each axis. For example, a tensor with shape (2, 3, 4) has 2 elements along axis 0, 3 along axis 1, and 4 along axis 2."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "In PyTorch, what layout does an image batch tensor use by default?",
       "options": [
         "CHWN (channels, height, width, batch)",
@@ -25,7 +25,7 @@
       "explanation": "PyTorch defaults to NCHW (channels-first) layout. TensorFlow defaults to NHWC (channels-last). Mismatched layouts cause silent errors or performance issues."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "What is the result shape when broadcasting tensors of shape (8, 1, 6, 1) and (7, 1, 5)?",
       "options": [
         "(8, 7, 6, 5)",
@@ -37,7 +37,7 @@
       "explanation": "Align shapes from the right: (8,1,6,1) and (1,7,1,5). Dimensions are compatible when equal or one is 1. The result takes the maximum along each axis: (8, 7, 6, 5)."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "In the einsum expression 'bhtd,bhsd->bhts', what happens to the index 'd'?",
       "options": [
         "It is transposed between the two input tensors",
@@ -59,6 +59,18 @@
       ],
       "correct": 0,
       "explanation": "Transpose swaps strides without moving data, making the tensor non-contiguous. The .view() operation requires contiguous memory layout. Use .reshape() or call .contiguous() first."
+    },
+    {
+      "stage": "post",
+      "question": "What does a tensor's stride tell you?",
+      "options": [
+        "How many dimensions the tensor has in total",
+        "How much memory the tensor occupies in bytes",
+        "How many elements to skip to move one step along an axis",
+        "How many batches are processed per second"
+      ],
+      "correct": 2,
+      "explanation": "Strides are the memory step size per axis. Transposing a tensor swaps its shape and strides, which is why the result is non-contiguous and view() fails on it."
     }
   ]
 }

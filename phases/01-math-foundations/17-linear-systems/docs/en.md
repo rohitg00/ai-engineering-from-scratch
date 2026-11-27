@@ -28,7 +28,7 @@ This lesson builds every major method for solving that equation from scratch. Yo
 
 A system of linear equations has a geometric interpretation. Each equation defines a hyperplane. The solution is the point (or set of points) where all hyperplanes intersect.
 
-```
+```text
 2x + y = 5          Two lines in 2D.
 x - y  = 1          They intersect at x=2, y=1.
 ```
@@ -64,7 +64,7 @@ There are two ways to read $Ax = b$.
 
 **Column picture.** Each column of $A$ is a vector. The question becomes: what linear combination of the columns of $A$ produces $b$?
 
-```
+```text
 A = | 2  1 |    b = | 5 |
     | 1 -1 |        | 1 |
 
@@ -83,7 +83,7 @@ Gaussian elimination transforms $Ax = b$ into an upper triangular system $Ux = c
 
 The algorithm:
 
-```
+```text
 1. For each column k (the pivot column):
    a. Find the largest entry in column k at or below row k (partial pivoting).
    b. Swap that row with row k.
@@ -95,7 +95,7 @@ The algorithm:
 
 Example:
 
-```
+```text
 Original:
 | 2  1  1 | 8 |       R2 = R2 - (2)R1     | 2  1   1 |  8 |
 | 4  3  3 |20 |  -->  R3 = R3 - (1)R1 --> | 0  1   1 |  4 |
@@ -117,7 +117,7 @@ Gaussian elimination costs $O(n^3)$ operations. For a $1000 \times 1000$ system,
 
 Without pivoting, Gaussian elimination can fail or produce garbage. If a pivot element is zero, you divide by zero. If it is small, you amplify rounding errors.
 
-```
+```text
 Bad pivot:                       With partial pivoting:
 | 0.001  1 | 1.001 |            Swap rows first:
 | 1      1 | 2     |            | 1      1 | 2     |
@@ -138,7 +138,7 @@ In floating-point arithmetic with limited precision, the unpivoted version can l
 
 LU decomposition factors $A$ into a lower triangular matrix $L$ and an upper triangular matrix $U$: $A = LU$. The $L$ matrix stores the multipliers from Gaussian elimination. The $U$ matrix is the result of elimination.
 
-```
+```text
 A = L @ U
 
 | 2  1  1 |   | 1  0  0 |   | 2  1   1 |
@@ -168,7 +168,7 @@ QR decomposition factors $A$ into an orthogonal matrix $Q$ and an upper triangul
 
 An orthogonal matrix has the property $Q^T Q = I$. Its columns are orthonormal vectors. Multiplying by $Q$ preserves lengths and angles.
 
-```
+```text
 A = Q @ R
 
 Q has orthonormal columns: Q^T Q = I
@@ -182,7 +182,7 @@ To solve Ax = b:
 
 QR is numerically more stable than LU for solving least-squares problems. The Gram-Schmidt process builds $Q$ column by column:
 
-```
+```text
 Given columns a1, a2, ... of A:
 
 q1 = a1 / ||a1||
@@ -202,7 +202,7 @@ Each step removes the component along all previous $q$ vectors, leaving only the
 
 When $A$ is symmetric ($A = A^T$) and positive definite (all eigenvalues positive), you can factor it as $A = L L^T$ where $L$ is lower triangular. This is the Cholesky decomposition.
 
-```
+```text
 A = L @ L^T
 
 | 4  2 |   | 2  0 |   | 2  1 |
@@ -225,7 +225,7 @@ In Gaussian processes, you factor the kernel matrix $K$ with Cholesky, then solv
 
 If $A$ is $m \times n$ with $m > n$ (more equations than unknowns), the system is overdetermined. There is no exact solution. Instead, you minimize the squared error:
 
-```
+```text
 minimize ||Ax - b||^2
 
 This is the sum of squared residuals:
@@ -240,7 +240,7 @@ A^T A x = A^T b
 
 Derivation: expand $\lVert Ax - b \rVert^2 = (Ax - b)^T (Ax - b) = x^T A^T A x - 2 x^T A^T b + b^T b$. Take the gradient with respect to $x$, set it to zero: $2 A^T A x - 2 A^T b = 0$.
 
-```
+```text
 Original system (overdetermined, 4 equations, 2 unknowns):
 | 1  1 |         | 3 |
 | 1  2 | x     = | 5 |       No exact x satisfies all 4 equations.
@@ -293,7 +293,7 @@ x &= A^+ b \\[4pt]
 
 $\Sigma^+$ is formed by taking the reciprocal of each nonzero singular value and transposing the result. If $A = U \Sigma V^T$, then $A^+ = V \Sigma^+ U^T$.
 
-```
+```text
 A = U Sigma V^T        (SVD)
 
 Sigma = | 5  0 |       Sigma+ = | 1/5  0  0 |
@@ -304,6 +304,7 @@ A+ = V Sigma+ U^T
 ```
 
 The pseudoinverse gives the minimum-norm least-squares solution. If the system has:
+
 - One solution: $A^+ b$ gives it.
 - No solution: $A^+ b$ gives the least-squares solution.
 - Infinite solutions: $A^+ b$ gives the one with the smallest $\lVert x \rVert$.
@@ -320,7 +321,7 @@ The condition number measures how sensitive the solution is to small changes in 
 
 where $\sigma_{\max}$ and $\sigma_{\min}$ are the largest and smallest singular values.
 
-```
+```text
 Well-conditioned (kappa ~ 1):        Ill-conditioned (kappa ~ 10^15):
 Small change in b -->                Small change in b -->
 small change in x                    huge change in x
@@ -330,6 +331,7 @@ small change in x                    huge change in x
 ```
 
 Rules of thumb:
+
 - $\kappa < 100$: safe, solution is accurate.
 - $\kappa \approx 10^k$: you lose about $k$ digits of precision from your floating-point arithmetic.
 - $\kappa \approx 10^{16}$ (for float64): the solution is meaningless. The matrix is effectively singular.
@@ -342,7 +344,7 @@ For very large sparse systems (millions of unknowns), direct methods like LU or 
 
 Conjugate gradient (CG) solves $Ax = b$ when $A$ is symmetric positive definite. It finds the exact solution in at most $n$ iterations (in exact arithmetic), but typically converges much faster if the eigenvalues of $A$ are clustered.
 
-```
+```text
 Algorithm sketch:
   x0 = initial guess (often zero)
   r0 = b - A x0           (residual)
@@ -358,6 +360,7 @@ Algorithm sketch:
 ```
 
 CG is used in:
+
 - Large-scale optimization (Newton-CG method)
 - Solving PDE discretizations
 - Kernel methods where the kernel matrix is too large to factor
@@ -545,6 +548,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 ## Ship It
 
 This lesson produces:
+
 - `code/linear_systems.py` containing from-scratch implementations of Gaussian elimination, LU decomposition, Cholesky decomposition, least squares, and ridge regression
 - A working demonstration that normal equations and sklearn's LinearRegression produce the same weights
 

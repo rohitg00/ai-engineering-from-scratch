@@ -28,7 +28,7 @@ Every optimizer in deep learning is an answer to the same question: how do you g
 
 Optimization is finding the input values that minimize (or maximize) a function. In machine learning, the function is the loss. The inputs are the model's weights. Training is optimization.
 
-```
+```text
 minimize L(w) where:
   L = loss function
   w = model weights (could be millions of parameters)
