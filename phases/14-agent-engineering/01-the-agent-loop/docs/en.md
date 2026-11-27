@@ -3,7 +3,7 @@
 > Every agent in 2026 is a variant of the ReAct loop from 2022 — Claude Code, Cursor, Devin, Operator included. Reasoning tokens interleave with tool calls and observations until a stop condition fires. Learn this loop cold before touching any framework.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 (LLM Engineering), Phase 13 (Tools and Protocols)
 **Time:** ~60 minutes
 
