@@ -9,7 +9,7 @@
 using Random
 using Printf
 
-import Base: +, -, *, /, ^
+import Base: +, -, *, /, ^, inv
 
 
 mutable struct Value
@@ -65,6 +65,15 @@ function ^(a::Value, n::Real)
     out = Value(a.data ^ nf, Value[a], "^$nf")
     out.backward! = () -> begin
         a.grad += nf * a.data ^ (nf - 1) * out.grad
+    end
+    return out
+end
+
+
+function inv(a::Value)
+    out = Value(1 / a.data, Value[a], "inv")
+    out.backward! = () -> begin
+        a.grad += (-1 / a.data ^ 2) * out.grad
     end
     return out
 end
@@ -249,7 +258,8 @@ function demo_gradient_check()
     cases = [
         ("x^3 + 2x + 1", x -> x ^ 3 + x * 2 + 1.0),
         ("tanh(x^2)", x -> _tanh(x ^ 2)),
-        ("(x+1) / (x^2+1)", x -> (x + 1.0) * ((x ^ 2 + 1.0) ^ -1)),
+        ("(x+1) / (x^2+1)", x -> (x + 1.0) / (x ^ 2 + 1.0)),
+        ("1 / (x+2)", x -> 1.0 / (x + 2.0)),
         ("exp(x) * x", x -> _exp(x) * x),
         ("log(x^2 + 1)", x -> _log(x ^ 2 + 1.0)),
     ]
@@ -258,13 +268,15 @@ function demo_gradient_check()
     all_passed = true
     for (name, expr) in cases
         ad, num, diff = gradient_check(expr, 0.5)
-        status = diff < 1e-5 ? "OK" : "FAIL"
-        if diff >= 1e-5
+        ok = diff < 1e-5
+        status = ok ? "OK" : "FAIL"
+        if !ok
             all_passed = false
         end
         @printf("  %-22s %12.8f %12.8f %12.2e  %s\n", name, ad, num, diff, status)
     end
     println(all_passed ? "  ALL CHECKS PASSED\n" : "  SOME CHECKS FAILED\n")
+    @assert all_passed "gradient check failed"
 end
 
 
