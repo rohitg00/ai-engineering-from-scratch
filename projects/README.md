@@ -1,6 +1,6 @@
 # Projects
 
-Build useful AI engineering tools from scratch, one tested stage at a time. The catalog covers 104 projects across Python, Rust, TypeScript, and Go: 79 ready to build and 25 on the [roadmap](ROADMAP.md).
+Build useful AI engineering tools from scratch, one tested stage at a time. The catalog covers 104 projects across Python, Rust, TypeScript, and Go: 80 ready to build and 24 on the [roadmap](ROADMAP.md).
 
 Each ready project includes a working reference implementation, a learner starter, cumulative stage tests, mechanism diagrams, explanations, and recorded run/output GIFs. Core tests use local fixtures and require no model credentials. Optional framework comparisons use real SDKs with deterministic fake models. Planned projects have proposed outcomes and learning milestones; their implementations and completion tests are still to come.
 
@@ -95,6 +95,7 @@ Import `completion.json` on the project page and enter your name to download a p
 | [Report Judge](report-judge/) | 3 | Python | 4 | ~8h |
 | [Retry Storm Lab](retry-storm-lab/) | 3 | Go, TypeScript | 4 | ~8h |
 | [Self-Correcting Workflow Hooks](workflow-hooks/) | 3 | TypeScript | 4 | ~8h |
+| [Semantic Cache Correctness Lab](semantic-cache-correctness-lab/) | 3 | Python | 4 | ~8h |
 | [Skill Supply-Chain Scanner](skill-scanner/) | 3 | Rust | 4 | ~8h |
 | [Streaming Answer Recovery](streaming-answer-recovery/) | 3 | TypeScript, Go | 4 | ~8h |
 | [Support Agent With Google ADK](support-agent-with-google-adk/) | 3 | Python | 4 | ~8h |
@@ -119,7 +120,7 @@ Import `completion.json` on the project page and enter your name to download a p
 
 ## Roadmap
 
-The [25 planned projects](ROADMAP.md) extend all five levels with practical applications, data and multimodal workflows, developer tooling, DevOps, and agent systems. Each brief names its deliverable, prerequisites, first demo and four proposed milestones. The website marks these cards as planned; they do not count toward completed stages or certificates.
+The [24 planned projects](ROADMAP.md) extend all five levels with practical applications, data and multimodal workflows, developer tooling, DevOps, and agent systems. Each brief names its deliverable, prerequisites, first demo and four proposed milestones. The website marks these cards as planned; they do not count toward completed stages or certificates.
 
 ## Build an application you can use
 
