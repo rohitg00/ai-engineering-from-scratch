@@ -733,6 +733,7 @@
     .lesson-action-head {
       min-width: 0;
       display: flex;
+      flex-wrap: wrap;
       align-items: flex-start;
       justify-content: space-between;
       gap: 18px;
@@ -744,6 +745,10 @@
     .lesson-action-body > *,
     .lesson-action-command-row > * {
       min-width: 0;
+    }
+
+    .lesson-action-head > div:first-child {
+      min-width: min(100%, 260px);
     }
 
     .lesson-action-title {
