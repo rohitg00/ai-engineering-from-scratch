@@ -64,7 +64,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 uv python install 3.12
 
-uv venv
+uv venv --python 3.12
 source .venv/bin/activate  # or .venv\Scripts\activate on Windows
 
 uv pip install numpy matplotlib jupyter
@@ -137,6 +137,20 @@ nvidia-smi
 # Install PyTorch with CUDA
 uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
+
+The index has to match your Python version, your GPU and your driver, and those three can disagree:
+
+- **Python version.** `cu124` stops at `torch 2.6.0` and publishes no Python 3.14 wheels, so on Python 3.14 the command above fails with `No matching distribution found for torch`. Use `cu126` or newer there.
+- **GPU generation.** Blackwell cards (RTX 50-series and later) need `cu128` or newer. `cu124` predates them: the install succeeds, then every CUDA operation fails at runtime.
+- **Driver.** A driver older than CUDA 12 needs `cu118`, which requires driver 450.80.02 or newer on Linux and 452.39 or newer on Windows, and Python 3.13 or older.
+
+If you already have a working CUDA build, keep it. Reinstalling from a different index can move you backwards — `cu124` would replace a Blackwell stack with `torch 2.6.0`, which does not support those cards. `--reinstall` is for the opposite case, replacing a build rather than keeping it: a CPU-only torch from `requirements.txt`, or a CUDA build that does not match your GPU. Without it uv leaves the installed packages alone even when you change the index, because they already satisfy `torch>=2.0`:
+
+```bash
+uv pip install --reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+```
+
+Step 2 pins Python 3.12, which works with every index above. On Linux the PyPI wheel already bundles CUDA; on Windows it is CPU-only. pytorch.org lists an index per CUDA version, and NVIDIA's compatibility table maps your driver to one.
 
 **macOS / Apple Silicon (M1/M2/M3/M4):** There is no CUDA on a Mac — that's expected, not a failure. Do **not** pass `--index-url .../cuXXX` (those wheels are Linux/Windows only, so the install fails). Install the plain build, which includes Apple's MPS (Metal) GPU backend:
 
