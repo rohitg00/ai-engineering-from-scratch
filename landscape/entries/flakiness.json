@@ -1,0 +1,9 @@
+{
+  "name": "Flakiness",
+  "url": "https://flakiness.io",
+  "category": "review",
+  "description": "Test analytics for Github and Gitlab, designed from the ground-up for agents and automation.",
+  "open_source": false,
+  "x": "flakinessio",
+  "logo_url": "https://flakiness.io/logo.svg"
+}
