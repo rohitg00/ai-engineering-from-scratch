@@ -117,6 +117,7 @@ graph LR
 ```
 
 Shear matrices:
+
 - `Shx = [[1, k], [0, 1]]` shifts $x$ by $k \cdot y$
 - `Shy = [[1, 0], [k, 1]]` shifts $y$ by $k \cdot x$
 
@@ -139,6 +140,7 @@ graph LR
 ```
 
 Reflection matrices:
+
 - Reflect across y-axis: `[[-1, 0], [0, 1]]`
 - Reflect across x-axis: `[[1, 0], [0, -1]]`
 
@@ -170,7 +172,7 @@ Different results. Matrix multiplication is not commutative.
 
 Most vectors change direction when a matrix hits them. Eigenvectors are special: the matrix only scales them, never rotates them. The scaling factor is the eigenvalue.
 
-```
+```text
 A @ v = lambda * v
 
 v is the eigenvector (direction that survives)
@@ -192,7 +194,7 @@ The matrix stretches space by 3x along [1, 1] and keeps [1, -1] unchanged. Every
 
 If a matrix has $n$ linearly independent eigenvectors, it can be decomposed:
 
-```
+```text
 A = V @ D @ V^(-1)
 
 V = matrix whose columns are eigenvectors
@@ -214,7 +216,7 @@ This says: rotate into eigenvector coordinates, scale along each axis, rotate ba
 
 The determinant of a transformation matrix tells you how much it scales area (2D) or volume (3D).
 
-```
+```text
 det = 1:   area preserved (rotation)
 det = 2:   area doubled
 det = 0:   space crushed to lower dimension (singular)

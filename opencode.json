@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "rea": {
+      "type": "local",
+      "command": ["cmd.exe", "/d", "/c", "npx", "-y", "rea-agents@6.8.0", "mcp"],
+      "enabled": true,
+      "timeout": 60000
+    }
+  }
+}

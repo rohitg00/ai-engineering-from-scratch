@@ -1,0 +1,16 @@
+{
+  "name": "workbench",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Micro-learning workbench for the AI Engineering from Scratch curriculum. Zero dependencies.",
+  "scripts": {
+    "content": "node scripts/build-content.mjs",
+    "dev": "node scripts/build-content.mjs && node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "build": "node scripts/build-content.mjs",
+    "check": "node scripts/check.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "shots": "node scripts/shots.mjs"
+  }
+}

@@ -80,7 +80,7 @@ Transpose does not move data. It swaps the strides, making the tensor **non-cont
 
 Broadcasting lets you operate on tensors of different shapes without copying data. Align shapes from the right. Two dimensions are compatible when they are equal or one is 1. Fewer dimensions get padded with 1s on the left.
 
-```
+```text
 Tensor A:     (8, 1, 6, 1)
 Tensor B:        (7, 1, 5)
 Padded B:     (1, 7, 1, 5)

@@ -13,7 +13,7 @@
       "explanation": "The Markov property (memorylessness) means P(X_{t+1} = j | X_t = i, X_{t-1}, ...) = P(X_{t+1} = j | X_t = i). The future depends only on where you are, not how you got there. This enables compact representation via a transition matrix."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "In a 1D random walk, how does the expected distance from the origin scale with the number of steps n?",
       "options": [
         "Logarithmically: proportional to log(n)",
@@ -25,7 +25,7 @@
       "explanation": "Each step is +/-1 with equal probability. The variance after n steps is n, so the standard deviation (typical distance from origin) is sqrt(n). After 10,000 steps, the expected distance is about 100, not 10,000."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "What is the stationary distribution of a Markov chain?",
       "options": [
         "The uniform distribution over all states",
@@ -37,7 +37,7 @@
       "explanation": "The stationary distribution pi satisfies pi * P = pi — applying the transition matrix leaves it unchanged. It represents the long-run fraction of time spent in each state. For an irreducible, aperiodic chain, any initial distribution converges to pi."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "In Langevin dynamics x_{t+1} = x_t - dt * grad(U) + sqrt(2*T*dt) * z, what happens as temperature T approaches 0?",
       "options": [
         "The process diverges to infinity",
@@ -59,6 +59,18 @@
       ],
       "correct": 1,
       "explanation": "The forward process is a Markov chain: x_t = sqrt(alpha_t) * x_{t-1} + sqrt(1 - alpha_t) * noise. After T steps, x_T is approximately N(0, I) — pure Gaussian noise. The reverse process (learned by a neural network) then denoises step-by-step to generate new data."
+    },
+    {
+      "stage": "post",
+      "question": "What does an ergodic Markov chain guarantee?",
+      "options": [
+        "Time averages converge to the stationary distribution",
+        "Every state is visited exactly once per cycle",
+        "The chain has no stationary distribution at all",
+        "Transitions become deterministic after enough steps"
+      ],
+      "correct": 0,
+      "explanation": "Ergodicity means the chain forgets where it started, so the fraction of time spent in each state converges to the stationary probability. MCMC sampling depends on this."
     }
   ]
 }

@@ -1,0 +1,20 @@
+version = 1
+revision = 5
+requires-python = ">=3.12"
+
+[[package]]
+name = "ai-engineering-from-scratch"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "numpy" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "numpy", specifier = "==1.22" }]
+
+[[package]]
+name = "numpy"
+version = "1.22.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/50/e1/9b0c184f04b8cf5f3c941ffa56fbcbe936888bdac9aa7ba6bae405ac752b/numpy-1.22.0.zip", hash = "sha256:a955e4128ac36797aaffd49ab44ec74a71c11d6938df83b1285492d277db5397", size = 11291139, upload-time = "2021-12-31T20:44:52.909Z" }

@@ -16,9 +16,13 @@
 
 ## The Problem
 
-You have a dataset with 784 features per sample. Maybe it is pixel values of handwritten digits. Maybe it is gene expression levels. Maybe it is user behavior signals. You cannot visualize 784 dimensions. You cannot plot them. You cannot even think about them.
+You have a dataset with 784 features per sample. Maybe it is pixel values of handwritten digits. Maybe it is gene expression levels. Maybe it is user behavior signals.
 
-But most of those 784 features are redundant. The actual information lives on a much smaller surface. A handwritten "7" does not need 784 independent numbers to describe it. It needs a few: the angle of the stroke, the length of the crossbar, how much it leans. The rest is noise.
+You cannot visualize 784 dimensions. You cannot plot them. You cannot even think about them.
+
+But most of those 784 features are redundant. The actual information lives on a much smaller surface.
+
+A handwritten "7" does not need 784 independent numbers to describe it. It needs a few: the angle of the stroke, the length of the crossbar, how much it leans. The rest is noise.
 
 Dimensionality reduction finds that smaller surface. It takes your 784-dimensional data and compresses it to 2, 10, or 50 dimensions while keeping the structure that matters.
 
@@ -30,7 +34,7 @@ High-dimensional spaces are unintuitive. Three things break as dimensions grow.
 
 **Distance becomes meaningless.** In high dimensions, the distance between any two random points converges to the same value. If every point is roughly the same distance from every other point, nearest-neighbor search stops working.
 
-```
+```text
 Dimension    Avg distance ratio (max/min between random points)
 2            ~5.0
 10           ~1.8
@@ -42,13 +46,17 @@ Dimension    Avg distance ratio (max/min between random points)
 
 **You need exponentially more data.** To maintain the same density of samples in a space, going from 2D to 20D means you need $10^{18}$ times more data. You never have enough. Reducing dimensions brings the data density back to something workable.
 
+**Check yourself.** In 1000 dimensions, why does nearest-neighbor search stop working?
+
+Answer: the distance between random points converges to one value, so every point looks equally far away. There is no clear nearest neighbor left to find.
+
 ### PCA: find the directions that matter
 
 Principal Component Analysis (PCA) finds the axes along which your data varies the most. It rotates your coordinate system so the first axis captures the most variance, the second captures the next most, and so on.
 
 The algorithm:
 
-```
+```text
 1. Center the data        (subtract the mean from each feature)
 2. Compute covariance     (how features move together)
 3. Eigendecomposition     (find the principal directions)
@@ -56,7 +64,9 @@ The algorithm:
 5. Project               (keep top k eigenvectors, drop the rest)
 ```
 
-Why eigendecomposition? The covariance matrix is symmetric and positive semi-definite. Its eigenvectors are orthogonal directions in feature space. The eigenvalues tell you how much variance each direction captures. The eigenvector with the largest eigenvalue points along the direction of maximum variance.
+Why eigendecomposition? The covariance matrix is symmetric and positive semi-definite.
+
+Its eigenvectors are orthogonal directions in feature space. The eigenvalues tell you how much variance each direction captures. The eigenvector with the largest eigenvalue points along the direction of maximum variance.
 
 ```mermaid
 graph LR
@@ -67,11 +77,26 @@ graph LR
 - **After PCA:** Coordinate system is rotated so PC1 aligns with the direction of maximum variance (elongated spread) and PC2 aligns with the direction of minimum variance (narrow spread)
 - **Dimensionality reduction:** Dropping PC2 projects the data onto PC1, losing very little information
 
+**Worked example: center three points and read the covariance.**
+
+Take three samples with two features: `[1, 2]`, `[3, 4]`, and `[5, 6]`.
+
+1. Column means: $(1 + 3 + 5)/3 = 3$ and $(2 + 4 + 6)/3 = 4$.
+2. Centered rows: $[1-3, 2-4] = [-2, -2]$, then $[0, 0]$, then $[2, 2]$.
+3. Multiply the centered matrix by itself: $X_c^T X_c = \begin{bmatrix} 8 & 8 \\ 8 & 8 \end{bmatrix}$, so $C = \frac{1}{3-1}\begin{bmatrix} 8 & 8 \\ 8 & 8 \end{bmatrix} = \begin{bmatrix} 4 & 4 \\ 4 & 4 \end{bmatrix}$.
+4. Solve $(4-\lambda)^2 - 16 = 0$: the eigenvalues are $\lambda_1 = 8$ and $\lambda_2 = 0$. The eigenvector for 8 is $[1, 1]/\sqrt{2}$.
+
+All three points sit on the line $y = x$, so one direction explains everything. PCA reports exactly that: 8 out of 8, or 100%.
+
+**Check yourself.** A covariance matrix has eigenvalues 8 and 0. How many components do you keep to hold 100% of the variance?
+
+Answer: one. The second eigenvalue is zero, so dropping that component loses nothing.
+
 ### Explained variance ratio
 
 Each principal component captures a fraction of the total variance. The explained variance ratio tells you how much.
 
-```
+```text
 Component    Eigenvalue    Explained ratio    Cumulative
 PC1          4.73          0.473              0.473
 PC2          2.51          0.251              0.724
@@ -81,6 +106,21 @@ PC4          0.89          0.089              0.925
 ```
 
 When the cumulative explained variance reaches 0.95, you know that many components capture 95% of the information. Everything after that is mostly noise.
+
+**Worked example: cumulative variance from four eigenvalues.**
+
+Use the four eigenvalues in the table: 4.73, 2.51, 1.12, and 0.89, out of a total variance of 10.0.
+
+1. Individual ratios: $4.73/10 = 0.473$ and $2.51/10 = 0.251$.
+2. Add the first two: $0.473 + 0.251 = 0.724$.
+3. Add the next two: $0.724 + 0.112 = 0.836$, then $0.836 + 0.089 = 0.925$.
+4. Variance still dropped: $1 - 0.925 = 0.075$, which is $0.75$ in the original eigenvalue units.
+
+Four components keep 92.5% of the variance and throw away 7.5%. If your threshold is 0.95, four components are not enough and you need at least one more.
+
+**Check yourself.** Two components have ratios 0.6 and 0.3. What is the cumulative ratio, and how much variance is lost?
+
+Answer: the cumulative ratio is 0.9, so 10% of the variance is lost.
 
 ### Choosing the number of components
 
@@ -94,9 +134,12 @@ Three strategies:
 
 t-Distributed Stochastic Neighbor Embedding (t-SNE) is designed for visualization. It maps high-dimensional data to 2D (or 3D) while preserving which points are near each other.
 
-The intuition: in the original space, compute a probability distribution over pairs of points based on their distances. Near points get high probability. Far points get low probability. Then find a 2D arrangement where the same probability distribution holds. Points that were neighbors in 784 dimensions stay neighbors in 2D.
+The intuition: in the original space, compute a probability distribution over pairs of points based on their distances. Near points get high probability. Far points get low probability.
+
+Then find a 2D arrangement where the same probability distribution holds. Points that were neighbors in 784 dimensions stay neighbors in 2D.
 
 Key properties of t-SNE:
+
 - Non-linear. It can unfold complex manifolds that PCA cannot.
 - Stochastic. Different runs produce different layouts.
 - Perplexity parameter controls how many neighbors to consider (typical range: 5-50).
@@ -106,12 +149,14 @@ Key properties of t-SNE:
 ### UMAP: faster, better global structure
 
 Uniform Manifold Approximation and Projection (UMAP) works similarly to t-SNE but with two advantages:
+
 - Faster. It uses approximate nearest-neighbor graphs instead of computing all pairwise distances.
 - Better global structure. The relative positions of clusters in the output tend to be more meaningful than in t-SNE.
 
 UMAP builds a weighted graph in high-dimensional space (the "fuzzy topological representation") and then finds a low-dimensional layout that preserves this graph as well as possible.
 
 Key parameters:
+
 - `n_neighbors`: how many neighbors define local structure (similar to perplexity). Higher values preserve more global structure.
 - `min_dist`: how tightly points pack together in the output. Lower values create denser clusters.
 
@@ -135,6 +180,7 @@ Standard PCA finds linear subspaces. It rotates your coordinate system and drops
 Kernel PCA applies PCA in a high-dimensional feature space induced by a kernel function, without explicitly computing the coordinates in that space. This is the kernel trick -- the same idea behind SVMs.
 
 The algorithm:
+
 1. Compute the kernel matrix $K$ where $K_{ij} = k(x_i, x_j)$
 2. Center the kernel matrix in feature space
 3. Eigendecompose the centered kernel matrix
@@ -165,6 +211,7 @@ The classic example: concentric circles in 2D. Two rings of points, one inside t
 How good is your dimensionality reduction? You compressed 784 dimensions to 50. What did you lose?
 
 Measure reconstruction error:
+
 1. Project data to $k$ dimensions: $X_{\text{reduced}} = X W_k$
 2. Reconstruct: $\hat{X} = X_{\text{reduced}} W_k^T$
 3. Compute MSE: $\text{mean}((X - \hat{X})^2)$
@@ -186,6 +233,7 @@ The explained variance ratio for each component is:
 ```
 
 Plotting cumulative explained variance against number of components gives you the "elbow" curve. The right number of components is where:
+
 - The curve flattens out (diminishing returns)
 - Cumulative variance crosses your threshold (usually 0.90 or 0.95)
 - Downstream task performance plateaus
@@ -352,6 +400,7 @@ Performance plateaus well before 784 dimensions. That plateau is your operating 
 ## Ship It
 
 This lesson produces:
+
 - `outputs/skill-dimensionality-reduction.md` - a skill for choosing the right dimensionality reduction technique for a given task
 
 ## Exercises

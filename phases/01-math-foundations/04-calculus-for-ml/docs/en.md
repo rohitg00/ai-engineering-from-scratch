@@ -86,7 +86,7 @@ This is gradient descent in a picture. Compute the gradient, negate it, take a s
 
 Training a neural network is optimization. You have a loss function $L(w_1, w_2, \ldots, w_n)$ that measures how wrong the model is. You want to minimize it.
 
-```
+```text
 Gradient descent update rule:
 
   w_new = w_old - learning_rate * dL/dw
@@ -119,7 +119,7 @@ Analytical: apply calculus rules by hand. For $f(x) = x^2$, the derivative is $f
 
 Numerical: approximate using the definition. Compute $f(x+h)$ and $f(x-h)$ for a tiny $h$, then use the difference.
 
-```
+```text
 Numerical (central difference):
 
 f'(x) ~= f(x + h) - f(x - h)
@@ -135,7 +135,7 @@ Numerical derivatives are slower but work for any function. Analytical derivativ
 
 These are the derivatives you will see over and over in ML.
 
-```
+```text
 Function        Derivative       Used in
 --------        ----------       -------
 f(x) = x^2     f'(x) = 2x      Loss functions (MSE)
@@ -149,7 +149,7 @@ f(x) = 1/(1+e^-x)  f'(x) = f(x)(1-f(x))   Sigmoid activation
 
 For $f(x) = x^2$:
 
-```
+```text
 f(x) = x^2    f'(x) = 2x
 
   x    f(x)   f'(x)   meaning
@@ -162,7 +162,7 @@ f(x) = x^2    f'(x) = 2x
 
 For $f(w) = wx + b$ with $x=3$, $b=1$:
 
-```
+```text
 f(w) = 3w + 1    f'(w) = 3
 
 The derivative with respect to w is just x.
@@ -173,7 +173,7 @@ If x is big, a small change in w causes a big change in output.
 
 When functions are composed, the chain rule tells you how to differentiate.
 
-```
+```text
 If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x)
 
 Example: y = (3x + 1)^2
@@ -210,7 +210,7 @@ H = \begin{bmatrix} \dfrac{\partial^2 f}{\partial x^2} & \dfrac{\partial^2 f}{\p
 
 **Example:** $f(x, y) = x^2 - y^2$ (a saddle function)
 
-```
+```text
 df/dx = 2x       df/dy = -2y
 d^2f/dx^2 = 2    d^2f/dy^2 = -2    d^2f/dxdy = 0
 
@@ -223,7 +223,7 @@ Eigenvalues: 2 and -2 (one positive, one negative)
 
 Compare with $f(x, y) = x^2 + y^2$ (a bowl):
 
-```
+```text
 H = | 2  0 |
     | 0  2 |
 
@@ -274,7 +274,7 @@ The more terms you include, the better the approximation -- but only near the po
 
 - **Loss function design.** MSE and cross-entropy are smooth, which means their Taylor expansions are well-behaved. This is not an accident. Smooth losses make optimization predictable.
 
-```
+```text
 Approximation order    What it captures    Optimization method
 -------------------    -----------------   -------------------
 0th order (constant)   Just the value      Random search
@@ -391,6 +391,7 @@ graph RL
 ```
 
 Each weight update:
+
 - `W1 = W1 - lr * dL/dW1`
 - `W2 = W2 - lr * dL/dW2`
 

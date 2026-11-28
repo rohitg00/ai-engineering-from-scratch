@@ -13,7 +13,7 @@
       "explanation": "The p-value is the probability of observing data as extreme as what you got, assuming the null hypothesis is true. It is NOT the probability that H0 is true — this is the single most common misunderstanding in statistics."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "Why do you divide by (n-1) instead of n when computing sample variance?",
       "options": [
         "It converts the variance to standard deviation",
@@ -25,7 +25,7 @@
       "explanation": "Bessel's correction (dividing by n-1) compensates for the bias introduced by using the sample mean instead of the true population mean. Without it, sample variance systematically underestimates the true population variance."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "You test 20 different model configurations at alpha = 0.05. What is the approximate probability of at least one false positive?",
       "options": [
         "5%",
@@ -37,7 +37,7 @@
       "explanation": "P(at least one false positive) = 1 - (1 - 0.05)^20 = 1 - 0.95^20 ≈ 0.64 (64%). This is the multiple comparison problem. Bonferroni correction addresses it by testing each at alpha/20 = 0.0025."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "Model A scores 0.9234 and Model B scores 0.9237 on 1 million test samples with p-value = 0.001. What should you conclude?",
       "options": [
         "Model A is better because it was tested first",
@@ -59,6 +59,18 @@
       ],
       "correct": 2,
       "explanation": "Bootstrap resampling estimates the sampling distribution of any statistic by resampling with replacement. Unlike the t-test, it does not assume normality. It works for any metric — AUC, F1, precision@k, median — without needing a closed-form formula."
+    },
+    {
+      "stage": "post",
+      "question": "A 95% confidence interval is computed from one sample. What does the 95% refer to?",
+      "options": [
+        "The probability that the true value lies in this interval",
+        "The share of the sample that falls inside the interval",
+        "The chance that the sample mean equals the true value",
+        "The share of such intervals that would contain the true value"
+      ],
+      "correct": 3,
+      "explanation": "The interval either contains the true value or it does not. The 95% describes the procedure: across repeated samples, about 95% of intervals built this way capture it."
     }
   ]
 }

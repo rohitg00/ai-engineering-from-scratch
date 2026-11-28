@@ -1,0 +1,7 @@
+node_modules
+dist
+public/content
+.smoke
+.shots
+*.local
+.DS_Store

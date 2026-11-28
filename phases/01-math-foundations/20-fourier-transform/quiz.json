@@ -13,7 +13,7 @@
       "explanation": "The Fourier transform converts a signal from the time domain to the frequency domain. Each frequency coefficient X[k] tells you the amplitude and phase of a sine wave at frequency k. The signal is re-expressed as a sum of these sine waves."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "What is the time complexity of the Fast Fourier Transform (FFT) compared to the direct DFT?",
       "options": [
         "FFT is O(log N), DFT is O(N)",
@@ -25,7 +25,7 @@
       "explanation": "The direct DFT computes N outputs, each summing over N inputs: O(N^2). The Cooley-Tukey FFT splits the signal into even/odd halves recursively, doing O(N) work at each of log2(N) levels, giving O(N log N). For N = 1 million, this is 20 million vs 1 trillion operations."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "What does the convolution theorem state?",
       "options": [
         "Convolution in the time domain equals addition in the frequency domain",
@@ -37,7 +37,7 @@
       "explanation": "The convolution theorem states that convolution in the time domain equals pointwise multiplication in the frequency domain: x * h = IFFT(FFT(x) . FFT(h)). This is why FFT-based convolution is O(N log N) instead of O(N*M) for large kernels."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "Why does zero-padding a signal before FFT NOT increase the true frequency resolution?",
       "options": [
         "Zero-padding interpolates between existing frequency bins but cannot reveal frequency detail absent from the original samples",
@@ -59,6 +59,18 @@
       ],
       "correct": 1,
       "explanation": "High-frequency dimensions change rapidly with position (fine resolution), while low-frequency dimensions change slowly (coarse resolution). Together, the multi-frequency encoding gives every position a unique pattern — similar to how Fourier coefficients uniquely identify a signal."
+    },
+    {
+      "stage": "post",
+      "question": "What does the Nyquist rate say about sampling a signal?",
+      "options": [
+        "You must sample above twice its highest frequency",
+        "You must sample at exactly its highest frequency",
+        "You must average two samples per period",
+        "You must remove all high frequencies before sampling"
+      ],
+      "correct": 0,
+      "explanation": "Sampling below twice the highest frequency aliases high frequencies onto low ones. The 2x threshold is the minimum rate that lets the original signal be reconstructed."
     }
   ]
 }

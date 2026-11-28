@@ -1,0 +1,19 @@
+[project]
+name = "ai-engineering-from-scratch"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Dawit Hailu", email = "Davidhailu0@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy==1.22",
+]
+
+[project.scripts]
+ai-engineering-from-scratch = "ai_engineering_from_scratch:main"
+
+[build-system]
+requires = ["uv_build>=0.13.6,<0.14.0"]
+build-backend = "uv_build"

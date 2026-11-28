@@ -13,7 +13,7 @@
       "explanation": "Float32 has an 8-bit exponent giving a range of approximately +/- 3.4e38. Float16 is limited to +/- 65,504, and float64 reaches +/- 1.8e308."
     },
     {
-      "stage": "pre",
+      "stage": "check",
       "question": "Why does 0.1 + 0.2 not equal 0.3 in floating-point arithmetic?",
       "options": [
         "The CPU has a bug in its addition circuit",
@@ -25,7 +25,7 @@
       "explanation": "The number 0.1 is a repeating fraction in binary (like 1/3 in decimal). Float32 truncates it, so the stored value is approximately 0.100000001490116. The accumulated error makes the sum differ from 0.3."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "In the stable softmax implementation, why do you subtract max(logits) before exponentiating?",
       "options": [
         "It normalizes the logits to have zero mean",
@@ -37,7 +37,7 @@
       "explanation": "After subtracting max(logits), the largest value is 0 and exp(0) = 1, which cannot overflow. All other values are negative, so their exponentials are less than 1. The probabilities are mathematically identical to the naive version."
     },
     {
-      "stage": "post",
+      "stage": "check",
       "question": "When using centered finite differences for gradient checking, what happens if the step size h is too small (e.g., 1e-15)?",
       "options": [
         "The approximation becomes more accurate",
@@ -59,6 +59,18 @@
       ],
       "correct": 1,
       "explanation": "bfloat16 has 8 exponent bits (same as float32, range up to 3.4e38) while float16 has only 5 exponent bits (max ~65,504). During training, activations and gradients can exceed 65,504, causing float16 overflow. bfloat16 handles this without loss scaling."
+    },
+    {
+      "stage": "post",
+      "question": "Why do libraries compute log-sum-exp instead of taking the log of a sum of exponentials?",
+      "options": [
+        "It avoids overflow and underflow in intermediate values",
+        "It produces a more accurate result in exact arithmetic",
+        "It removes the need to find a maximum value",
+        "It converts the final result into an integer"
+      ],
+      "correct": 0,
+      "explanation": "Exponentiating large logits overflows and exponentiating very negative ones underflows to zero. Subtracting the maximum keeps every exponent at or below zero without changing the answer."
     }
   ]
 }

@@ -30,7 +30,7 @@ This lesson builds complex arithmetic from scratch, connects it to geometry, and
 
 A complex number has two parts: a real part and an imaginary part.
 
-```
+```text
 z = a + bi
 
 where:
@@ -89,7 +89,7 @@ This eliminates the imaginary part from the denominator, giving you a clean comp
 
 The complex plane maps every complex number to a 2D point. The horizontal axis is the real axis, the vertical axis is the imaginary axis.
 
-```
+```text
 z = 3 + 2i  corresponds to the point (3, 2)
 z = -1 + 0i corresponds to the point (-1, 0) on the real axis
 z = 0 + 4i  corresponds to the point (0, 4) on the imaginary axis
@@ -385,6 +385,7 @@ def roots_of_unity(N):
 ```
 
 Verify two properties:
+
 - Every root has magnitude exactly 1.
 - The sum of all $N$ roots is zero (they cancel out by symmetry).
 

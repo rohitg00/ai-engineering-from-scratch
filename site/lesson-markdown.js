@@ -313,14 +313,20 @@
 
       var paraClass = '';
       if (firstBlockquoteDone && !firstParaAfterMottoDone) {
-        var isMetaLine = line.match(/^\*\*[^*]+\*\*\s*:/);
+        // Lesson frontmatter is written as "**Type:** Learn" (colon inside the
+        // bold), and older lessons use "**Type**: Learn". Treat both as the
+        // metadata block so the drop cap lands on the first prose paragraph.
+        var isMetaLine = line.match(/^\*\*(?:[^*]+?:\*\*|[^*]+\*\*\s*:)/);
         if (!isMetaLine) {
           paraClass = ' class="drop-cap"';
           firstParaAfterMottoDone = true;
         }
       }
 
-      var metaMatch = line.match(/^\*\*([^*]+)\*\*:\s*(.+)/);
+      // "**Type:** Learn" puts the colon inside the bold; older lessons write
+      // "**Type**: Learn". Both forms require the colon, so a bold sentence in
+      // the header area is never mistaken for metadata.
+      var metaMatch = line.match(/^\*\*([^*]+?):\*\*\s*(.+)/) || line.match(/^\*\*([^*]+)\*\*\s*:\s*(.+)/);
       if (metaMatch && !firstParaAfterMottoDone) {
         out += '<div class="lesson-meta-tag"><strong>' + escapeHtml(metaMatch[1]) + ':</strong> ' + inlineFormat(metaMatch[2]) + '</div>';
         continue;

@@ -18,11 +18,19 @@
 
 You have two vectors. Maybe they are word embeddings. Maybe they are user profiles. Maybe they are pixel arrays. You need to know: how close are they?
 
-The answer depends entirely on which distance function you pick. Two data points can be nearest neighbors under one metric and far apart under another. Your KNN classifier, your recommendation engine, your vector database, your clustering algorithm, your loss function -- they all depend on this choice. Get it wrong and your model optimizes for the wrong thing.
+The answer depends entirely on which distance function you pick. Two data points can be nearest neighbors under one metric and far apart under another.
 
-There is no universal best distance. L2 works for spatial data. Cosine similarity dominates NLP. Jaccard handles sets. Edit distance handles strings. Mahalanobis accounts for correlations. Wasserstein moves probability mass. Each one encodes a different assumption about what "similar" means.
+Your KNN classifier, your recommendation engine, your vector database, your clustering algorithm, your loss function -- they all depend on this choice. Get it wrong and your model optimizes for the wrong thing.
+
+There is no universal best distance. L2 works for spatial data. Cosine similarity dominates NLP. Jaccard handles sets. Edit distance handles strings. Mahalanobis accounts for correlations. Wasserstein moves probability mass.
+
+Each one encodes a different assumption about what "similar" means.
 
 This lesson builds every major distance function from scratch, shows you when each one is the right tool, and demonstrates how the same data produces completely different nearest neighbors depending on which metric you use.
+
+**Check yourself.** Two points have L2 distance 5. Can their L1 distance be 4?
+
+Answer: no. L1 is always greater than or equal to L2, so the L1 distance here is at least 5.
 
 ## The Concept
 
@@ -40,7 +48,7 @@ The L1 norm sums the absolute values of all components.
 
 It is called Manhattan distance because it measures how far you walk on a city grid where you can only move along axes. No diagonals.
 
-```
+```text
 Point A = (1, 1)
 Point B = (4, 5)
 
@@ -50,11 +58,18 @@ On a grid, you walk 3 blocks east and 4 blocks north.
 ```
 
 When to use L1:
+
 - High-dimensional sparse data (text features, one-hot encodings)
 - When you want robustness to outliers (a single huge difference does not dominate)
 - Feature selection problems (L1 regularization promotes sparsity)
 
-Connection to L1 regularization (Lasso): adding $\lVert w \rVert_1$ to your loss function penalizes the sum of absolute weight values. This pushes small weights to exactly zero, performing automatic feature selection. The L1 penalty creates diamond-shaped constraint regions in weight space, and the corners of diamonds lie on the axes where some weights are zero.
+**Check yourself.** Does a single large difference dominate the L1 distance?
+
+Answer: no. Each difference enters the sum at full size but no larger, so one bad coordinate cannot swamp the other coordinates the way squaring would.
+
+Connection to L1 regularization (Lasso): adding $\lVert w \rVert_1$ to your loss function penalizes the sum of absolute weight values. This pushes small weights to exactly zero, performing automatic feature selection.
+
+The L1 penalty creates diamond-shaped constraint regions in weight space, and the corners of diamonds lie on the axes where some weights are zero.
 
 Connection to loss functions: Mean Absolute Error (MAE) is the average L1 distance between predictions and targets. It penalizes all errors linearly, making it robust to outliers compared to MSE.
 
@@ -68,7 +83,7 @@ The L2 norm is the straight-line distance. Square root of the sum of squared com
 
 This is the distance you learned in geometry class. Pythagoras in $n$ dimensions.
 
-```
+```text
 Point A = (1, 1)
 Point B = (4, 5)
 
@@ -78,6 +93,7 @@ The straight line, cutting diagonally through the grid.
 ```
 
 When to use L2:
+
 - Low-to-medium dimensional continuous data
 - When the feature scales are comparable
 - Physical distances (spatial data, sensor readings)
@@ -104,7 +120,7 @@ L1 and L2 are special cases of the Lp norm:
 
 Different values of $p$ produce different shaped "unit balls" (the set of all points at distance at most 1 from the origin; the shapes below are their boundaries):
 
-```
+```text
 p=1:    Diamond shape      (corners on axes)
 p=2:    Circle/sphere      (the usual round ball)
 p=3:    Superellipse       (rounded square)
@@ -130,9 +146,24 @@ L_\infty \text{ distance} &= \max(|4-1|, |5-1|) = \max(3, 4) = 4
 ```
 
 When to use L-infinity:
+
 - When the worst-case deviation in any single dimension matters
 - Game boards (a king in chess moves in L-infinity: one step in any direction costs 1)
 - Manufacturing tolerances (every dimension must be within spec)
+
+**Worked example: three norms on one pair of points.**
+
+Take $A = (0, 0)$ and $B = (6, 8)$, so the difference vector is $(6, 8)$.
+
+1. L1: $|6| + |8| = 6 + 8 = 14$.
+2. L2: $\sqrt{6^2 + 8^2} = \sqrt{36 + 64} = \sqrt{100} = 10$.
+3. L-infinity: $\max(6, 8) = 8$.
+
+The three answers are 14, 10, and 8, and they satisfy $L_\infty \le L_2 \le L_1$: $8 \le 10 \le 14$. The L2 answer of 10 is the straight diagonal. The L1 answer of 14 is the walk along the grid edges.
+
+**Check yourself.** For $A = (0, 0)$ and $B = (6, 8)$, which norm equals the number of blocks a taxi drives?
+
+Answer: L1, with 14 blocks: 6 east plus 8 north. The straight line of 10 is not a legal route on the grid.
 
 ### Cosine Similarity and Cosine Distance
 
@@ -154,9 +185,27 @@ Cosine distance converts it to a distance: cosine_distance = 1 - cosine_similari
 \end{aligned}
 ```
 
-Why cosine dominates NLP and embeddings: in text, document length should not affect similarity. A document about cats that is twice as long as another document about cats should still be "similar." Cosine similarity ignores magnitude (length) and only cares about direction. Two documents with the same word distribution but different lengths point in the same direction and get cosine similarity 1.0.
+Why cosine dominates NLP and embeddings: in text, document length should not affect similarity. A document about cats that is twice as long as another document about cats should still be "similar."
+
+Cosine similarity ignores magnitude (length) and only cares about direction. Two documents with the same word distribution but different lengths point in the same direction and get cosine similarity 1.0.
+
+**Worked example: cosine similarity of two short vectors.**
+
+Take $a = (2, 1, 0)$ and $b = (1, 2, 0)$.
+
+1. Dot product: $2 \times 1 + 1 \times 2 + 0 \times 0 = 4$.
+2. Lengths: $\lVert a \rVert_2 = \sqrt{4 + 1} = \sqrt{5} \approx 2.236$, and $\lVert b \rVert_2$ is also $\sqrt{5} \approx 2.236$.
+3. Similarity: $4 / (2.236 \times 2.236) = 4 / 5 = 0.8$.
+4. Distance: $1 - 0.8 = 0.2$.
+
+Now scale $b$ by 10 to get $(10, 20, 0)$. The dot product becomes 40 and the length becomes 22.36, so the ratio is still $40 / (2.236 \times 22.36) = 0.8$. Length changed by a factor of 10 and the answer did not move.
+
+**Check yourself.** Two vectors point in the same direction, but one is 100 times longer. What is their cosine similarity?
+
+Answer: 1.0. Cosine only reads the angle, and the angle between them is zero.
 
 When to use cosine similarity:
+
 - Text similarity (TF-IDF vectors, word embeddings, sentence embeddings)
 - Any domain where magnitude is noise and direction is signal
 - Recommendation systems (user preference vectors)
@@ -181,7 +230,7 @@ Cosine similarity is the dot product normalized by both magnitudes. When both ve
 
 When they differ: dot product includes magnitude information. A vector with larger magnitude gets a higher dot product score. This matters in some retrieval systems where you want "popular" items to rank higher. The magnitude acts as an implicit quality or importance signal.
 
-```
+```text
 a = (3, 0)    b = (1, 0)    c = (0, 1)
 
 dot(a, b) = 3     dot(a, c) = 0
@@ -191,6 +240,7 @@ Both agree on direction, but dot product also reflects magnitude.
 ```
 
 In practice:
+
 - Use cosine similarity when you want pure directional similarity
 - Use dot product when magnitudes carry meaningful information
 - Many vector databases (Pinecone, Weaviate, Qdrant) let you choose between them
@@ -210,7 +260,22 @@ where $S$ is the covariance matrix of the data.
 
 Intuitively: Mahalanobis distance first decorrelates and normalizes the data (whitening), then computes L2 distance in that transformed space. If $S$ is the identity matrix (uncorrelated, unit variance features), Mahalanobis distance reduces to Euclidean distance.
 
-```
+**Worked example: two features with different spreads.**
+
+Take two uncorrelated features with covariance $S = \begin{bmatrix} 4 & 0 \\ 0 & 1 \end{bmatrix}$, so feature 1 has variance 4 and feature 2 has variance 1. Compare the point $x = (2, 3)$ against the mean $y = (0, 0)$.
+
+1. Difference: $x - y = (2, 3)$.
+2. Inverse covariance: $S^{-1} = \begin{bmatrix} 0.25 & 0 \\ 0 & 1 \end{bmatrix}$.
+3. Weighted sum: $2^2 \times 0.25 + 3^2 \times 1 = 1 + 9 = 10$.
+4. Mahalanobis distance: $\sqrt{10} \approx 3.162$.
+
+Plain L2 gives $\sqrt{4 + 9} = \sqrt{13} \approx 3.606$. The Mahalanobis answer is smaller because the 2-unit step sits on the wide axis, where 2 units is ordinary, and only the 3-unit step on the tight axis is unusual.
+
+**Check yourself.** If every feature has variance 1 and no two features are correlated, what does Mahalanobis distance become?
+
+Answer: plain Euclidean distance, because $S$ is the identity matrix and $S^{-1}$ changes nothing.
+
+```text
 Example: height and weight are correlated.
 Someone 6'2" and 180 lbs is not unusual.
 Someone 5'0" and 180 lbs is unusual.
@@ -221,6 +286,7 @@ because it accounts for the height-weight correlation.
 ```
 
 When to use Mahalanobis distance:
+
 - Outlier detection (points with large Mahalanobis distance from the mean are outliers)
 - Classification when features have different scales and correlations
 - When you have enough data to estimate a reliable covariance matrix
@@ -236,7 +302,7 @@ J(A, B) = \frac{|A \cap B|}{|A \cup B|}
 
 It ranges from 0 (no overlap) to 1 (identical sets). Jaccard distance = 1 - Jaccard similarity.
 
-```
+```text
 A = {cat, dog, fish}
 B = {cat, bird, fish, snake}
 
@@ -248,6 +314,7 @@ Jaccard distance = 0.6
 ```
 
 When to use Jaccard:
+
 - Comparing sets of tags, categories, or features
 - Document similarity based on word presence (not frequency)
 - Near-duplicate detection (MinHash approximation of Jaccard)
@@ -258,7 +325,7 @@ When to use Jaccard:
 
 Edit distance counts the minimum number of single-character operations needed to transform one string into another. The operations are: insert, delete, or substitute.
 
-```
+```text
 "kitten" -> "sitting"
 
 kitten -> sitten  (substitute k -> s)
@@ -270,7 +337,7 @@ Edit distance = 3
 
 Computed using dynamic programming. Fill a matrix where entry $(i, j)$ is the edit distance between the first $i$ characters of string A and the first $j$ characters of string B.
 
-```
+```text
         ""  s  i  t  t  i  n  g
     ""   0  1  2  3  4  5  6  7
     k    1  1  2  3  4  5  6  7
@@ -282,6 +349,7 @@ Computed using dynamic programming. Fill a matrix where entry $(i, j)$ is the ed
 ```
 
 When to use edit distance:
+
 - Spell checking and correction
 - DNA sequence alignment (with weighted operations)
 - Fuzzy string matching
@@ -307,6 +375,7 @@ Forward KL $(D_{KL}(P \Vert Q))$ is "mean-seeking": $Q$ tries to cover all modes
 Reverse KL $(D_{KL}(Q \Vert P))$ is "mode-seeking": $Q$ focuses on a single mode of $P$.
 
 When you see KL divergence:
+
 - VAEs (the KL term in the ELBO pushes the latent distribution toward a prior)
 - Knowledge distillation (student tries to match teacher's distribution)
 - RLHF (the KL penalty keeps the fine-tuned model close to the base model)
@@ -327,11 +396,12 @@ W_1(P, Q) = \int |\text{CDF}_P(x) - \text{CDF}_Q(x)| \, dx
 ```
 
 Why Wasserstein matters:
+
 - It is a true metric (symmetric, satisfies triangle inequality)
 - It provides gradients even when distributions do not overlap (KL divergence goes to infinity)
 - This property made it central to Wasserstein GANs (WGANs), which solved the training instability of original GANs
 
-```
+```text
 Distributions with no overlap:
 
 P: [1, 0, 0, 0, 0]    Q: [0, 0, 0, 0, 1]
@@ -343,6 +413,7 @@ Wasserstein gives a meaningful gradient. KL does not.
 ```
 
 When to use Wasserstein:
+
 - GAN training (WGAN, WGAN-GP)
 - Comparing distributions that may not overlap
 - Optimal transport problems
@@ -369,7 +440,7 @@ When to use Wasserstein:
 
 Loss functions are distance functions applied to predictions vs targets.
 
-```
+```text
 Loss function       Distance it uses       Behavior
 MSE                 L2 squared             Penalizes large errors heavily
 MAE                 L1                     Penalizes all errors equally
@@ -387,7 +458,7 @@ Contrastive loss    L2                     Similar pairs close, dissimilar
 
 Regularization adds a norm penalty on the weights to the loss function.
 
-```
+```text
 L1 regularization (Lasso):   loss + lambda * ||w||_1
   -> Sparse weights. Some weights become exactly zero.
   -> Automatic feature selection.
@@ -413,7 +484,7 @@ Exact nearest neighbor search is $O(n \cdot d)$ per query in a dataset of $n$ po
 
 Approximate Nearest Neighbor (ANN) algorithms trade a small amount of accuracy for massive speed gains:
 
-```
+```text
 Algorithm         Approach                      Used by
 KD-trees          Axis-aligned space partition   scikit-learn (low-dim)
 Ball trees        Nested hyperspheres            scikit-learn (medium-dim)
